@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageVersion>0.0.1</PackageVersion>
+    <Authors>antopen</Authors>
+    <NeutralLanguage>zh</NeutralLanguage>
+    <PackageLicenseUrl>https://www.mit-license.org/</PackageLicenseUrl>
+    <Description>Alipay Easy SDK for .NET</Description>
+    <PackageId>AlipayEasySDKNet</PackageId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tea" Version="0.2.2" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.5.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NuGet.Build.Packaging" Version="0.2.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Kernel\Util\" />
+    <Folder Include="Factory\" />
+  </ItemGroup>
+</Project>

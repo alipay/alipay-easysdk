@@ -1,0 +1,100 @@
+module Main {
+  type @getConfig = (string): string
+  type @isCertMode = (): boolean
+  type @getTimestamp = (): string
+  type @sign = (map[string]string, map[string]any, map[string]string, string): string
+  type @getMerchantCertSN = (): string
+  type @getAlipayRootCertSN = (): string
+  type @toUrlEncodedRequestBody = (map[string]any, map[string]string): bytes
+  type @getRandomBoundary = (): string
+  type @concatStr = (string, string): string
+  type @toMultipartRequestBody = (map[string]string, map[string]string, string): readable
+  type @readAsJson = ($Response, string): object
+  type @getAlipayCertSN = (object): string
+  type @extractAlipayPublicKey = (string): string
+  type @verify = (object, string): boolean
+  type @toRespModel = (object): object
+  type @getSdkVersion = (): string
+
+  init(); 
+
+  model AlipayOfflineMaterialImageUploadResponse {
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    imageId: string(name='image_id'),
+    imageUrl: string(name='image_url')
+  }
+
+  api upload(videoName: string, videoFilePath: string): AlipayOfflineMaterialImageUploadResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.offline.material.image.upload',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+    };
+
+    var textParams: map[string]string = {
+      image_type = 'mp4',
+      image_name = videoName
+    };
+
+    var fileParams: map[string]string = {
+      image_content = videoFilePath
+    };
+
+    var boundary = @getRandomBoundary();
+
+    protocol = @getConfig('protocol');
+    method = 'POST';
+    pathname = '/gateway.do';
+
+    headers = {
+      host = @getConfig('gatewayHost'),
+      content-type = @concatStr('multipart/form-data;charset=utf-8;boundary=', boundary)
+    };
+
+    query = {
+      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+      ... systemParams
+    };
+
+    body = @toMultipartRequestBody(textParams, fileParams, boundary);
+  } returns {
+    var respMap: object = @readAsJson(__response, "alipay.offline.material.image.upload");
+
+    if (@isCertMode()) {
+      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+        return @toRespModel(respMap);
+      } 
+    } else {
+      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+        return @toRespModel(respMap);
+      } 
+    }
+    
+    throw {
+      message = '验签失败，请检查支付宝公钥设置是否正确。'
+    }
+    
+  } runtime {
+    connectTimeout = 100000,
+    readTimeout = 100000,
+    retry = {
+      maxAttempts = 0
+    }
+  }
+}

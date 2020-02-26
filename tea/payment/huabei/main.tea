@@ -1,0 +1,99 @@
+module Main {
+  type @getConfig = (string): string
+  type @isCertMode = (): boolean
+  type @getTimestamp = (): string
+  type @sign = (map[string]string, map[string]any, map[string]string, string): string
+  type @getMerchantCertSN = (): string
+  type @getAlipayRootCertSN = (): string
+  type @toUrlEncodedRequestBody = (map[string]any, map[string]string): bytes
+  type @readAsJson = ($Response, string): object
+  type @getAlipayCertSN = (object): string
+  type @extractAlipayPublicKey = (string): string
+  type @verify = (object, string): boolean
+  type @toRespModel = (object): object
+  type @getSdkVersion = (): string
+
+  init(); 
+
+  model HuabeiConfig {
+    hbFqNum: string(name='hb_fq_num'),
+    hbFqSellerPercent: string(name='hb_fq_seller_percent')
+  }
+
+  model AlipayTradeCreateResponse {
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    outTradeNo: string(name='out_trade_no'),
+    tradeNo: string(name='trade_no')
+  }
+
+  api create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string, extendParams: HuabeiConfig): AlipayTradeCreateResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.trade.create',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+      subject = subject,
+      out_trade_no = outTradeNo,
+      total_amount = totalAmount,
+      buyer_id = buyerId,
+      extend_params = extendParams
+    };
+
+    var textParams: map[string]string = {
+    };
+
+    protocol = @getConfig('protocol');
+    method = 'POST';
+    pathname = '/gateway.do';
+
+    headers = {
+      host = @getConfig('gatewayHost'),
+      content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+    };
+
+    query = {
+      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+      ... systemParams
+    };
+
+    body = @toUrlEncodedRequestBody(bizParams, textParams);
+  } returns {
+    var respMap: object = @readAsJson(__response, "alipay.trade.create");
+
+    if (@isCertMode()) {
+      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+        return @toRespModel(respMap);
+      } 
+    } else {
+      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+        return @toRespModel(respMap);
+      } 
+    }
+    
+    throw {
+      message = '验签失败，请检查支付宝公钥设置是否正确。'
+    }
+    
+  } runtime {
+    connectTimeout = 15000,
+    readTimeout = 15000,
+    retry = {
+      maxAttempts = 0
+    }
+  }
+}

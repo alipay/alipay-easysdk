@@ -1,0 +1,461 @@
+module Main {
+  type @getConfig = (string): string
+  type @isCertMode = (): boolean
+  type @getTimestamp = (): string
+  type @sign = (map[string]string, map[string]any, map[string]string, string): string
+  type @getMerchantCertSN = (): string
+  type @getAlipayRootCertSN = (): string
+  type @toUrlEncodedRequestBody = (map[string]any, map[string]string): bytes
+  type @readAsJson = ($Response, string): object
+  type @getAlipayCertSN = (object): string
+  type @extractAlipayPublicKey = (string): string
+  type @verify = (object, string): boolean
+  type @toRespModel = (object): object
+  type @getSdkVersion = (): string
+
+  init(); 
+
+  model TradeFundBill {
+    fundChannel: string(name='fund_channel'),
+    bankCode: string(name='bank_code'),
+    amount: string(name='amount'),
+    realAmount: string(name='real_amount')
+  }
+
+  model TradeSettleDetail {
+    operationType: string(name='operation_type'),
+    operationSerial_no: string(name='operation_serial_no'),
+    operationDt: string(name='operation_dt'),
+    transOut: string(name='trans_out'),
+    transIn: string(name='trans_in'),
+    amount: string(name='amount')
+  }
+
+  model TradeSettleInfo {
+    tradeSettleDetailList: [ TradeSettleDetail ](name='trade_settle_detail_list')
+  }
+
+  model PresetPayToolInfo {
+    amount: [ string ](name='amount'),
+    assertTypeCode: string(name='assert_type_code')
+  }
+
+  model AlipayTradeCreateResponse {
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    outTradeNo: string(name='out_trade_no'),
+    tradeNo: string(name='trade_no')
+  }
+
+  model AlipayTradeQueryResponse {
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    tradeNo: string(name='trade_no'),
+    outTradeNo: string(name='out_trade_no'),
+    buyerLogonId: string(name='buyer_logon_id'),
+    tradeStatus: string(name='trade_status'),
+    totalAmount: string(name='total_amount'),
+    transCurrency: string(name='trans_currency'),
+    settleCurrency: string(name='settle_currency'),
+    settleAmount: string(name='settle_amount'),
+    payCurrency: string(name='pay_currency'),
+    payAmount: string(name='pay_amount'),
+    settleTransRate: string(name='settle_trans_rate'),
+    transPayRate: string(name='trans_pay_rate'),
+    buyerPayAmount: string(name='buyer_pay_amount'),
+    pointAmount: string(name='point_amount'),
+    invoiceAmount: string(name='invoice_amount'),
+    sendPayDate: string(name='send_pay_date'),
+    receiptAmount: string(name='receipt_amount'),
+    storeId: string(name='store_id'),
+    terminalId: string(name='terminal_id'),
+    fundBillList: [ TradeFundBill ](name='fund_bill_list'),
+    storeName: string(name='store_name'),
+    buyerUserId: string(name='buyer_user_id'),
+    chargeAmount: string(name='charge_amount'),
+    chargeFlags: string(name='charge_flags'),
+    settlementId: string(name='settlement_id'),
+    tradeSettleInfo: [ TradeSettleInfo ](name='trade_settle_info'),
+    authTradePayMode: string(name='auth_trade_pay_mode'),
+    buyerUserType: string(name='buyer_user_type'),
+    mdiscountAmount: string(name='mdiscount_amount'),
+    discountAmount: string(name='discount_amount'),
+    buyerUserName: string(name='buyer_user_name'),
+    subject: string(name='subject'),
+    body: string(name='body'),
+    alipaySubMerchantId: string(name='alipay_sub_merchant_id'),
+    extInfos: string(name='ext_infos')
+  }
+
+  model AlipayTradeRefundResponse {
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    tradeNo: string(name='trade_no'),
+    outTradeNo: string(name='out_trade_no'),
+    buyerLogonId: string(name='buyer_logon_id'),
+    fundChange: string(name='fund_change'),
+    refundFee: string(name='refund_fee'),
+    refundCurrency: string(name='refund_currency'),
+    gmtRefundPay: string(name='gmt_refund_pay'),
+    refundDetailItemList: [ TradeFundBill ](name='refund_detail_item_list'),
+    storeName: string(name='store_name'),
+    buyerUserId: string(name='buyer_user_id'),
+    refundPresetPaytoolList: [ PresetPayToolInfo ](name='refund_preset_paytool_list'),
+    refundSettlementId: string(name='refund_settlement_id'),
+    presentRefundBuyerAmount: string(name='present_refund_buyer_amount'),
+    presentRefundDiscountAmount: string(name='present_refund_discount_amount'),
+    presentRefundMdiscountAmount: string(name='present_refund_mdiscount_amount'),
+  }
+
+  model AlipayTradeCloseResponse {
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    tradeNo: string(name='trade_no'),
+    outTradeNo: string(name='out_trade_no')
+  }
+
+  model AlipayTradeCancelResponse {
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    tradeNo: string(name='trade_no'),
+    outTradeNo: string(name='out_trade_no'),
+    retryFlag: string(name='retry_flag'),
+    action: string(name='action'),
+    gmtRefundPay: string(name='gmt_refund_pay'),
+    refundSettlementId: string(name='refund_settlement_id')
+  }
+
+  api create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string): AlipayTradeCreateResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.trade.create',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+      subject = subject,
+      out_trade_no = outTradeNo,
+      total_amount = totalAmount,
+      buyer_id = buyerId
+    };
+
+    var textParams: map[string]string = {
+    };
+
+    protocol = @getConfig('protocol');
+    method = 'POST';
+    pathname = '/gateway.do';
+
+    headers = {
+      host = @getConfig('gatewayHost'),
+      content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+    };
+
+    query = {
+      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+      ... systemParams
+    };
+
+    body = @toUrlEncodedRequestBody(bizParams, textParams);
+  } returns {
+    var respMap: object = @readAsJson(__response, "alipay.trade.create");
+
+    if (@isCertMode()) {
+      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+        return @toRespModel(respMap);
+      } 
+    } else {
+      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+        return @toRespModel(respMap);
+      } 
+    }
+    
+    throw {
+      message = '验签失败，请检查支付宝公钥设置是否正确。'
+    }
+    
+  } runtime {
+    connectTimeout = 15000,
+    readTimeout = 15000,
+    retry = {
+      maxAttempts = 0
+    }
+  }
+
+  api query(outTradeNo: string): AlipayTradeQueryResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.trade.query',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+      out_trade_no = outTradeNo
+    };
+
+    var textParams: map[string]string = {
+    };
+
+    protocol = @getConfig('protocol');
+    method = 'POST';
+    pathname = '/gateway.do';
+
+    headers = {
+      host = @getConfig('gatewayHost'),
+      content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+    };
+
+    query = {
+      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+      ... systemParams
+    };
+
+    body = @toUrlEncodedRequestBody(bizParams, textParams);
+  } returns {
+    var respMap: object = @readAsJson(__response, "alipay.trade.query");
+
+    if (@isCertMode()) {
+      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+        return @toRespModel(respMap);
+      } 
+    } else {
+      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+        return @toRespModel(respMap);
+      } 
+    }
+    
+    throw {
+      message = '验签失败，请检查支付宝公钥设置是否正确。'
+    }
+    
+  } runtime {
+    connectTimeout = 15000,
+    readTimeout = 15000,
+    retry = {
+      maxAttempts = 0
+    }
+  }
+
+  api refund(outTradeNo: string, refundAmount: string): AlipayTradeRefundResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.trade.refund',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+      out_trade_no = outTradeNo,
+      refund_amount = refundAmount
+    };
+
+    var textParams: map[string]string = {
+    };
+
+    protocol = @getConfig('protocol');
+    method = 'POST';
+    pathname = '/gateway.do';
+
+    headers = {
+      host = @getConfig('gatewayHost'),
+      content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+    };
+
+    query = {
+      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+      ... systemParams
+    };
+
+    body = @toUrlEncodedRequestBody(bizParams, textParams);
+  } returns {
+    var respMap: object = @readAsJson(__response, "alipay.trade.refund");
+
+    if (@isCertMode()) {
+      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+        return @toRespModel(respMap);
+      } 
+    } else {
+      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+        return @toRespModel(respMap);
+      } 
+    }
+    
+    throw {
+      message = '验签失败，请检查支付宝公钥设置是否正确。'
+    }
+    
+  } runtime {
+    connectTimeout = 15000,
+    readTimeout = 15000,
+    retry = {
+      maxAttempts = 0
+    }
+  }
+  
+  api close(outTradeNo: string): AlipayTradeCloseResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.trade.close',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+      out_trade_no = outTradeNo
+    };
+
+    var textParams: map[string]string = {
+    };
+
+    protocol = @getConfig('protocol');
+    method = 'POST';
+    pathname = '/gateway.do';
+
+    headers = {
+      host = @getConfig('gatewayHost'),
+      content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+    };
+
+    query = {
+      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+      ... systemParams
+    };
+
+    body = @toUrlEncodedRequestBody(bizParams, textParams);
+  } returns {
+    var respMap: object = @readAsJson(__response, "alipay.trade.close");
+
+    if (@isCertMode()) {
+      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+        return @toRespModel(respMap);
+      } 
+    } else {
+      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+        return @toRespModel(respMap);
+      } 
+    }
+    
+    throw {
+      message = '验签失败，请检查支付宝公钥设置是否正确。'
+    }
+    
+  } runtime {
+    connectTimeout = 15000,
+    readTimeout = 15000,
+    retry = {
+      maxAttempts = 0
+    }
+  }
+
+  api cancel(outTradeNo: string): AlipayTradeCancelResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.trade.cancel',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+      out_trade_no = outTradeNo
+    };
+
+    var textParams: map[string]string = {
+    };
+
+    protocol = @getConfig('protocol');
+    method = 'POST';
+    pathname = '/gateway.do';
+
+    headers = {
+      host = @getConfig('gatewayHost'),
+      content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+    };
+
+    query = {
+      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+      ... systemParams
+    };
+
+    body = @toUrlEncodedRequestBody(bizParams, textParams);
+  } returns {
+    var respMap: object = @readAsJson(__response, "alipay.trade.cancel");
+
+    if (@isCertMode()) {
+      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+        return @toRespModel(respMap);
+      } 
+    } else {
+      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+        return @toRespModel(respMap);
+      } 
+    }
+    
+    throw {
+      message = '验签失败，请检查支付宝公钥设置是否正确。'
+    }
+    
+  } runtime {
+    connectTimeout = 15000,
+    readTimeout = 15000,
+    retry = {
+      maxAttempts = 0
+    }
+  }
+}
