@@ -41,6 +41,7 @@ Alipay Easy SDK首发暂只支持`Java`、`C#`编程语言，更多编程语言�
 [C#](./csharp)
 
 <a name="spec"/>
+
 ## API组织规范
 
 在Alipay Easy SDK中，API的引用路径与能力地图的组织层次一致，遵循如下规范
