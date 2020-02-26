@@ -115,18 +115,22 @@ namespace SDKDemo
 接口方法名称通常是对其依赖的OpenAPI功能的一个最简概况，接口方法的出入参数通常与OpenAPI中同名参数含义一致，参照OpenAPI相关参数的使用说明即可。Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编程直觉。
 
 ## 已支持的API列表
-| 能力名称      | 场景名称            | 接口方法名称                 | 调用的OpenAPI名称                                              |
+| 能力类别      | 场景类别            | 接口方法名称                 | 调用的OpenAPI名称                                              |
 |-----------|-----------------|------------------------|-----------------------------------------------------------|
 | Base      | OAuth           | getToken               | alipay\.system\.oauth\.token                              |
 | Base      | Qrcode          | create                 | alipay\.open\.app\.qrcode\.create                         |
 | Base      | Image           | upload                 | alipay\.offline\.material\.image\.upload                  |
 | Base      | Video           | upload                 | alipay\.offline\.material\.image\.upload                  |
-| Payment   | 无               | create                 | alipay\.trade\.create                                     |
-| Payment   | 无               | query                  | alipay\.trade\.query                                      |
-| Payment   | 无               | pay                    | alipay\.trade\.pay                                        |
-| Payment   | 无               | refund                 | alipay\.trade\.refund                                     |
-| Payment   | 无               | close                  | alipay\.trade\.close                                      |
-| Payment   | 无               | cancel                 | alipay\.trade\.close                                      |
+| Member    | Identification  | init                   | alipay\.user\.certify\.open\.initialize                   |
+| Member    | Identification  | certify                | alipay\.user\.certify\.open\.certify                      |
+| Member    | Identification  | query                  | alipay\.user\.certify\.open\.query                        |
+| Payment   | Common          | create                 | alipay\.trade\.create                                     |
+| Payment   | Common          | query                  | alipay\.trade\.query                                      |
+| Payment   | Common          | refund                 | alipay\.trade\.refund                                     |
+| Payment   | Common          | close                  | alipay\.trade\.close                                      |
+| Payment   | Common          | cancel                 | alipay\.trade\.close                                      |
+| Payment   | HuaBei          | create                 | alipay\.trade\.create                                     |
+| Payment   | FaceToFace      | pay                    | alipay\.trade\.pay                                        |
 | Security  | TextRisk        | detectContent          | alipay\.security\.risk\.content\.detect                   |
 | Marketing | Pass            | createTemplate         | alipay\.pass\.template\.add                               |
 | Marketing | Pass            | updateTemplate         | alipay\.pass\.template\.update                            |
@@ -135,12 +139,13 @@ namespace SDKDemo
 | Marketing | TemplateMessage | send                   | alipay\.open\.app\.mini\.templatemessage\.send            |
 | Marketing | OpenLife        | createImageTextContent | alipay\.open\.public\.message\.content\.create            |
 | Marketing | OpenLife        | modifyImageTextContent | alipay\.open\.public\.message\.content\.modify            |
-| Marketing | OpenLife        | sendTex                | alipay\.open\.public\.message\.total\.send                |
+| Marketing | OpenLife        | sendText               | alipay\.open\.public\.message\.total\.send                |
 | Marketing | OpenLife        | sendImageText          | alipay\.open\.public\.message\.total\.send                |
 | Marketing | OpenLife        | sendSingleMessage      | alipay\.open\.public\.message\.single\.send               |
 | Marketing | OpenLife        | recallMessage          | alipay\.open\.public\.life\.msg\.recall                   |
 | Marketing | OpenLife        | setIndustry            | alipay\.open\.public\.template\.message\.industry\.modify |
 | Marketing | OpenLife        | getIndustry            | alipay\.open\.public\.setting\.category\.query            |
+
 
 > 注：更多高频场景的API持续更新中，敬请期待。
 
