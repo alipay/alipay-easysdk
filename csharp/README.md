@@ -27,8 +27,8 @@ Alipay Easy SDK主要目标是提升开发者在服务端集成支付宝开放�
 `AppId`、`应用的私钥`、`支付宝公钥`
 
 ## 安装依赖
-### 通过NuGet程序包管理器在线安装依赖
-（Beat阶段暂不支持NuGet包的在线安装，后续会尽快推出）
+### 通过NuGet程序包管理器在线安装依赖（推荐）
+（在线依赖包正在筹备中，即将发布到NuGet。）
 
 ### 离线安装NuGet包
 1. 使用`Visual Studio`打开本`README.md`所在文件夹下的`AlipayEasySDKNet.sln`解决方案，在`生成`菜单栏下，执行`全部重新生成`。
