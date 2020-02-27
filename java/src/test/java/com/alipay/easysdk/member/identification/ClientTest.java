@@ -58,13 +58,13 @@ public class ClientTest {
     public void testQuery() throws Exception {
         AlipayUserCertifyOpenQueryResponse response = Member.Identification().query("89ad1f1b8171d9741c3e5620fd77f9de");
 
-        assertThat(response.code, is("10000"));
-        assertThat(response.msg, is("Success"));
-        assertThat(response.subCode, is(nullValue()));
-        assertThat(response.subMsg, is(nullValue()));
+        assertThat(response.code, is("40004"));
+        assertThat(response.msg, is("Business Failed"));
+        assertThat(response.subCode, is("CERTIFY_ID_EXPIRED"));
+        assertThat(response.subMsg, is("认证已失效"));
         assertThat(response.httpBody, not(nullValue()));
-        assertThat(response.passed, is("F"));
+        assertThat(response.passed, is(nullValue()));
         assertThat(response.identityInfo, is(nullValue()));
-        assertThat(response.materialInfo, is("{}"));
+        assertThat(response.materialInfo, is(nullValue()));
     }
 }

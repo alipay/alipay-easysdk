@@ -55,14 +55,14 @@ namespace UnitTest.Member.Identification
         {
             AlipayUserCertifyOpenQueryResponse response = Factory.Member.Identification().Query("89ad1f1b8171d9741c3e5620fd77f9de");
 
-            Assert.AreEqual(response.Code, "10000");
-            Assert.AreEqual(response.Msg, "Success");
-            Assert.IsNull(response.SubCode);
-            Assert.IsNull(response.SubMsg);
+            Assert.AreEqual(response.Code, "40004");
+            Assert.AreEqual(response.Msg, "Business Failed");
+            Assert.AreEqual(response.SubCode, "CERTIFY_ID_EXPIRED");
+            Assert.AreEqual(response.SubMsg, "认证已失效");
             Assert.NotNull(response.HttpBody);
-            Assert.AreEqual(response.Passed, "F");
+            Assert.IsNull(response.Passed);
             Assert.IsNull(response.IdentityInfo);
-            Assert.AreEqual(response.MaterialInfo, "{}");
+            Assert.IsNull(response.MaterialInfo);
         }
     }
 }

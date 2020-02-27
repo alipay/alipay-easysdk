@@ -14,9 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AlipayEasySDKNet\AlipayEasySDKNet.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Fixture\" />
     <Folder Include="Base\" />
     <Folder Include="Base\OAuth\" />
@@ -38,5 +35,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Payment\FaceToFace\ClientTest %28副本%29.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AlipayEasySDK\AlipayEasySDK.csproj" />
   </ItemGroup>
 </Project>

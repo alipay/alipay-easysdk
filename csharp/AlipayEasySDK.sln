@@ -1,7 +1,7 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlipayEasySDKNet", "AlipayEasySDKNet\AlipayEasySDKNet.csproj", "{14B089B9-C61C-46E6-BD93-5DFBBB77E2B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlipayEasySDK", "AlipayEasySDK\AlipayEasySDK.csproj", "{14B089B9-C61C-46E6-BD93-5DFBBB77E2B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{79DE080D-34C1-485E-996D-435A8515766D}"
 EndProject

@@ -6,7 +6,7 @@
 
     <groupId>com.alipay.easysdk</groupId>
     <artifactId>alipay-easysdk-java</artifactId>
-    <version>0.0.1.beta</version>
+    <version>1.0.0</version>
 
     <name>Alipay Easy SDK</name>
 
