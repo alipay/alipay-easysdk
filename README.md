@@ -25,7 +25,7 @@ Alipay Easy SDK对每个API都精心打磨，剔除了`Open API`中不常用的�
 > 注：单元测试中使用到的私钥均进行了脱敏处理，会导致单元测试无法直接执行。您可以自行更改单元测试项目中的`TestAccout类`和`privateKey.json`文件中的相关账号与私钥配置后再执行单元测试。
 
 ### 多语言
-Alipy Easy SDK基于阿里集团研发的`Tea DSL`工具链进行架构，通过DSL中间语言定义API模型，再基于DSL语言自动生成不同编程语言（Java、C#、PHP、TS等）实现的SDK，极大地提升了SDK能力的扩展效率和适用范围，同时也保证了相同开放能力的API模型在不同语言生态中体验的一致性。
+Alipy Easy SDK基于阿里集团研发的`Tea DSL`工具链进行架构，通过DSL中间语言定义API模型，再基于DSL语言自动生成不同编程语言（Java、C#、PHP、TS等）实现的SDK，极大地提升了SDK能力的扩展效率和适用范围，同时也保证了相同的`Easy API`在不同语言生态中体验的一致性。
 
 API模型的Tea DSL描述可以进入[tea](./tea)目录查看。
 
