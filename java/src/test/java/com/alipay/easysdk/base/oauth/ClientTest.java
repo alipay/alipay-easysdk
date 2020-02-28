@@ -18,8 +18,8 @@ public class ClientTest {
     }
 
     @Test
-    public void testGetTokenWhenGrantTypeIsAuthorizationCode() throws Exception {
-        AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().getToken("authorization_code", "ee4b3c871f7c4f30a82251908458VB64", "");
+    public void testGetToken() throws Exception {
+        AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().getToken("ee4b3c871f7c4f30a82251908458VB64");
 
         assertThat(response.code, is("40002"));
         assertThat(response.msg, is("Invalid Arguments"));
@@ -29,8 +29,8 @@ public class ClientTest {
     }
 
     @Test
-    public void testGetTokenWhenGrantTypeIsRefreshToken() throws Exception {
-        AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().getToken("refresh_token", "", "1234567890");
+    public void testRefreshToken() throws Exception {
+        AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().refreshToken("1234567890");
 
         assertThat(response.code, is("40002"));
         assertThat(response.msg, is("Invalid Arguments"));

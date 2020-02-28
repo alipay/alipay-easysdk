@@ -13,9 +13,9 @@ namespace UnitTest.Base.OAuth
         }
 
         [Test]
-        public void TestGetTokenWhenGrantTypeIsAuthorizationCode()
+        public void TestGetToken()
         {
-            AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().GetToken("authorization_code", "1234567890", "");
+            AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().GetToken("1234567890");
 
             Assert.AreEqual(response.Code, "40002");
             Assert.AreEqual(response.Msg, "Invalid Arguments");
@@ -25,9 +25,9 @@ namespace UnitTest.Base.OAuth
         }
 
         [Test]
-        public void TestGetTokenWhenGrantTypeIsRefreshToken()
+        public void TestRefreshToken()
         {
-            AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().GetToken("refresh_token", "", "1234567890");
+            AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().RefreshToken("1234567890");
 
             Assert.AreEqual(response.Code, "40002");
             Assert.AreEqual(response.Msg, "Invalid Arguments");

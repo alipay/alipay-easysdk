@@ -19,7 +19,7 @@ namespace Alipay.EasySDK.Security.TextRisk
         public Client(Config config): base(config.ToMap())
         { }
 
-        public AlipaySecurityRiskContentDetectResponse DetectContent(string content)
+        public AlipaySecurityRiskContentDetectResponse Detect(string content)
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>()
             {
@@ -120,7 +120,7 @@ namespace Alipay.EasySDK.Security.TextRisk
             throw new TeaUnretryableException(_lastRequest, _lastException);
         }
 
-        public async Task<AlipaySecurityRiskContentDetectResponse> DetectContentAsync(string content)
+        public async Task<AlipaySecurityRiskContentDetectResponse> DetectAsync(string content)
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>()
             {

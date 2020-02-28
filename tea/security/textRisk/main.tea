@@ -27,7 +27,7 @@ module Main {
     uniqueId: string(name='unique_id')
   }
 
-  api detectContent(content: string): AlipaySecurityRiskContentDetectResponse {
+  api detect(content: string): AlipaySecurityRiskContentDetectResponse {
     var systemParams: map[string]string = {
       method = 'alipay.security.risk.content.detect',
 

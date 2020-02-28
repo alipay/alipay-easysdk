@@ -29,7 +29,7 @@ module Main {
     reExpiresIn: long(name='re_expires_in')
   }
 
-  api getToken(grantType: string, code: string, refreshToken: string): AlipaySystemOauthTokenResponse {
+  api getToken(code: string): AlipaySystemOauthTokenResponse {
     var systemParams: map[string]string = {
       method = 'alipay.system.oauth.token',
 
@@ -48,8 +48,70 @@ module Main {
     };
 
     var textParams: map[string]string = {
-      grant_type = grantType,
-      code = code,
+      grant_type = 'authorization_code',
+      code = code
+    };
+
+    protocol = @getConfig('protocol');
+    method = 'POST';
+    pathname = '/gateway.do';
+
+    headers = {
+      host = @getConfig('gatewayHost'),
+      content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+    };
+
+    query = {
+      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+      ... systemParams
+    };
+
+    body = @toUrlEncodedRequestBody(bizParams, textParams);
+  } returns {
+    var respMap: object = @readAsJson(__response, "alipay.system.oauth.token");
+
+    if (@isCertMode()) {
+      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+        return @toRespModel(respMap);
+      } 
+    } else {
+      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+        return @toRespModel(respMap);
+      } 
+    }
+    
+    throw {
+      message = '验签失败，请检查支付宝公钥设置是否正确。'
+    }
+    
+  } runtime {
+    connectTimeout = 15000,
+    readTimeout = 15000,
+    retry = {
+      maxAttempts = 0
+    }
+  }
+
+  api refreshToken(refreshToken: string): AlipaySystemOauthTokenResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.system.oauth.token',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+    };
+
+    var textParams: map[string]string = {
+      grant_type = 'refresh_token',
       refresh_token = refreshToken
     };
 
@@ -93,3 +155,4 @@ module Main {
     }
   }
 }
+

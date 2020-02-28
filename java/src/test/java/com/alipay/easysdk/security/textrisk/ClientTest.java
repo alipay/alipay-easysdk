@@ -20,8 +20,8 @@ public class ClientTest {
     }
 
     @Test
-    public void testDetectContent() throws Exception {
-        AlipaySecurityRiskContentDetectResponse response = Security.TextRisk().detectContent("test");
+    public void testDetect() throws Exception {
+        AlipaySecurityRiskContentDetectResponse response = Security.TextRisk().detect("test");
 
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));

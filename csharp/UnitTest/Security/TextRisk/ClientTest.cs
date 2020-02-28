@@ -13,9 +13,9 @@ namespace UnitTest.Security.TextRisk
         }
 
         [Test]
-        public void TestDetectContent()
+        public void TestDetect()
         {
-            AlipaySecurityRiskContentDetectResponse response = Factory.Security.TextRisk().DetectContent("test");
+            AlipaySecurityRiskContentDetectResponse response = Factory.Security.TextRisk().Detect("test");
 
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");

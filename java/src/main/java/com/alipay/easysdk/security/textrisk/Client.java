@@ -10,7 +10,7 @@ public class Client extends BaseClient {
         super(TeaModel.buildMap(config));
     }
 
-    public AlipaySecurityRiskContentDetectResponse detectContent(String content) throws Exception {
+    public AlipaySecurityRiskContentDetectResponse detect(String content) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
