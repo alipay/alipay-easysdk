@@ -7,7 +7,7 @@
 
 Alipay Easy SDK提供了与[能力地图](https://opendocs.alipay.com/mini/00am3f)相对应的代码组织结构，让开发者可以快速找到不同能力对应的API。
 
-Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开放平台中各类高频场景下的开放能力的效率。
+Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开放平台开放的各类核心能力的效率。
 
 ## 技术特点
 ### 纯语言开发
@@ -22,6 +22,9 @@ Alipay Easy SDK对每个API都精心打磨，剔除了`Open API`中不常用的�
 
 ### 测试/示例完备
 每个API都有对应的单元测试进行覆盖，良好的单元测试天生就是最好的示例。
+
+同时您也可以前往[API Doc](./APIDoc.md)查看每个API的详细使用说明。
+
 > 注：单元测试中使用到的私钥均进行了脱敏处理，会导致单元测试无法直接执行。您可以自行更改单元测试项目中的`TestAccout类`和`privateKey.json`文件中的相关账号与私钥配置后再执行单元测试。
 
 ### 多语言
@@ -30,6 +33,9 @@ Alipy Easy SDK基于阿里集团研发的`Tea DSL`工具链进行架构，通过
 API模型的Tea DSL描述可以进入[tea](./tea)目录查看。
 
 > Tea DSL相关介绍和编写规范正在筹划开放中，后续您也可以参与Tea DSL的编写贡献更多优秀的`Easy API`模型，而无需关心多语言问题。
+
+### 快速集成
+各语言SDK均会在各自的中央仓库（Maven、NuGet、Composer、NPM etc.）中同步发布，让您使用各语言主流依赖管理工具即可一键安装集成SDK。
 
 ## 语言支持情况
 Alipay Easy SDK首发暂只支持`Java`、`C#`编程语言，更多编程语言支持正在积极新增中，敬请期待。
@@ -58,6 +64,7 @@ Alipay Easy SDK首发暂只支持`Java`、`C#`编程语言，更多编程语言�
 Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编程直觉。
 
 ## 已支持的API列表
+
 | 能力类别      | 场景类别            | 接口方法名称                 | 调用的OpenAPI名称                                              |
 |-----------|-----------------|------------------------|-----------------------------------------------------------|
 | Base      | OAuth           | getToken               | alipay\.system\.oauth\.token                              |
@@ -92,6 +99,8 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 
 > 注：更多高频场景的API持续更新中，敬请期待。
 
+您可以前往[API Doc](./APIDoc.md)查看每个API的详细使用说明。
+
 # 变更日志
 每个版本的详细更改记录在[变更日志](./CHANGELOG)中。
 
@@ -111,4 +120,6 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 
 # 交流与技术支持
 不管您在使用Alipay Easy SDK的过程中遇到任何问题，欢迎在当前 GitHub [提交 Issues](https://github.com/alipay/alipay-easysdk/issues/new)。
+
+钉钉交流群即将开放，敬请期待。
 

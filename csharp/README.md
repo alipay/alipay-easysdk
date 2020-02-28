@@ -11,7 +11,7 @@ Alipay Esay SDK for .NET让您不用复杂编程即可访支付宝开放平台�
 
 Alipay Easy SDK提供了与[能力地图](https://opendocs.alipay.com/mini/00am3f)相对应的代码组织结构，让开发者可以快速找到不同能力对应的API。
 
-Alipay Easy SDK主要目标是提升开发者在服务端集成支付宝开放平台中各类高频场景下的开放能力的效率。
+Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开放平台开放的各类核心能力的效率。
 
 ## 环境要求
 1. Alipay Easy SDK for .NET基于`.Net Standard 2.0`开发，支持`.Net Framework 4.6.1`、.`Net Core 2.0`及其以上版本
@@ -153,3 +153,6 @@ namespace SDKDemo
 | Marketing | OpenLife        | getIndustry            | alipay\.open\.public\.setting\.category\.query            |
 
 > 注：更多高频场景的API持续更新中，敬请期待。
+
+## 文档
+[API Doc](./../APIDoc.md)
