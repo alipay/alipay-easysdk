@@ -90,6 +90,7 @@ upload(videoName: string, videoFilePath: string)
 
 ---
 
+
 #营销能力 Marketing
 ## 生活号
 ### 创建图文消息内容
@@ -267,6 +268,7 @@ getIndustry()
 
 ---
 
+
 ## 支付宝卡包
 ### 卡券模板创建
 * API声明
@@ -340,6 +342,7 @@ updateInstance(serialNumber: string, channelId: string, tplParams: string, statu
 
 ---
 
+
 ## 小程序模板消息
 ### 发送模板消息
 * API声明
@@ -353,8 +356,7 @@ send(toUserId: string, formId: string, userTemplateId: string, page: string, dat
 | toUserId | string | 是  |  发送消息的支付宝账号  |
 | formId | string | 是  |  用户发生的交易行为的交易号，或者用户在小程序产生表单提交的表单号，用于信息发送的校验  |
 | userTemplateId | string | 是  |  用户申请的模板id号，固定的模板id会发送固定的消息  |
-| page | string | 是  |  小程序的跳转页面，用于消息中心用户点击之后详细跳转的小程序页面，例如：page/component/index
- |
+| page | string | 是  |  小程序的跳转页面，用于消息中心用户点击之后详细跳转的小程序页面，例如：page/component/index |
 | data | string | 是  |  开发者需要发送模板消息中的自定义部分来替换模板的占位符，例如：{"keyword1": {"value" : "12:00"},"keyword2": {"value" : "20180808"},"keyword3": {"value" : "支付宝"}}  |
 
 * 出参说明
@@ -362,6 +364,7 @@ send(toUserId: string, formId: string, userTemplateId: string, page: string, dat
 可前往[alipay.open.app.mini.templatemessage.send](https://docs.open.alipay.com/api_5/alipay.open.app.mini.templatemessage.send)查看更加详细的参数说明。
 
 ---
+
 
 # 会员能力 Member
 ## 支付宝身份认证 Identification
@@ -430,6 +433,7 @@ query(certifyId: string)
 
 ---
 
+
 # 支付能力 Payment
 ## 通用接口 Common
 ### 创建交易
@@ -449,7 +453,7 @@ create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string
 * 出参说明
 
 可前往[alipay.trade.pay](https://docs.open.alipay.com/api_1/alipay.trade.pay)查看更加详细的参数说明。
-		
+
 ###查询交易
 * API声明
 
