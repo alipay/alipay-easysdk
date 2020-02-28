@@ -28,7 +28,15 @@ Alipay Easy SDK主要目标是提升开发者在服务端集成支付宝开放�
 
 ## 安装依赖
 ### 通过Maven来管理项目依赖（推荐）
-（在线依赖包正在筹备中，即将发布到Maven中央仓库。）
+推荐通过Maven来管理项目依赖，您只需在项目的`pom.xml`文件中声明如下依赖
+
+```xml
+<dependency>
+    <groupId>com.alipay.sdk</groupId>
+    <artifactId>alipay-easysdk</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
 ### 本地手动集成依赖
 1. 本机安装配置[Maven](https://maven.apache.org/)工具。
