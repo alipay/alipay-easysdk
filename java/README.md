@@ -110,6 +110,7 @@ public class Main {
 | 能力类别      | 场景类别            | 接口方法名称                 | 调用的OpenAPI名称                                              |
 |-----------|-----------------|------------------------|-----------------------------------------------------------|
 | Base      | OAuth           | getToken               | alipay\.system\.oauth\.token                              |
+| Base      | OAuth           | refreshToken           | alipay\.system\.oauth\.token                              |
 | Base      | Qrcode          | create                 | alipay\.open\.app\.qrcode\.create                         |
 | Base      | Image           | upload                 | alipay\.offline\.material\.image\.upload                  |
 | Base      | Video           | upload                 | alipay\.offline\.material\.image\.upload                  |
@@ -123,7 +124,7 @@ public class Main {
 | Payment   | Common          | cancel                 | alipay\.trade\.close                                      |
 | Payment   | HuaBei          | create                 | alipay\.trade\.create                                     |
 | Payment   | FaceToFace      | pay                    | alipay\.trade\.pay                                        |
-| Security  | TextRisk        | detectContent          | alipay\.security\.risk\.content\.detect                   |
+| Security  | TextRisk        | detect                 | alipay\.security\.risk\.content\.detect                   |
 | Marketing | Pass            | createTemplate         | alipay\.pass\.template\.add                               |
 | Marketing | Pass            | updateTemplate         | alipay\.pass\.template\.update                            |
 | Marketing | Pass            | addInstance            | alipay\.pass\.instance\.add                               |
@@ -138,8 +139,4 @@ public class Main {
 | Marketing | OpenLife        | setIndustry            | alipay\.open\.public\.template\.message\.industry\.modify |
 | Marketing | OpenLife        | getIndustry            | alipay\.open\.public\.setting\.category\.query            |
 
-
 > 注：更多高频场景的API持续更新中，敬请期待。
-
-
-
