@@ -90,9 +90,8 @@ upload(videoName: string, videoFilePath: string)
 
 ---
 
-
-#营销能力 Marketing
-## 生活号
+# 营销能力 Marketing
+## 生活号 OpenLife
 ### 创建图文消息内容
 * API声明
 
@@ -269,7 +268,7 @@ getIndustry()
 ---
 
 
-## 支付宝卡包
+## 支付宝卡包 Pass
 ### 卡券模板创建
 * API声明
 
@@ -343,7 +342,7 @@ updateInstance(serialNumber: string, channelId: string, tplParams: string, statu
 ---
 
 
-## 小程序模板消息
+## 小程序模板消息 TemplateMessage
 ### 发送模板消息
 * API声明
 
@@ -517,7 +516,7 @@ cancel(outTradeNo: string)
 
 ---
 
-## 花呗分期
+## 花呗分期 HuaBei
 ### 创建花呗分期交易
 * API声明
 
@@ -547,7 +546,7 @@ HuabeiConfig对象说明
 
 --- 
 
-## 当面付
+## 当面付 FaceToFace
 ### 当面付交易付款
 * API声明
 
@@ -568,8 +567,8 @@ pay(subject: string, outTradeNo: string, totalAmount: string, authCode: string)
 
 ---
 
-# 安全能力
-## 文本风险识别
+# 安全能力 Security
+## 文本风险识别 TextRisk
 ### 检测内容风险
 * API声明
 
