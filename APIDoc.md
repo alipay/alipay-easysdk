@@ -453,7 +453,7 @@ create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string
 
 可前往[alipay.trade.pay](https://docs.open.alipay.com/api_1/alipay.trade.pay)查看更加详细的参数说明。
 
-###查询交易
+### 查询交易
 * API声明
 
 query(outTradeNo: string)
