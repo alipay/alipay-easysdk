@@ -29,7 +29,7 @@ public class ClientTest {
         HuabeiConfig config = new HuabeiConfig();
         config.hbFqNum = "3";
         config.hbFqSellerPercent = "0";
-        AlipayTradeCreateResponse response = Factory.Payment.HuaBei().create("Iphone6 16G",
+        AlipayTradeCreateResponse response = Factory.Payment.Huabei().create("Iphone6 16G",
                 outTradeNo, "0.10", "2088002656718920", config);
 
         assertThat(response.code, is("10000"));

@@ -1,3 +1,6 @@
+[![Maven Central](https://img.shields.io/maven-central/v/com.alipay.sdk/alipay-easysdk.svg)](https://mvnrepository.com/artifact/com.alipay.sdk/alipay-easysdk)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk?ref=badge_shield)
+
 欢迎使用 Alipay **Easy** SDK for Java 。
 
 Alipay Esay SDK for Java让您不用复杂编程即可访支付宝开放平台开放的各项常用能力，SDK可以自动帮您满足能力调用过程中所需的证书校验、加签、验签、发送HTTP请求等非功能性要求。
@@ -34,7 +37,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 <dependency>
     <groupId>com.alipay.sdk</groupId>
     <artifactId>alipay-easysdk</artifactId>
-    <version>1.0.0</version>
+    <version>Use the version shown in the maven badge</version>
 </dependency>
 ```
 
@@ -130,7 +133,7 @@ public class Main {
 | Payment   | Common          | refund                 | alipay\.trade\.refund                                     |
 | Payment   | Common          | close                  | alipay\.trade\.close                                      |
 | Payment   | Common          | cancel                 | alipay\.trade\.close                                      |
-| Payment   | HuaBei          | create                 | alipay\.trade\.create                                     |
+| Payment   | Huabei          | create                 | alipay\.trade\.create                                     |
 | Payment   | FaceToFace      | pay                    | alipay\.trade\.pay                                        |
 | Security  | TextRisk        | detect                 | alipay\.security\.risk\.content\.detect                   |
 | Marketing | Pass            | createTemplate         | alipay\.pass\.template\.add                               |

@@ -71,7 +71,7 @@ public class Factory {
          *
          * @return 花呗相关API Client
          */
-        public static com.alipay.easysdk.payment.huabei.Client HuaBei() {
+        public static com.alipay.easysdk.payment.huabei.Client Huabei() {
             return getClient(com.alipay.easysdk.payment.huabei.Client.class);
         }
 

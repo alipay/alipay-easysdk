@@ -31,7 +31,6 @@
     <Folder Include="Member\Identification\" />
     <Folder Include="Payment\Common\" />
     <Folder Include="Payment\FaceToFace\" />
-    <Folder Include="Payment\HuaBei\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Payment\FaceToFace\ClientTest %28副本%29.cs" />

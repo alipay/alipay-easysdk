@@ -516,7 +516,7 @@ cancel(outTradeNo: string)
 
 ---
 
-## 花呗分期 HuaBei
+## 花呗分期 Huabei
 ### 创建花呗分期交易
 * API声明
 

@@ -8,7 +8,7 @@
     "baseClient": "com.alipay.easysdk.kernel.BaseClient"
   },
   "csharp": {
-    "namespace": "Alipay.EasySDK.Payment.HuaBei",
+    "namespace": "Alipay.EasySDK.Payment.Huabei",
     "baseClient": "Alipay.EasySDK.Kernel:BaseClient"
   },
   "typescript": {

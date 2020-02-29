@@ -1,4 +1,5 @@
 [![NuGet](https://badge.fury.io/nu/AlipayEasySDK.svg)](https://badge.fury.io/nu/AlipayEasySDK)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk?ref=badge_shield)
 
 欢迎使用 Alipay **Easy** SDK for .NET 。
 
@@ -135,7 +136,7 @@ namespace SDKDemo
 | Payment   | Common          | refund                 | alipay\.trade\.refund                                     |
 | Payment   | Common          | close                  | alipay\.trade\.close                                      |
 | Payment   | Common          | cancel                 | alipay\.trade\.close                                      |
-| Payment   | HuaBei          | create                 | alipay\.trade\.create                                     |
+| Payment   | Huabei          | create                 | alipay\.trade\.create                                     |
 | Payment   | FaceToFace      | pay                    | alipay\.trade\.pay                                        |
 | Security  | TextRisk        | detect                 | alipay\.security\.risk\.content\.detect                   |
 | Marketing | Pass            | createTemplate         | alipay\.pass\.template\.add                               |

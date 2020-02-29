@@ -27,7 +27,7 @@ namespace Alipay.EasySDK.Factory
             RegisterClient(new EasySDK.Member.Identification.Client(options));
             RegisterClient(new EasySDK.Payment.Common.Client(options));
             RegisterClient(new EasySDK.Payment.FaceToFace.Client(options));
-            RegisterClient(new EasySDK.Payment.HuaBei.Client(options));
+            RegisterClient(new EasySDK.Payment.Huabei.Client(options));
             RegisterClient(new EasySDK.Security.TextRisk.Client(options));
         }
 
@@ -165,9 +165,9 @@ namespace Alipay.EasySDK.Factory
             /// 获取花呗API Client
             /// </summary>
             /// <returns></returns>
-            public static EasySDK.Payment.HuaBei.Client HuaBei()
+            public static EasySDK.Payment.Huabei.Client Huabei()
             {
-                return GetClient<EasySDK.Payment.HuaBei.Client>(typeof(EasySDK.Payment.HuaBei.Client));
+                return GetClient<EasySDK.Payment.Huabei.Client>(typeof(EasySDK.Payment.Huabei.Client));
             }
         }
 
