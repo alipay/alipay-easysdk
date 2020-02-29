@@ -41,7 +41,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 </dependency>
 ```
 
-### 本地手动集成依赖
+### 本地手动集成依赖（适用于自己修改源码后的本地重新打包安装）
 1. 本机安装配置[Maven](https://maven.apache.org/)工具。
 2. 在本`README.md`所在目录下，执行`mvn package -DskipTests`，将SDK源码编译打包。
 3. `target`目录下生成的`alipay-easysdk-java-[version].jar`文件（大小在15MB左右）即为打包SDK得到的Jar文件。
