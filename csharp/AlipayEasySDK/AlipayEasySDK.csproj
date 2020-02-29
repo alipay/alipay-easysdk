@@ -15,6 +15,11 @@
     <Title>Alipay Easy SDK</Title>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType></DebugType>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Tea" Version="0.2.2" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.5.2" />
