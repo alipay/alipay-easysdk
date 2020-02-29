@@ -193,7 +193,7 @@ Template对象说明
 
 | 字段名  | 类型     | 必填 | 说明 |
 |------|--------|----|----|
-| template_id | string | 是  |  消息模板ID |
+| templateId | string | 是  |  消息模板ID |
 | context | Context | 是  |  消息模板上下文，即模板中定义的参数及参数值 |
 
 Context对象说明
@@ -217,7 +217,7 @@ Keyword对象说明
 
 * 出参说明
 
-可前往[alipay.open.public.message.total.send](https://docs.open.alipay.com/api_6/alipay.open.public.message.total.send)查看更加详细的参数说明。
+可前往[alipay.open.public.message.single.send](https://docs.open.alipay.com/api_6/alipay.open.public.message.single.send)查看更加详细的参数说明。
 
 ### 生活号消息撤回
 * API声明
@@ -333,7 +333,7 @@ updateInstance(serialNumber: string, channelId: string, tplParams: string, statu
 | tplParams | string | 否  |  Alipass添加对象识别类型，填写“1”表示订单信息  |
 | status | string | 否  |  券状态，支持更新为USED、CLOSED两种状态 |
 | verifyCode | string | 否  |  核销码串值（当状态变更为USED时，建议传），该值正常为模板中核销区域（Operation）对应的message值 |
-| verifyType | string | 否  |  核销方式，该值正常为模板中核销区域（Operation）对应的format值，verify_code和verify_type需同时传入 |
+| verifyType | string | 否  |  核销方式，该值正常为模板中核销区域（Operation）对应的format值，verifyCode和verifyType需同时传入 |
 
 * 出参说明
 
@@ -385,16 +385,16 @@ IdentityParam对象说明
 
 | 字段名  | 类型     | 必填 | 说明 |
 |------|--------|----|----|
-| identity_type | string | 是  |  身份信息参数类型，必须传入CERT_INFO  |
-| cert_type | string | 是  |  证件类型，当前支持身份证，必须传入IDENTITY_CARD  |
-| cert_name | string | 是  |  真实姓名 |
-| cert_no | string | 是  |  证件号码  |
+| identityType | string | 是  |  身份信息参数类型，必须传入CERT_INFO  |
+| certType | string | 是  |  证件类型，当前支持身份证，必须传入IDENTITY_CARD  |
+| certName | string | 是  |  真实姓名 |
+| certNo | string | 是  |  证件号码  |
 
 MerchantConfig对象说明
 
 | 字段名  | 类型     | 必填 | 说明 |
 |------|--------|----|----|
-| return_url | string | 是  |  需要回跳的目标URL地址，一般指定为商户业务页面  |
+| returnUrl | string | 是  |  需要回跳的目标URL地址，一般指定为商户业务页面  |
 
 * 出参说明
 
@@ -409,7 +409,7 @@ certify(certifyId: string)
 
 | 字段名  | 类型     | 必填 | 说明 |
 |------|--------|----|----|
-| certify_id | string | 是  |  本次申请操作的唯一标识，由身份认证初始化接口调用后生成，后续的操作都需要用到  |
+| certifyId | string | 是  |  本次申请操作的唯一标识，由身份认证初始化接口调用后生成，后续的操作都需要用到  |
 
 * 出参说明
 
@@ -424,7 +424,7 @@ query(certifyId: string)
 
 | 字段名  | 类型     | 必填 | 说明 |
 |------|--------|----|----|
-| certify_id | string | 是  |  身份认证操作的唯一标识，由身份认证初始化接口调用后生成  |
+| certifyId | string | 是  |  身份认证操作的唯一标识，由身份认证初始化接口调用后生成  |
 
 * 出参说明
 
@@ -451,7 +451,7 @@ create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string
 
 * 出参说明
 
-可前往[alipay.trade.pay](https://docs.open.alipay.com/api_1/alipay.trade.pay)查看更加详细的参数说明。
+可前往[alipay.trade.create](https://docs.open.alipay.com/api_1/alipay.trade.create)查看更加详细的参数说明。
 
 ### 查询交易
 * API声明

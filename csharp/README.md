@@ -37,8 +37,8 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 	> dotnet add package AlipayEasySDK
 
 ### 离线安装NuGet包（适用于自己修改源码后的本地重新打包安装）
-1. 使用`Visual Studio`打开本`README.md`所在文件夹下的`AlipayEasySDKNet.sln`解决方案，在`生成`菜单栏下，执行`全部重新生成`。
-2. 在`AlipayEasySDKNet/bin/Debug`或`AlipayEasySDKNet/bin/Release`目录下，找到`AlipayEasySDKNet.[version].nupkg`文件，该文件即为本SDK的NuGet离线包。
+1. 使用`Visual Studio`打开本`README.md`所在文件夹下的`AlipayEasySDK.sln`解决方案，在`生成`菜单栏下，执行`全部重新生成`。
+2. 在`AlipayEasySDK/bin/Debug`或`AlipayEasySDK/bin/Release`目录下，找到`AlipayEasySDK.[version].nupkg`文件，该文件即为本SDK的NuGet离线包。
 3. 参照[NuGet离线安装程序包使用指南](https://yq.aliyun.com/articles/689227)，在您的.NET应用项目工程中引入本SDK的NuGet离线包，即可完成SDK的依赖安装。
 
 ## 快速使用
