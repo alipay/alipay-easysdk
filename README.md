@@ -22,13 +22,13 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 | 只保留高频场景下的必备参数    | 可选参数高达数十个，干扰项多 |
 
 
-* Alipay Easy SDK
+* Alipay Easy SDK :smiley:
 
 ```java
 Factory.Payment.Common().create("Iphone6 16G", "202003019443", "0.10", "2088002656718920");
 ```
 
-* Alipay SDK
+* Alipay SDK :confused:
 
 ```java
 AlipayTradeCreateRequest request = new AlipayTradeCreateRequest();
