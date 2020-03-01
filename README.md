@@ -4,14 +4,56 @@
 
 欢迎使用 Alipay **Easy** SDK。
 
-打造**最好用**的支付宝开放平台SDK，Alipay Easy SDK让您享受**极简编程**体验，快速访支付宝开放平台开放的各项**高频能力**。
+打造**最好用**的支付宝开放平台**服务端SDK**，Alipay Easy SDK让您享受**极简编程**体验，快速访支付宝开放平台开放的各项**高频能力**。
 
 ## 设计理念
-不同于原有的`Alipay SDK`通用而全面的设计理念，Alipay Easy SDK对开放能力的API进行了更加贴近高频场景的精心设计与裁剪，简化了服务端调用方式，让调用API像使用语言内置的函数一样简便。
+不同于原有的Alipay SDK通用而全面的设计理念，Alipay Easy SDK对开放能力的API进行了更加贴近高频场景的精心设计与裁剪，简化了服务端调用方式，让调用API像使用语言内置的函数一样简便。
 
 Alipay Easy SDK提供了与[能力地图](https://opendocs.alipay.com/mini/00am3f)相对应的代码组织结构，让开发者可以快速找到不同能力对应的API。
 
 Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开放平台开放的各类核心能力的效率。
+
+### 化繁为简
+
+| Alipay Easy SDK  | Alipay SDK                                                     |
+|------------------|----------------------------------------------------------------|
+| 极简代码风格，更贴近自然语言阅读习惯  | 代码冗长，不紧凑，阅读不流畅 |
+| Factory单例全局任何地方都可直接引用 | AlipayClient实例需自行创建并在上下文中传递 |
+| 只保留高频场景下的必备参数    | 可选参数高达数十个，干扰项多 |
+
+
+* Alipay Easy SDK
+
+```java
+Factory.Payment.Common().create("Iphone6 16G", "202003019443", "0.10", "2088002656718920");
+```
+
+* Alipay SDK
+
+```java
+AlipayTradeCreateRequest request = new AlipayTradeCreateRequest();
+
+AlipayTradeCreateModel model = new AlipayTradeCreateModel();
+model.setSubject("Iphone6 16G");
+model.setOutTradeNo("202003019443");
+model.setTotalAmount("0.10");
+model.setBuyerId("2088002656718920");
+...
+
+request.setBizModel(model);
+...
+
+alipayClient.execute(request);
+```
+
+### 如何切换
+* Alipay Easy SDK和Alipay SDK并无冲突，可以共存。
+	* 如果您所对接的能力和场景，Alipay Easy SDK已完全支持（[已支持的API列表](#apiList)），您也可以去除对Alipay SDK的依赖。
+
+
+* 无论是Alipay Easy SDK还是Alipay SDK，本质都是发送HTTP请求访问Open API网关，所以只需将原来通过Alipay SDK调用Open API的代码，替换为Alipay Easy SDK中对应API的调用即可
+
+* 我们会持续挖掘高频场景，不断丰富Alipay Easy SDK支持的API，让您在绝大多数常见场景下，都能享受Alipay Easy SDK带来的便捷。
 
 ## 技术特点
 ### 纯语言开发
@@ -67,6 +109,8 @@ Alipay Easy SDK首发暂只支持`Java`、`C#`编程语言，更多编程语言�
 
 Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编程直觉。
 
+<a name="apiList"/>
+
 ## 已支持的API列表
 
 | 能力类别      | 场景类别            | 接口方法名称                 | 调用的OpenAPI名称                                              |
@@ -103,7 +147,7 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 
 > 注：更多高频场景的API持续更新中，敬请期待。
 
-您可以前往[API Doc](./APIDoc.md)查看每个API的详细使用说明。
+您还可以前往[API Doc](./APIDoc.md)查看每个API的详细使用说明。
 
 # 变更日志
 每个版本的详细更改记录在[变更日志](./CHANGELOG)中。
