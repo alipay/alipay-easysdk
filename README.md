@@ -17,9 +17,9 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 
 | Alipay Easy SDK  | Alipay SDK                                                     |
 |------------------|----------------------------------------------------------------|
-| 极简代码风格，更贴近自然语言阅读习惯  | 代码冗长，不紧凑，阅读不流畅 |
+| 极简代码风格，更贴近自然语言阅读习惯  | 传统代码风格，需要多行代码完成一个接口的调用 |
 | Factory单例全局任何地方都可直接引用 | AlipayClient实例需自行创建并在上下文中传递 |
-| 只保留高频场景下的必备参数    | 可选参数高达数十个，干扰项多 |
+| 只保留高频场景下的必备参数    | 可选参数最多可达数十个，对普通开发者的干扰项较多 |
 
 
 * Alipay Easy SDK :smiley:
@@ -52,7 +52,7 @@ alipayClient.execute(request);
 
 * 无论是Alipay Easy SDK还是Alipay SDK，本质都是发送HTTP请求访问Open API网关，所以只需将原来通过Alipay SDK调用Open API的代码，替换为Alipay Easy SDK中对应API的调用即可。
 
-* 我们会持续挖掘高频场景，不断丰富Alipay Easy SDK支持的API，让您在绝大多数常见场景下，都能享受Alipay Easy SDK带来的便捷。
+* 我们会持续挖掘高频场景，不断丰富Alipay Easy SDK支持的API，让您在绝大多数常见场景下，都能享受Alipay Easy SDK带来的便捷。对于非高频场景的对接，依然建议使用Alipay SDK，Alipay SDK对支付宝开放平台开放的所有能力提供了**最全面**的支持。
 
 ## 技术特点
 ### 纯语言开发
