@@ -169,5 +169,5 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 不管您在使用Alipay Easy SDK的过程中遇到任何问题，欢迎在当前 GitHub [提交 Issues](https://github.com/alipay/alipay-easysdk/issues/new)。
 
 您也可以使用钉钉扫描下方二维码，与更多开发者和支付宝工程师共同交流。
-![支付宝官方Alipay Easy SDK开源交流群](https://gw.alipayobjects.com/mdn/rms_0e15fa/afts/img/A*Fsb0TKizrtEAAAAAAAAAAABkARQnAQ)
+![支付宝官方Alipay Easy SDK开源交流群](https://gw.alipayobjects.com/mdn/rms_0e15fa/afts/img/A*f4urToyhLUIAAAAAAAAAAABkARQnAQ)
 
