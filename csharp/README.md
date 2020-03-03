@@ -30,7 +30,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 `AppId`、`应用的私钥`、`支付宝公钥`
 
 ## 安装依赖
-### 通过NuGet程序包管理器在线安装依赖（推荐）
+### 通过[NuGet](https://www.nuget.org/packages/AlipayEasySDK/)程序包管理器在线安装依赖（推荐）
 * 在 `解决方案资源管理器面板` 中右击您的项目选择 `管理 NuGet 程序包` 菜单，在打开的 `NuGet 管理面板` 中点击 `浏览` 选项卡输入 `AlipayEasySDK`，在下方列表中选择 `Authors` 为 `antopen` 由官方发布的**最新稳定版**NuGet包，点击 **安装** 即可。
 
 * 或者通过 .NET CLI 工具来安装

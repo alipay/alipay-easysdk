@@ -30,7 +30,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 `AppId`、`应用的私钥`、`支付宝公钥`
 
 ## 安装依赖
-### 通过Maven来管理项目依赖（推荐）
+### 通过[Maven](https://mvnrepository.com/artifact/com.alipay.sdk/alipay-easysdk)来管理项目依赖（推荐）
 推荐通过Maven来管理项目依赖，您只需在项目的`pom.xml`文件中声明如下依赖
 
 ```xml
