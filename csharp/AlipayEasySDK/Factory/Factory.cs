@@ -29,6 +29,7 @@ namespace Alipay.EasySDK.Factory
             RegisterClient(new EasySDK.Payment.FaceToFace.Client(options));
             RegisterClient(new EasySDK.Payment.Huabei.Client(options));
             RegisterClient(new EasySDK.Security.TextRisk.Client(options));
+            RegisterClient(new EasySDK.Util.Generic.Client(options));
         }
 
         private static void RegisterClient(BaseClient client)
@@ -183,6 +184,21 @@ namespace Alipay.EasySDK.Factory
             public static EasySDK.Security.TextRisk.Client TextRisk()
             {
                 return GetClient<EasySDK.Security.TextRisk.Client>(typeof(EasySDK.Security.TextRisk.Client));
+            }
+        }
+
+        /// <summary>
+        /// 辅助工具
+        /// </summary>
+        public static class Util
+        {
+            /// <summary>
+            /// 获取OpenAPI通用接口，可通过自行拼装参数，调用几乎所有OpenAPI
+            /// </summary>
+            /// <returns>OpenAPI通用接口</returns>
+            public static EasySDK.Util.Generic.Client Generic()
+            {
+                return GetClient<EasySDK.Util.Generic.Client>(typeof(EasySDK.Util.Generic.Client));
             }
         }
     }

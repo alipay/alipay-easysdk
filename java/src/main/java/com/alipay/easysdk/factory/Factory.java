@@ -37,6 +37,7 @@ public class Factory {
             registerClient(new com.alipay.easysdk.payment.huabei.Client(options));
             registerClient(new com.alipay.easysdk.payment.facetoface.Client(options));
             registerClient(new com.alipay.easysdk.security.textrisk.Client(options));
+            registerClient(new com.alipay.easysdk.util.generic.Client(options));
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -183,6 +184,20 @@ public class Factory {
          */
         public static com.alipay.easysdk.security.textrisk.Client TextRisk() {
             return getClient(com.alipay.easysdk.security.textrisk.Client.class);
+        }
+    }
+
+    /**
+     * 辅助工具
+     */
+    public static class Util {
+        /**
+         * 获取OpenAPI通用接口，可通过自行拼装参数，调用几乎所有OpenAPI
+         *
+         * @return OpenAPI通用接口
+         */
+        public static com.alipay.easysdk.util.generic.Client Generic() {
+            return getClient(com.alipay.easysdk.util.generic.Client.class);
         }
     }
 }

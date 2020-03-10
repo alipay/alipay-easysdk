@@ -584,5 +584,48 @@ detect(content: string)
 
 可前往[alipay.security.risk.content.detect](https://docs.open.alipay.com/api_49/alipay.security.risk.content.detect)查看更加详细的参数说明。
 
+---
+
+# 辅助工具 Util
+
+<a name="generic"/>
+
+## 通用接口 Generic
+### 执行OpenAPI调用
+* API声明
+
+execute(method: string, textParams: map[string]string, bizParams: map[string]any): AlipayOpenApiGenericResponse
+
+* 接口说明
+
+对于Alipay Easy SDK尚未支持的Open API，开发者可以通过调用此方法，通过自行拼装请求参数，完成几乎所有OpenAPI的调用，且调用时可按需设置所有可选参数。本接口同样会自动为您完成请求的加签和响应的验签工作。
+
+注：
+
+> 少部分OpenAPI（例如：`alipay.trade.wap.pay`）调用时不会实际发送HTTP请求，只是本地生成网页表单/URL字符串（Alipay SDK中提供的`pageExecute`用于调用此类OpenAPI），或者本地生成请求支付宝APP的签名串（Alipay SDK中提供的`sdkExecute`用于调用此类OpenAPI）。
+
+> 此类Open API的调用本接口暂不支持，如有需要请使用Alipay SDK完成调用。
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| method | string | 是  |  OpenAPI的名称，例如：alipay.trade.pay |
+| textParams | map[string]string | 否  |  **没有**包装在`biz_content`下的请求参数集合，例如`app_auth_token`等参数 |
+| bizParams | map[string]any | 否  |  被包装在`biz_content`下的请求参数集合 |
+
+* 出参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| httpBody | string | 是  |  网关返回的HTTP响应，是一个JSON格式的字符串，开发者可按需从中解析出响应参数，响应示例：{"alipay_trade_create_response":{"code":"10000","msg":"Success","out_trade_no":"4ac9eac...","trade_no":"202003..."},"sign":"AUumfYgGSe7...02MA=="} |
+| code | string | 是  |  [网关返回码](https://docs.open.alipay.com/common/105806) |
+| msg | string | 是  |  [网关返回码描述](https://docs.open.alipay.com/common/105806) |
+| subCode | string | 否  |  业务返回码，参见具体的API接口文档 |
+| subMsg | string | 否  |  业务返回码描述，参见具体的API接口文档 |
+
+---
+
+
 
 
