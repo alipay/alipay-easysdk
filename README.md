@@ -50,7 +50,7 @@ alipayClient.execute(request);
 * 无论是Alipay Easy SDK还是Alipay SDK，本质都是发送HTTP请求访问Open API网关，所以只需将原来通过Alipay SDK调用Open API的代码，替换为Alipay Easy SDK中对应API的调用即可。
 
 * Alipay Easy SDK和Alipay SDK并无冲突，可以共存。
-	* 如果您所对接的能力和场景，Alipay Easy SDK已完全支持（[已支持的API列表](#apiList)），或者可以通过[通用接口](https://github.com/alipay/alipay-easysdk/blob/master/APIDoc.md#generic)覆盖，您也可以去除对Alipay SDK的依赖。
+	* 如果您所对接的能力和场景，Alipay Easy SDK已完全支持（[已支持的API列表](#apiList)），或者可以通过[通用接口](./APIDoc.md#generic)覆盖，您也可以去除对Alipay SDK的依赖。
 
 * 我们会持续挖掘高频场景，不断丰富Alipay Easy SDK支持的API，让您在绝大多数常见场景下，都能享受Alipay Easy SDK带来的便捷。对于非高频场景的对接，依然建议使用Alipay SDK，Alipay SDK对支付宝开放平台开放的所有能力提供了**最全面**的支持。
 
