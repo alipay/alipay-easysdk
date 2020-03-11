@@ -10,7 +10,7 @@ namespace Alipay.EasySDK.Marketing.OpenLife.Models
 {
     public class Article : TeaModel {
         [NameInMap("title")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string Title { get; set; }
 
         [NameInMap("desc")]
@@ -18,7 +18,7 @@ namespace Alipay.EasySDK.Marketing.OpenLife.Models
         public string Desc { get; set; }
 
         [NameInMap("image_url")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string ImageUrl { get; set; }
 
         [NameInMap("url")]
@@ -26,7 +26,7 @@ namespace Alipay.EasySDK.Marketing.OpenLife.Models
         public string Url { get; set; }
 
         [NameInMap("action_name")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public string ActionName { get; set; }
 
     }

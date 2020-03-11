@@ -17,19 +17,15 @@ public class Context extends TeaModel {
     public String actionName;
 
     @NameInMap("keyword1")
-    @Validation(required = true)
     public Keyword keyword1;
 
     @NameInMap("keyword2")
-    @Validation(required = true)
     public Keyword keyword2;
 
     @NameInMap("first")
-    @Validation(required = true)
     public Keyword first;
 
     @NameInMap("remark")
-    @Validation(required = true)
     public Keyword remark;
 
     public static Context build(java.util.Map<String, ?> map) throws Exception {

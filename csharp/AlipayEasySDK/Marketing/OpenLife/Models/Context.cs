@@ -22,19 +22,19 @@ namespace Alipay.EasySDK.Marketing.OpenLife.Models
         public string ActionName { get; set; }
 
         [NameInMap("keyword1")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public Keyword Keyword1 { get; set; }
 
         [NameInMap("keyword2")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public Keyword Keyword2 { get; set; }
 
         [NameInMap("first")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public Keyword First { get; set; }
 
         [NameInMap("remark")]
-        [Validation(Required=true)]
+        [Validation(Required=false)]
         public Keyword Remark { get; set; }
 
     }

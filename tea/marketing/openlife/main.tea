@@ -53,11 +53,11 @@ module Main {
   }
 
   model Article {
-    title: string(name='title'),
+    title?: string(name='title'),
     desc: string(name='desc'),
-    imageUrl: string(name='image_url'),
+    imageUrl?: string(name='image_url'),
     url: string(name='url'),
-    actionName: string(name='action_name')
+    actionName?: string(name='action_name')
   }
 
   model Keyword {
@@ -69,10 +69,10 @@ module Main {
     headColor: string(name='head_color'),
     url: string(name='url'),
     actionName: string(name='action_name'),
-    keyword1: Keyword(name='keyword1'),
-    keyword2: Keyword(name='keyword2'),
-    first: Keyword(name='first'),
-    remark: Keyword(name='remark')
+    keyword1?: Keyword(name='keyword1'),
+    keyword2?: Keyword(name='keyword2'),
+    first?: Keyword(name='first'),
+    remark?: Keyword(name='remark')
   }
 
   model Template {
