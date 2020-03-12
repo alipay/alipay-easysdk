@@ -25,9 +25,9 @@ public class ClientTest {
     }
 
     @Test
-    public void testCrate() throws Exception {
+    public void testCreate() throws Exception {
         String outTradeNo = UUID.randomUUID().toString();
-        AlipayTradeCreateResponse response = Factory.Payment.Common().create("Iphone6 16G",
+        AlipayTradeCreateResponse response = Factory.Payment.Common().create("iPhone6 16G",
                 outTradeNo, "88.88", "2088002656718920");
 
         assertThat(response.code, is("10000"));
@@ -86,7 +86,7 @@ public class ClientTest {
     }
 
     private String createNewAndReturnOutTradeNo() throws Exception {
-        return Factory.Payment.Common().create("Iphone6 16G", UUID.randomUUID().toString(),
+        return Factory.Payment.Common().create("iPhone6 16G", UUID.randomUUID().toString(),
                 "88.88", "2088002656718920").outTradeNo;
     }
 }

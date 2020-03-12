@@ -14,10 +14,10 @@ namespace UnitTest.Payment.Common
         }
 
         [Test]
-        public void TestCrate()
+        public void TestCreate()
         {
             string outTradeNo = Guid.NewGuid().ToString();
-            AlipayTradeCreateResponse response = Factory.Payment.Common().Create("Iphone6 16G",
+            AlipayTradeCreateResponse response = Factory.Payment.Common().Create("iPhone6 16G",
                     outTradeNo, "88.88", "2088002656718920");
 
             Assert.AreEqual(response.Code, "10000");
@@ -81,7 +81,7 @@ namespace UnitTest.Payment.Common
 
         private string CreateNewAndReturnOutTradeNo()
         {
-            return Factory.Payment.Common().Create("Iphone6 16G", Guid.NewGuid().ToString(),
+            return Factory.Payment.Common().Create("iPhone6 16G", Guid.NewGuid().ToString(),
                     "88.88", "2088002656718920").OutTradeNo;
         }
     }
