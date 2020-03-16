@@ -413,7 +413,6 @@ public class BaseClient {
         public String signType;
 
         @NameInMap("alipayPublicKey")
-        @Validation(required = true)
         public String alipayPublicKey;
 
         @NameInMap("merchantPrivateKey")
@@ -421,15 +420,12 @@ public class BaseClient {
         public String merchantPrivateKey;
 
         @NameInMap("merchantCertPath")
-        @Validation(required = true)
         public String merchantCertPath;
 
         @NameInMap("alipayCertPath")
-        @Validation(required = true)
         public String alipayCertPath;
 
         @NameInMap("alipayRootCertPath")
-        @Validation(required = true)
         public String alipayRootCertPath;
     }
 }

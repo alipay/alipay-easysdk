@@ -1,6 +1,7 @@
 package com.alipay.easysdk.kernel.util;
 
 import com.google.common.base.Strings;
+import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Base64;
@@ -359,10 +360,37 @@ public class AntCertificationUtil {
      * @return 证书内容
      */
     public static String readCertContent(String certPath) {
+        if (existsInFileSystem(certPath)) {
+            return readFromFileSystem(certPath);
+        }
+        return readFromClassPath(certPath);
+    }
+
+    private static boolean existsInFileSystem(String certPath) {
+        try {
+            return new File(certPath).exists();
+        } catch (Throwable e) {
+            return false;
+        }
+    }
+
+    private static String readFromFileSystem(String certPath) {
         try {
             return new String(Files.toByteArray(new File(certPath)), StandardCharsets.UTF_8);
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new RuntimeException("从文件系统中读取[" + certPath + "]失败，" + e.getMessage(), e);
+        }
+    }
+
+    private static String readFromClassPath(String certPath) {
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(certPath)) {
+            return new String(ByteStreams.toByteArray(inputStream), StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            String errorMessage = e.getMessage() == null ? "" : e.getMessage() + "。";
+            if (certPath.startsWith("/")) {
+                errorMessage += "ClassPath路径不可以/开头，请去除后重试。";
+            }
+            throw new RuntimeException("读取[" + certPath + "]失败。" + errorMessage, e);
         }
     }
 }
