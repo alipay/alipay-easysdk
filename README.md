@@ -91,6 +91,8 @@ Alipay Easy SDK首发暂只支持`Java`、`C#`编程语言，更多编程语言�
 
 [C#](./csharp)
 
+[PHP](./php)
+
 <a name="spec"/>
 
 ## API组织规范

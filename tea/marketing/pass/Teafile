@@ -13,5 +13,9 @@
   },
   "typescript": {
     "baseClient": "@alipay/easysdk-baseclient"
+  },
+  "php": {
+     "package": "Alipay.EasySDK.Marketing.Pass",
+     "baseClient": "Alipay.EasySDK.Kernel.BaseClient"
   }
 }
