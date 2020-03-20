@@ -1,11 +1,10 @@
-[![Maven Central](https://img.shields.io/maven-central/v/com.alipay.sdk/alipay-easysdk.svg)](https://mvnrepository.com/artifact/com.alipay.sdk/alipay-easysdk)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk?ref=badge_shield)
 
 欢迎使用 Alipay **Easy** SDK for PHP 。
 
 Alipay Esay SDK for PHP让您不用复杂编程即可访支付宝开放平台开放的各项常用能力，SDK可以自动帮您满足能力调用过程中所需的证书校验、加签、验签、发送HTTP请求等非功能性要求。
 
-下面向您介绍Alipay Easy SDK for Java 的基本设计理念和使用方法。
+下面向您介绍Alipay Easy SDK for PHP 的基本设计理念和使用方法。
 
 ## 设计理念
 不同于原有的[Alipay SDK](https://openhome.alipay.com/doc/sdkDownload.resource?sdkType=PHP)通用而全面的设计理念，Alipay Easy SDK对开放能力的API进行了更加贴近高频场景的精心设计与裁剪，简化了服务端调用方式，让调用API像使用语言内置的函数一样简便。
@@ -17,7 +16,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 ## 环境要求
 1. Alipay Easy SDK for PHP 需要配合`PHP 7.0`或其以上版本。
 
-2. 使用 Alipay Easy SDK for Java 之前 ，您需要先前往[支付宝开发平台-开发者中心](https://openhome.alipay.com/platform/developerIndex.htm)完成开发者接入的一些准备工作，包括创建应用、为应用添加功能包、设置应用的接口加签方式等。
+2. 使用 Alipay Easy SDK for PHP 之前 ，您需要先前往[支付宝开发平台-开发者中心](https://openhome.alipay.com/platform/developerIndex.htm)完成开发者接入的一些准备工作，包括创建应用、为应用添加功能包、设置应用的接口加签方式等。
 
 3. 准备工作完成后，注意保存如下信息，后续将作为使用SDK的输入。
 
@@ -28,6 +27,9 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 * 加签模式为公钥模式时
 
 `AppId`、`应用的私钥`、`支付宝公钥`
+
+## 安装依赖
+### 通过[Composer](https://getcomposer.org/)安装敬请期待
 
 ### 本地手动集成依赖（适用于自己修改源码后的本地重新打包安装）
 1. 本机安装配置[Composer](https://getcomposer.org/)工具。
@@ -46,7 +48,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 ```php
 <?php
 
-class ClientTest extends TestCase
+class Client
 {
     protected $app = null;
 
@@ -58,7 +60,7 @@ class ClientTest extends TestCase
         $this->app = new Factory($account->getTestCertAccount());
     }
 
-    public function testCrate()
+    public function create()
     {
         //2、发起API调用（以支付能力下的统一收单交易创建接口为例）
         $result = $this->app->payment()->common()->create("Iphone6 16G",
