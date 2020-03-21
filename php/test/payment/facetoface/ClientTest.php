@@ -13,7 +13,7 @@ class ClientTest extends TestCase
     public function testPay()
     {
         $account = new TestAccount();
-        $app = new Factory($account->getTestAccount());
+        $app = Factory::setOptions($account->getTestAccount());
         $create = $app->payment()->common()->create("Iphone6 16G",
             microtime(), "88.88", "2088002656718920");
 

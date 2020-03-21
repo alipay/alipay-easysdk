@@ -16,50 +16,94 @@ use Alipay\EasySDK\Payment\FaceToFace\Client as faceToFaceClient;
 use Alipay\EasySDK\Payment\Huabei\Client as huabeiClient;
 use Alipay\EasySDK\Security\TextRisk\Client as textRiskClient;
 use Alipay\EasySDK\Util\Generic\Client as genericClient;
-use Pimple\Container;
 
-class Factory extends Container
+class Factory
 {
-    protected $config = null;
+    public $config = null;
+    private static $instance;
+    protected $base;
+    protected $marketing;
+    protected $member;
+    protected $payment;
+    protected $security;
+    protected $util;
 
-    public function __construct(Model $config)
+    private function __construct($config)
     {
-        parent::__construct($config->toMap());
-        $this->config = $config;
+        if (!empty($config->alipayCertPath)) {
+            $certEnvironment = new CertEnvironment();
+            $certEnvironment->certEnvironment(
+                $config->merchantCertPath,
+                $config->alipayCertPath,
+                $config->alipayRootCertPath
+            );
+            $config->merchantCertSN = $certEnvironment->getMerchantCertSN();
+            $config->alipayRootCertSN = $certEnvironment->getRootCertSN();
+            $config->alipayPublicKey = $certEnvironment->getCachedAlipayPublicKey();
+        }
+
+        $this->base = new Base($config);
+        $this->marketing = new Marketing($config);
+        $this->member = new Member($config);
+        $this->payment = new Payment($config);
+        $this->security = new Security($config);
+        $this->util = new Util($config);
+
+    }
+
+    public static function setOptions($config)
+    {
+        if (!(self::$instance instanceof self)) {
+            self::$instance = new self($config);
+        }
+        return self::$instance;
+    }
+
+    private function __clone()
+    {
     }
 
     public function base()
     {
-        return new Base($this->config);
+        return $this->base;
     }
 
     public function marketing()
     {
-        return new Marketing($this->config);
+        return $this->marketing;
     }
 
     public function member()
     {
-        return new Member($this->config);
+        return $this->member;
     }
 
     public function payment()
     {
-        return new Payment($this->config);
+        return $this->payment;
     }
 
     public function security()
     {
-        return new Security($this->config);
+        return $this->security;
     }
-    public function util(){
-        return new Util($this->config);
+
+    public function util()
+    {
+        return $this->util;
     }
 }
 
 
-class Base extends Factory
+class Base
 {
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     public function image()
     {
         return new imageClient($this->config);
@@ -81,8 +125,15 @@ class Base extends Factory
     }
 }
 
-class Marketing extends Factory
+class Marketing
 {
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     public function openLife()
     {
         return new openLifeClient($this->config);
@@ -99,16 +150,30 @@ class Marketing extends Factory
     }
 }
 
-class Member extends Factory
+class Member
 {
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     public function identification()
     {
         return new identificationClient($this->config);
     }
 }
 
-class Payment extends Factory
+class Payment
 {
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     public function common()
     {
         return new commonClient($this->config);
@@ -125,16 +190,30 @@ class Payment extends Factory
     }
 }
 
-class Security extends Factory
+class Security
 {
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     public function textRisk()
     {
         return new textRiskClient($this->config);
     }
 }
 
-class Util extends Factory
+class Util
 {
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     public function generic()
     {
         return new genericClient($this->config);

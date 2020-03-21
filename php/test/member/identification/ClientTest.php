@@ -18,7 +18,7 @@ class ClientTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
         $account = new TestAccount();
-        $this->app = new Factory($account->getTestAccount());
+        $this->app = Factory::setOptions($account->getTestAccount());
     }
 
     public function testInit()
@@ -47,8 +47,10 @@ class ClientTest extends TestCase
     public function testQuery()
     {
         $result = $this->app->member()->identification()->query("16cbbf40de9829e337d51818a76eacc2");
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('40004', $result['code']);
+        $this->assertEquals('Business Failed', $result['msg']);
+        $this->assertEquals('CERTIFY_ID_EXPIRED',$result['sub_code']);
+        $this->assertEquals('认证已失效',$result['sub_msg']);
 
     }
 

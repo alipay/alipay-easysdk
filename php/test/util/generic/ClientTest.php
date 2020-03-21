@@ -17,7 +17,7 @@ class ClientTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
         $account = new TestAccount();
-        $this->app = new Factory($account->getTestAccount());
+        $this->app = Factory::setOptions($account->getTestAccount());
     }
 
     public function testExecuteWithoutAppAuthToken()

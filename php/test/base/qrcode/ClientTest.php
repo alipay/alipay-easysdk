@@ -10,7 +10,7 @@ class ClientTest extends TestCase
 {
     public function testCreate(){
         $account = new TestAccount();
-        $app = new Factory($account->getTestAccount());
+        $app = Factory::setOptions($account->getTestAccount());
         $result = $app->base()->qrcode()->create('https://opendocs.alipay.com','ageIndex=1','文档站点');
         $this->assertEquals('10000',$result['code']);
         $this->assertEquals('Success',$result['msg']);
