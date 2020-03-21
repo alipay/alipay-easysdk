@@ -12,7 +12,7 @@ class ClientTest extends TestCase
 {
     public function testDetectContent(){
         $account = new TestAccount();
-        $app = new Factory($account->getTestAccount());
+        $app = Factory::setOptions($account->getTestAccount());
         $result = $app->security()->textRisk()->detect("test");
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);

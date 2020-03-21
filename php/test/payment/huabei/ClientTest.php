@@ -14,7 +14,7 @@ class ClientTest extends TestCase
     public function testCreate()
     {
         $account = new TestAccount();
-        $app = new Factory($account->getTestAccount());
+        $app = Factory::setOptions($account->getTestAccount());
         $config = new HuabeiConfig();
         $config->hbFqNum = '3';
         $config->hbFqSellerPercent = '0';

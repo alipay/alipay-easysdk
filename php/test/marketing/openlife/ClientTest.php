@@ -20,7 +20,7 @@ class ClientTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
         $account = new TestAccount();
-        $this->app = new Factory($account->getTestCertAccount());
+        $this->app = Factory::setOptions($account->getTestCertAccount());
     }
 
     public function testCreateImageTextContent()
@@ -139,7 +139,6 @@ class ClientTest extends TestCase
     public function testGetIndustry()
     {
         $result = $this->app->marketing()->openLife()->getIndustry();
-        var_dump($result);
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);
         $this->assertEquals('IT科技/IT软件与服务', $result['primary_category']);

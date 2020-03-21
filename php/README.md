@@ -57,7 +57,7 @@ class Client
         parent::__construct($name, $data, $dataName);
         //1、设置参数（全局只需设置一次）
         $account = new TestAccount();
-        $this->app = new Factory($account->getTestCertAccount());
+        $this->app = Factory::setOptions($account->getTestAccount());
     }
 
     public function create()

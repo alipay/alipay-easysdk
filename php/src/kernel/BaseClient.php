@@ -13,19 +13,10 @@ use Psr\Http\Message\ResponseInterface;
 class BaseClient
 {
     private $config;
-    private $certEnvironment;
 
     public function __construct($config)
     {
         $this->config = $config;
-        $this->certEnvironment = new CertEnvironment();
-        if (!empty($config->alipayCertPath)) {
-            $this->certEnvironment->certEnvironment(
-                $config->merchantCertPath,
-                $config->alipayCertPath,
-                $config->alipayRootCertPath
-            );
-        }
     }
 
     /**
@@ -274,7 +265,7 @@ class BaseClient
      */
     protected function _getMerchantCertSN()
     {
-        return $this->certEnvironment->getMerchantCertSN();
+        return $this->config->merchantCertSN;
     }
 
     /**
@@ -284,7 +275,7 @@ class BaseClient
      */
     protected function _getAlipayRootCertSN()
     {
-        return $this->certEnvironment->getRootCertSN();
+        return $this->config->alipayRootCertSN;
     }
 
     /**
@@ -295,7 +286,7 @@ class BaseClient
      */
     protected function _getAlipayCertSN(array $respMap)
     {
-        if (!empty($this->certEnvironment->getMerchantCertSN())) {
+        if (!empty($this->config->merchantCertSN)) {
             $body = json_decode($respMap[AlipayConstants::BODY_FIELD]);
             $alipayCertSN = $body->alipay_cert_sn;
             return $alipayCertSN;
@@ -305,17 +296,17 @@ class BaseClient
     protected function _extractAlipayPublicKey($alipayCertSN)
     {
         // PHP 版本只存储一个版本支付宝公钥
-        return $this->certEnvironment->getCachedAlipayPublicKey();
+        return $this->config->alipayPublicKey;
     }
+
 
     /**
      * 是否是证书模式
-     *
-     * @return \Alipay\EasySDK\Kernel\CertEnvironment true：是；false：不是
+     * @return mixed true：是；false：不是
      */
     protected function _isCertMode()
     {
-        return $this->certEnvironment->getMerchantCertSN();
+        return $this->config->merchantCertSN;
     }
 
     /**

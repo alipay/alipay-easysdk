@@ -12,7 +12,7 @@ class ClientTest extends TestCase
 {
     public function testUpload(){
         $account = new TestAccount();
-        $app = new Factory($account->getTestAccount());
+        $app = Factory::setOptions($account->getTestAccount());
         $result = $app->base()->image()->upload("测试图片",
             "test/resources/fixture/json.txt");
         $this->assertEquals('10000',$result['code']);

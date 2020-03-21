@@ -12,7 +12,7 @@ class ClientTest extends TestCase
 {
     public function testUpload(){
         $account = new TestAccount();
-        $app = new Factory($account->getTestAccount());
+        $app = Factory::setOptions($account->getTestAccount());
         $result = $app->base()->video()->upload("测试视频",
             "test/resources/fixture/sample.mp4");
         $this->assertEquals('10000',$result['code']);
