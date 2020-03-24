@@ -29,7 +29,9 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 `AppId`、`应用的私钥`、`支付宝公钥`
 
 ## 安装依赖
-### 通过[Composer](https://getcomposer.org/)安装敬请期待
+### 通过[Composer](https://packagist.org/packages/alipaysdk/easysdk/)安装
+
+`composer require alipaysdk/easysdk:1.0.0`
 
 ### 本地手动集成依赖（适用于自己修改源码后的本地重新打包安装）
 1. 本机安装配置[Composer](https://getcomposer.org/)工具。
