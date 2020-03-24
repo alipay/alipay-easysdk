@@ -14,18 +14,16 @@ use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
-    protected $app = null;
-
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $account = new TestAccount();
-        $this->app = Factory::setOptions($account->getTestCertAccount());
+        Factory::setOptions($account->getTestCertAccount());
     }
 
     public function testCreateImageTextContent()
     {
-        $result = $this->app->marketing()->openLife()->createImageTextContent("标题",
+        $result = Factory::marketing()->openLife()->createImageTextContent("标题",
             "http://dl.django.t.taobao.com/rest/1.0/image?fileIds=hOTQ1lT1TtOjcxGflvnUXgAAACMAAQED",
             "示例", "T", "activity", "满100减10",
             "关键,热度", "13434343432,xxx@163.com");
@@ -35,7 +33,7 @@ class ClientTest extends TestCase
 
     public function testModifyImageTextContent()
     {
-        $result = $this->app->marketing()->openLife()->modifyImageTextContent(
+        $result = Factory::marketing()->openLife()->modifyImageTextContent(
             "20190510645210035577f788-d6cd-4020-9dba-1a195edb7342", "新标题",
             "http://dl.django.t.taobao.com/rest/1.0/image?fileIds=hOTQ1lT1TtOjcxGflvnUXgAAACMAAQED",
             "新示例", "T", "activity", "满100减20",
@@ -54,7 +52,7 @@ class ClientTest extends TestCase
 
     public function testSendText()
     {
-        $result = $this->app->marketing()->openLife()->sendText("测试");
+        $result = Factory::marketing()->openLife()->sendText("测试");
         if($result['code'] == '10000'){
             $this->assertEquals('10000', $result['code']);
             $this->assertEquals('Success', $result['msg']);
@@ -74,7 +72,7 @@ class ClientTest extends TestCase
         $article->title = '测试';
         $article->imageUrl = 'http://dl.django.t.taobao.com/rest/1.0/image?fileIds=hOTQ1lT1TtOjcxGflvnUXgAAACMAAQED';
         $article->url = 'https://docs.open.alipay.com/api_6/alipay.open.public.message.total.send';
-        $result = $this->app->marketing()->openLife()->sendImageText((array)$article);
+        $result = Factory::marketing()->openLife()->sendImageText((array)$article);
         if($result['code'] == '10000'){
             $this->assertEquals('10000', $result['code']);
             $this->assertEquals('Success', $result['msg']);
@@ -105,7 +103,7 @@ class ClientTest extends TestCase
         $template->templateId = "e44cd3e52ffa46b1a50afc145f55d1ea";
         $template->context = $context;
 
-        $result = $this->app->marketing()->openLife()->sendSingleMessage("2088002656718920", $template);
+        $result = Factory::marketing()->openLife()->sendSingleMessage("2088002656718920", $template);
 
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);
@@ -113,7 +111,7 @@ class ClientTest extends TestCase
 
     public function testRecallMessage()
     {
-        $result = $this->app->marketing()->openLife()->recallMessage("201905106452100327f456f6-8dd2-4a06-8b0e-ec8a3a85c46a");
+        $result = Factory::marketing()->openLife()->recallMessage("201905106452100327f456f6-8dd2-4a06-8b0e-ec8a3a85c46a");
 
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);
@@ -121,7 +119,7 @@ class ClientTest extends TestCase
 
     public function testSetIndustry()
     {
-        $result = $this->app->marketing()->openLife()->setIndustry(
+        $result = Factory::marketing()->openLife()->setIndustry(
             "10001/20102", "IT科技/IT软件与服务",
             "10001/20102", "IT科技/IT软件与服务");
 
@@ -138,7 +136,7 @@ class ClientTest extends TestCase
 
     public function testGetIndustry()
     {
-        $result = $this->app->marketing()->openLife()->getIndustry();
+        $result = Factory::marketing()->openLife()->getIndustry();
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);
         $this->assertEquals('IT科技/IT软件与服务', $result['primary_category']);
