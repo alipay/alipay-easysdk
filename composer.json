@@ -1,5 +1,5 @@
 {
-	"name":"alipay/alipay-easysdk",
+	"name":"alipay-easysdk",
 	"description":"easysdk",
 	"type":"library",
 	"version":"1.0.0",
