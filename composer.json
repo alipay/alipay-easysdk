@@ -1,5 +1,5 @@
 {
-	"name":"alipay/easysdk",
+	"name":"alipay/alipay-easysdk",
 	"description":"easysdk",
 	"type":"library",
 	"version":"1.0.0",
@@ -11,12 +11,12 @@
 	],
 	"autoload":{
 		"psr-4":{
-			"Alipay\\EasySDK\\":"src/"
+			"Alipay\\EasySDK\\":"php/src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Alipay\\EasySDK\\Test\\": "test/"
+			"Alipay\\EasySDK\\Test\\": "php/test/"
 		}
 	},
 	"license":"Apache-2.0",
