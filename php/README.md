@@ -50,20 +50,18 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 
 class Client
 {
-    protected $app = null;
-
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         //1、设置参数（全局只需设置一次）
         $account = new TestAccount();
-        $this->app = Factory::setOptions($account->getTestAccount());
+        Factory::setOptions($account->getTestAccount());
     }
 
     public function create()
     {
         //2、发起API调用（以支付能力下的统一收单交易创建接口为例）
-        $result = $this->app->payment()->common()->create("Iphone6 16G",
+        $result = Factory::payment()->common()->create("Iphone6 16G",
             microtime(), "88.88", "2088002656718920");
         //3、处理响应或异常
         if (!empty($result['code']) && $result['code'] == 10000) {

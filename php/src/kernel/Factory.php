@@ -2,7 +2,6 @@
 
 namespace Alipay\EasySDK\Kernel;
 
-use AlibabaCloud\Tea\Model;
 use Alipay\EasySDK\Base\Image\Client as imageClient;
 use Alipay\EasySDK\Base\OAuth\Client as oauthClient;
 use Alipay\EasySDK\Base\Qrcode\Client as qrcodeClient;
@@ -21,12 +20,12 @@ class Factory
 {
     public $config = null;
     private static $instance;
-    protected $base;
-    protected $marketing;
-    protected $member;
-    protected $payment;
-    protected $security;
-    protected $util;
+    protected static $base;
+    protected static $marketing;
+    protected static $member;
+    protected static $payment;
+    protected static $security;
+    protected static $util;
 
     private function __construct($config)
     {
@@ -42,13 +41,12 @@ class Factory
             $config->alipayPublicKey = $certEnvironment->getCachedAlipayPublicKey();
         }
 
-        $this->base = new Base($config);
-        $this->marketing = new Marketing($config);
-        $this->member = new Member($config);
-        $this->payment = new Payment($config);
-        $this->security = new Security($config);
-        $this->util = new Util($config);
-
+        self::$base = new Base($config);
+        self::$marketing = new Marketing($config);
+        self::$member = new Member($config);
+        self::$payment = new Payment($config);
+        self::$security = new Security($config);
+        self::$util = new Util($config);
     }
 
     public static function setOptions($config)
@@ -63,34 +61,34 @@ class Factory
     {
     }
 
-    public function base()
+    public static function base()
     {
-        return $this->base;
+        return self::$base;
     }
 
-    public function marketing()
+    public static function marketing()
     {
-        return $this->marketing;
+        return self::$marketing;
     }
 
-    public function member()
+    public static function member()
     {
-        return $this->member;
+        return self::$member;
     }
 
-    public function payment()
+    public static function payment()
     {
-        return $this->payment;
+        return self::$payment;
     }
 
-    public function security()
+    public static function security()
     {
-        return $this->security;
+        return self::$security;
     }
 
-    public function util()
+    public static function util()
     {
-        return $this->util;
+        return self::$util;
     }
 }
 

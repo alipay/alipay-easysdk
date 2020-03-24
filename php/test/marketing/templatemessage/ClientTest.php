@@ -12,8 +12,8 @@ class ClientTest extends TestCase
 {
     public function testSend(){
         $account = new TestAccount();
-        $app = Factory::setOptions($account->getTestAccount());
-        $result = $app->marketing()->templateMessage()->send("2088102122458832",
+        Factory::setOptions($account->getTestAccount());
+        $result = Factory::marketing()->templateMessage()->send("2088102122458832",
             "2017010100000000580012345678",
             "MDI4YzIxMDE2M2I5YTQzYjUxNWE4MjA4NmU1MTIyYmM=",
             "page/component/index",

@@ -13,11 +13,11 @@ class ClientTest extends TestCase
     public function testPay()
     {
         $account = new TestAccount();
-        $app = Factory::setOptions($account->getTestAccount());
-        $create = $app->payment()->common()->create("Iphone6 16G",
+        Factory::setOptions($account->getTestAccount());
+        $create =Factory::payment()->common()->create("Iphone6 16G",
             microtime(), "88.88", "2088002656718920");
 
-        $result = $app->payment()->faceToFace()->pay("Iphone6 16G", $create['out_trade_no'], "0.10",
+        $result = Factory::payment()->faceToFace()->pay("Iphone6 16G", $create['out_trade_no'], "0.10",
             "1234567890");
         $this->assertEquals('40004', $result['code']);
         $this->assertEquals('Business Failed', $result['msg']);

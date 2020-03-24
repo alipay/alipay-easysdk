@@ -11,24 +11,22 @@ use function Sodium\add;
 
 class ClientTest extends TestCase
 {
-    protected $app = null;
-
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $account = new TestAccount();
-        $this->app = Factory::setOptions($account->getTestAccount());
+        Factory::setOptions($account->getTestAccount());
     }
 
     public function testExecuteWithoutAppAuthToken()
     {
-        $result = $this->app->util()->generic()->execute("alipay.trade.create", null, $this->getBizParams(microtime()));
+        $result = Factory::util()->generic()->execute("alipay.trade.create", null, $this->getBizParams(microtime()));
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);
     }
 
     public function testExecuteWithAppAuthToken(){
-        $result = $this->app->util()->generic()->execute("alipay.trade.create", $this->getTextParams(), $this->getBizParams(microtime()));
+        $result = Factory::util()->generic()->execute("alipay.trade.create", $this->getTextParams(), $this->getBizParams(microtime()));
         $this->assertEquals('20001', $result['code']);
         $this->assertEquals('Insufficient Token Permissions', $result['msg']);
         $this->assertEquals('aop.invalid-app-auth-token', $result['sub_code']);

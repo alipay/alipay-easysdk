@@ -10,32 +10,30 @@ use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
 {
-    protected $app = null;
-
     public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $account = new TestAccount();
-        $this->app = Factory::setOptions($account->getTestAccount());
+        Factory::setOptions($account->getTestAccount());
     }
 
     public function testCreateTemplate()
     {
-        $result = $this->app->marketing()->pass()->createTemplate("1234567890", $this->getTplContent());
+        $result = Factory::marketing()->pass()->createTemplate("1234567890", $this->getTplContent());
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);
     }
 
     public function testUpdateTemplate()
     {
-        $result = $this->app->marketing()->pass()->updateTemplate("2020012014534017917956080", $this->getTplContent());
+        $result = Factory::marketing()->pass()->updateTemplate("2020012014534017917956080", $this->getTplContent());
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);
     }
 
     public function testAddInstance()
     {
-        $result = $this->app->marketing()->pass()->addInstance("2020012014534017917956080", "{}",
+        $result = Factory::marketing()->pass()->addInstance("2020012014534017917956080", "{}",
             "1", "{\"partner_id\":\"2088102114633762\",\"out_trade_no\":\"1234567\"}");
         $this->assertEquals('40004', $result['code']);
         $this->assertEquals('Business Failed', $result['msg']);
@@ -45,7 +43,7 @@ class ClientTest extends TestCase
 
     public function testUpdateInstance()
     {
-        $result = $this->app->marketing()->pass()->updateInstance("209919213",
+        $result = Factory::marketing()->pass()->updateInstance("209919213",
             "2088918273", "{}", "USED", "8612231273", "wave");
         $this->assertEquals('40004', $result['code']);
         $this->assertEquals('Business Failed', $result['msg']);
