@@ -47,14 +47,14 @@ namespace UnitTest
             {
                 Protocol = "https",
                 GatewayHost = "openapi.alipay.com",
-                AppId = "2019022663440152",
+                AppId = "<-- 请填写您的AppId，例如：2019022663440152 -->",
                 SignType = "RSA2",
 
-                AlipayPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAumX1EaLM4ddn1Pia4SxTRb62aVYxU8I2mHMqrc"
+                AlipayPublicKey = "<-- 请填写您的支付宝公钥，例如：MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAumX1EaLM4ddn1Pia4SxTRb62aVYxU8I2mHMqrc"
                        + "pQU6F01mIO/DjY7R4xUWcLi0I2oH/BK/WhckEDCFsGrT7mO+JX8K4sfaWZx1aDGs0m25wOCNjp+DCVBXotXSCurqgGI/9UrY+"
                        + "QydYDnsl4jB65M3p8VilF93MfS01omEDjUW+1MM4o3FP0khmcKsoHnYGs21btEeh0LK1gnnTDlou6Jwv3Ew36CbCNY2cYkuyP"
                        + "AW0j47XqzhWJ7awAx60fwgNBq6ZOEPJnODqH20TAdTLNxPSl4qGxamjBO+RuInBy+Bc2hFHq3pNv6hTAfktggRKkKzDlDEUwg"
-                       + "SLE7d2eL7P6rwIDAQAB",
+                       + "SLE7d2eL7P6rwIDAQAB -->",
                 MerchantPrivateKey = GetPrivateKey("2019022663440152")
             };
         }
@@ -68,12 +68,12 @@ namespace UnitTest
             {
                 Protocol = "https",
                 GatewayHost = "openapi.alipay.com",
-                AppId = "2019051064521003",
+                AppId = "<-- 请填写您的AppId，例如：2019051064521003 -->",
                 SignType = "RSA2",
 
-                AlipayCertPath = GetSolutionBasePath() + "/UnitTest/Fixture/alipayCertPublicKey_RSA2.crt",
-                AlipayRootCertPath = GetSolutionBasePath() + "/UnitTest/Fixture/alipayRootCert.crt",
-                MerchantCertPath = GetSolutionBasePath() + "/UnitTest/Fixture/appCertPublicKey_2019051064521003.crt",
+                AlipayCertPath = "<-- 请填写您的支付宝公钥证书文件路径，例如：GetSolutionBasePath() + \"/UnitTest/Fixture/alipayCertPublicKey_RSA2.crt\" -->",
+                AlipayRootCertPath = "<-- 请填写您的支付宝根证书文件路径，例如：GetSolutionBasePath() + \"/UnitTest/Fixture/alipayRootCert.crt\" -->",
+                MerchantCertPath = "<-- 请填写您的应用公钥证书文件路径，例如：GetSolutionBasePath() + \"/UnitTest/Fixture/appCertPublicKey_2019051064521003.crt\" -->",
                 MerchantPrivateKey = GetPrivateKey("2019051064521003")
             };
         }
