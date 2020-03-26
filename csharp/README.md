@@ -23,7 +23,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 
 * 加签模式为公钥证书模式时（推荐）
 
-`AppID`、`应用的私钥`、`应用的公钥证书文件`、`支付宝公钥证书文件`、`支付宝根证书文件`
+`AppId`、`应用的私钥`、`应用公钥证书文件`、`支付宝公钥证书文件`、`支付宝根证书文件`
 
 * 加签模式为公钥模式时
 
@@ -65,7 +65,7 @@ namespace SDKDemo
             try
             {
                 // 2. 发起API调用（以支付能力下的统一收单交易创建接口为例）
-                AlipayTradeCreateResponse response = Factory.Payment().Create("Apple iPhone11 128G",
+                AlipayTradeCreateResponse response = Factory.Payment.Common().Create("Apple iPhone11 128G",
                        "2234567890", "5799.00", "2088002656718920");
                 // 3. 处理响应或异常
                 if ("10000".Equals(response.Code))
@@ -92,19 +92,17 @@ namespace SDKDemo
                 GatewayHost = "openapi.alipay.com",
                 SignType = "RSA2",
 
-                // 请更换为您的AppId
-                AppId = "2019091767145019",
-                // 请更换为您的应用公钥证书文件路径
-                MerchantCertPath = "/home/foo/appCertPublicKey_2019051064521003.crt",
-                // 请更换为您的支付宝公钥证书文件路径
-                AlipayCertPath = "/home/foo/alipayCertPublicKey_RSA2.crt",
-                // 请更换为您的支付宝根证书文件路径
-                AlipayRootCertPath = "/home/foo/alipayRootCert.crt",
-                // 请更换为您的PKCS1格式的应用私钥
-                MerchantPrivateKey = "MIIEvQIBADANB ... ...",
+                AppId = "<-- 请填写您的AppId，例如：2019091767145019 -->",
+                
+                // 为避免私钥随源码泄露，推荐从文件中读取私钥字符串而不是写入源码中
+                MerchantPrivateKey = "<-- 请填写您的应用私钥，例如：MIIEvQIBADANB ... ... -->",
+                
+                MerchantCertPath = "<-- 请填写您的应用公钥证书文件路径，例如：/foo/appCertPublicKey_2019051064521003.crt -->",
+                AlipayCertPath = "<-- 请填写您的支付宝公钥证书文件路径，例如：/foo/alipayCertPublicKey_RSA2.crt -->",
+                AlipayRootCertPath = "<-- 请填写您的支付宝根证书文件路径，例如：/foo/alipayRootCert.crt -->",
 
                 // 如果采用非证书模式，则无需赋值上面的三个证书路径，改为赋值如下的支付宝公钥字符串即可
-                // AlipayPublicKey = "MIIBIjANBg..."
+                // AlipayPublicKey = "<-- 请填写您的支付宝公钥，例如：MIIBIjANBg... -->"
             };
         }
     }
@@ -114,11 +112,15 @@ namespace SDKDemo
 ## API组织规范
 在Alipay Easy SDK中，API的引用路径与能力地图的组织层次一致，遵循如下规则
 
-> Factory.能力名称.[场景名称.]接口方法名称( ... )
+> Factory.能力名称.场景名称().接口方法名称( ... )
 
-比如，如果您想要使用[能力地图](https://opendocs.alipay.com/mini/00am3f)中`营销能力`下的`模板消息`场景中的`小程序发送模板消息`，只需调用`Factory.Marketing.TemplateMessage().Send( ... );`API即可。
+比如，如果您想要使用[能力地图](https://opendocs.alipay.com/mini/00am3f)中`营销能力`下的`模板消息`场景中的`小程序发送模板消息`，只需按如下形式编写调用代码即可（不同编程语言的连接符号可能不同）。
 
-接口方法名称通常是对其依赖的OpenAPI功能的一个最简概况，接口方法的出入参数通常与OpenAPI中同名参数含义一致，参照OpenAPI相关参数的使用说明即可。Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编程直觉。
+`Factory.Marketing.TemplateMessage().send( ... )`
+
+其中，接口方法名称通常是对其依赖的OpenAPI功能的一个最简概况，接口方法的出入参与OpenAPI中同名参数含义一致，可参照OpenAPI相关参数的使用说明。
+
+Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编程直觉。
 
 ## 已支持的API列表
 | 能力类别      | 场景类别            | 接口方法名称                 | 调用的OpenAPI名称                                              |

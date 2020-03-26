@@ -43,14 +43,14 @@ public class TestAccount {
             BaseClient.Config config = new BaseClient.Config();
             config.protocol = "https";
             config.gatewayHost = "openapi.alipay.com";
-            config.appId = "2019022663440152";
+            config.appId = "<-- 请填写您的AppId，例如：2019022663440152 -->";
             config.signType = "RSA2";
 
-            config.alipayPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAumX1EaLM4ddn1Pia4SxTRb62aVYxU8I2mHMqrc"
+            config.alipayPublicKey = "<-- 请填写您的支付宝公钥，例如：MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAumX1EaLM4ddn1Pia4SxTRb62aVYxU8I2mHMqrc"
                     + "pQU6F01mIO/DjY7R4xUWcLi0I2oH/BK/WhckEDCFsGrT7mO+JX8K4sfaWZx1aDGs0m25wOCNjp+DCVBXotXSCurqgGI/9UrY+"
                     + "QydYDnsl4jB65M3p8VilF93MfS01omEDjUW+1MM4o3FP0khmcKsoHnYGs21btEeh0LK1gnnTDlou6Jwv3Ew36CbCNY2cYkuyP"
                     + "AW0j47XqzhWJ7awAx60fwgNBq6ZOEPJnODqH20TAdTLNxPSl4qGxamjBO+RuInBy+Bc2hFHq3pNv6hTAfktggRKkKzDlDEUwg"
-                    + "SLE7d2eL7P6rwIDAQAB";
+                    + "SLE7d2eL7P6rwIDAQAB --->";
             config.merchantPrivateKey = getPrivateKey(config.appId);
             return config;
         }
@@ -66,12 +66,12 @@ public class TestAccount {
             BaseClient.Config config = new BaseClient.Config();
             config.protocol = "https";
             config.gatewayHost = "openapi.alipay.com";
-            config.appId = "2019051064521003";
+            config.appId = "<-- 请填写您的AppId，例如：2019051064521003 -->";
             config.signType = "RSA2";
 
-            config.alipayCertPath = "src/test/resources/fixture/alipayCertPublicKey_RSA2.crt";
-            config.alipayRootCertPath = "src/test/resources/fixture/alipayRootCert.crt";
-            config.merchantCertPath = "src/test/resources/fixture/appCertPublicKey_2019051064521003.crt";
+            config.alipayCertPath = "<-- 请填写您的支付宝公钥证书文件路径，例如：/src/test/resources/fixture/alipayCertPublicKey_RSA2.crt -->";
+            config.alipayRootCertPath = "<-- 请填写您的支付宝根证书文件路径，例如：/src/test/resources/fixture/alipayRootCert.crt -->";
+            config.merchantCertPath = "<-- 请填写您的应用公钥证书文件路径，例如：/src/test/resources/fixture/appCertPublicKey_2019051064521003.crt -->";
             config.merchantPrivateKey = getPrivateKey(config.appId);
             return config;
         }
