@@ -1,3 +1,4 @@
+[![Latest Stable Version](https://poser.pugx.org/alipaysdk/easysdk/v/stable)](https://packagist.org/packages/alipaysdk/easysdk)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk?ref=badge_shield)
 
 欢迎使用 Alipay **Easy** SDK for PHP 。
@@ -22,14 +23,14 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 
 * 加签模式为公钥证书模式时（推荐）
 
-`AppID`、`应用的私钥`、`应用的公钥证书文件`、`支付宝公钥证书文件`、`支付宝根证书文件`
+`AppId`、`应用的私钥`、`应用公钥证书文件`、`支付宝公钥证书文件`、`支付宝根证书文件`
 
 * 加签模式为公钥模式时
 
 `AppId`、`应用的私钥`、`支付宝公钥`
 
 ## 安装依赖
-### 通过[Composer](https://packagist.org/packages/alipaysdk/easysdk/)安装
+### 通过[Composer](https://packagist.org/packages/alipaysdk/easysdk/)在线安装依赖（推荐）
 
 `composer require alipaysdk/easysdk:1.0.0`
 
@@ -37,8 +38,6 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 1. 本机安装配置[Composer](https://getcomposer.org/)工具。
 2. 在本`README.md`所在目录下，执行`composer install`，下载SDK依赖。
 3. 依赖文件会下载到`vendor`目录下。
-
-
 
 ## 快速使用
 以下这段代码示例向您展示了使用Alipay Easy SDK for PHP调用一个API的3个主要步骤：
@@ -56,11 +55,11 @@ class Client
     {
         parent::__construct($name, $data, $dataName);
         //1、设置参数（全局只需设置一次）
-        $account = new TestAccount();
+        $account = new Account();
         Factory::setOptions($account->getTestAccount());
     }
 
-    public function create()
+    public function handle()
     {
         //2、发起API调用（以支付能力下的统一收单交易创建接口为例）
         $result = Factory::payment()->common()->create("Iphone6 16G",
@@ -77,25 +76,30 @@ class Client
 
 <?php
 
-class TestAccount
+class Account
 {
-    public function getTestCertAccount()
+    public function getCertAccount()
     {
         $options = new Config();
         $options->protocol = 'https';
         $options->gatewayHost = 'openapi.alipay.com';
-        $options->appId = '<-- 请填写您的appId，例如：2019051064521003-->';
         $options->signType = 'RSA2';
-        $options->alipayCertPath = '<-- 请填写您的支付宝公钥证书文件路径，例如：dirname(__FILE__) . "/resources/fixture/alipayCertPublicKey_RSA2.crt"-->';
-        $options->alipayRootCertPath = '<-- 请填写您的支付宝根证书文件路径，例如：dirname(__FILE__) . "/resources/fixture/alipayRootCert.crt"-->';
-        $options->merchantCertPath = '<-- 请填写您的应用公钥证书文件路径，例如：dirname(__FILE__) . "/resources/fixture/appCertPublicKey_2019051064521003.crt"-->';
+        
+        $options->appId = '<-- 请填写您的appId，例如：2019051064521003 -->';
+        
+        // 为避免私钥随源码泄露，推荐从文件中读取私钥字符串而不是写入源码中
         $options->merchantPrivateKey = $this->getPrivateKey($options->appId);
+        
+        $options->alipayCertPath = '<-- 请填写您的支付宝公钥证书文件路径，例如：/foo/alipayCertPublicKey_RSA2.crt -->';
+        $options->alipayRootCertPath = '<-- 请填写您的支付宝根证书文件路径，例如：/foo/alipayRootCert.crt" -->';
+        $options->merchantCertPath = '<-- 请填写您的应用公钥证书文件路径，例如：/foo/appCertPublicKey_2019051064521003.crt -->';
+        
         return $options;
     }
 
     private function getPrivateKey($appId)
     {
-        $filePath = dirname(__FILE__) . '/resources/fixture/privateKey.json';
+        $filePath = '/foo/privateKey.json';
         $stream = fopen($filePath, 'r');
         fwrite($stream, '$filePath');
         $result = json_decode(stream_get_contents($stream));
@@ -107,12 +111,15 @@ class TestAccount
 ## API组织规范
 在Alipay Easy SDK中，API的引用路径与能力地图的组织层次一致，遵循如下规范
 
-> Factory.能力名称.[场景名称.]接口方法名称( ... )
+> Factory::能力名称()->场景名称()->接口方法名称( ... )
 
-比如，如果您想要使用[能力地图](https://opendocs.alipay.com/mini/00am3f)中`营销能力`下的`模板消息`场景中的`小程序发送模板消息`，只需调用`Factory.Marketing.TemplateMessage().send( ... )`API即可。
+比如，如果您想要使用[能力地图](https://opendocs.alipay.com/mini/00am3f)中`营销能力`下的`模板消息`场景中的`小程序发送模板消息`，只需按如下形式编写调用代码即可（不同编程语言的连接符号可能不同）。
 
-接口方法名称通常是对其依赖的OpenAPI功能的一个最简概况，接口方法的出入参数通常与OpenAPI中同名参数含义一致，参照OpenAPI相关参数的使用说明即可。Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编程直觉。
+`Factory::marketing()->templateMessage()->send( ... )`
 
+其中，接口方法名称通常是对其依赖的OpenAPI功能的一个最简概况，接口方法的出入参与OpenAPI中同名参数含义一致，可参照OpenAPI相关参数的使用说明。
+
+Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编程直觉。
 ## 已支持的API列表
 | 能力类别      | 场景类别            | 接口方法名称                 | 调用的OpenAPI名称                                              |
 |-----------|-----------------|------------------------|-----------------------------------------------------------|
