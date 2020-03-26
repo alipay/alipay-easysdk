@@ -90,22 +90,18 @@ public class Main {
         config.gatewayHost = "openapi.alipay.com";
         config.signType = "RSA2";
 
-        // 请更换为您的AppId
-        config.appId = "2019091767145019";
+        config.appId = "<-- 请填写您的AppId，例如：2019091767145019 -->";
         
-        // 请更换为您的PKCS8格式的应用私钥
-        config.merchantPrivateKey = "MIIEvQIBADANB ... ...";
+        // 为避免私钥随源码泄露，推荐从文件中读取私钥字符串而不是写入源码中
+        config.merchantPrivateKey = "<-- 请填写您的应用私钥，例如：MIIEvQIBADANB ... ... -->";
         
         //注：证书文件路径支持设置为文件系统中的路径或CLASS_PATH中的路径，优先从文件系统中加载，加载失败后会继续尝试从CLASS_PATH中加载
-        // 请更换为您的应用公钥证书文件路径
-        config.merchantCertPath = "/home/foo/appCertPublicKey_2019051064521003.crt";
-        // 请更换为您的支付宝公钥证书文件路径
-        config.alipayCertPath = "/home/foo/alipayCertPublicKey_RSA2.crt";
-        // 请更换为您的支付宝根证书文件路径
-        config.alipayRootCertPath = "/home/foo/alipayRootCert.crt";
+        config.merchantCertPath = "<-- 请填写您的应用公钥证书文件路径，例如：/foo/appCertPublicKey_2019051064521003.crt -->";
+        config.alipayCertPath = "<-- 请填写您的支付宝公钥证书文件路径，例如：/foo/alipayCertPublicKey_RSA2.crt -->";
+        config.alipayRootCertPath = "<-- 请填写您的支付宝根证书文件路径，例如：/foo/alipayRootCert.crt -->";
 
         //注：如果采用非证书模式，则无需赋值上面的三个证书路径，改为赋值如下的支付宝公钥字符串即可
-        // config.alipayPublicKey = "MIIBIjANBg...";
+        // config.alipayPublicKey = "<-- 请填写您的支付宝公钥，例如：MIIBIjANBg... -->";
         
         return config;
     }

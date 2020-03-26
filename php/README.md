@@ -55,11 +55,11 @@ class Client
     {
         parent::__construct($name, $data, $dataName);
         //1、设置参数（全局只需设置一次）
-        $account = new TestAccount();
+        $account = new Account();
         Factory::setOptions($account->getTestAccount());
     }
 
-    public function create()
+    public function handle()
     {
         //2、发起API调用（以支付能力下的统一收单交易创建接口为例）
         $result = Factory::payment()->common()->create("Iphone6 16G",
@@ -76,25 +76,30 @@ class Client
 
 <?php
 
-class TestAccount
+class Account
 {
-    public function getTestCertAccount()
+    public function getCertAccount()
     {
         $options = new Config();
         $options->protocol = 'https';
         $options->gatewayHost = 'openapi.alipay.com';
-        $options->appId = '<-- 请填写您的appId，例如：2019051064521003-->';
         $options->signType = 'RSA2';
-        $options->alipayCertPath = '<-- 请填写您的支付宝公钥证书文件路径，例如：dirname(__FILE__) . "/resources/fixture/alipayCertPublicKey_RSA2.crt"-->';
-        $options->alipayRootCertPath = '<-- 请填写您的支付宝根证书文件路径，例如：dirname(__FILE__) . "/resources/fixture/alipayRootCert.crt"-->';
-        $options->merchantCertPath = '<-- 请填写您的应用公钥证书文件路径，例如：dirname(__FILE__) . "/resources/fixture/appCertPublicKey_2019051064521003.crt"-->';
+        
+        $options->appId = '<-- 请填写您的appId，例如：2019051064521003 -->';
+        
+        // 为避免私钥随源码泄露，推荐从文件中读取私钥字符串而不是写入源码中
         $options->merchantPrivateKey = $this->getPrivateKey($options->appId);
+        
+        $options->alipayCertPath = '<-- 请填写您的支付宝公钥证书文件路径，例如：/foo/alipayCertPublicKey_RSA2.crt -->';
+        $options->alipayRootCertPath = '<-- 请填写您的支付宝根证书文件路径，例如：/foo/alipayRootCert.crt" -->';
+        $options->merchantCertPath = '<-- 请填写您的应用公钥证书文件路径，例如：/foo/appCertPublicKey_2019051064521003.crt -->';
+        
         return $options;
     }
 
     private function getPrivateKey($appId)
     {
-        $filePath = dirname(__FILE__) . '/resources/fixture/privateKey.json';
+        $filePath = '/foo/privateKey.json';
         $stream = fopen($filePath, 'r');
         fwrite($stream, '$filePath');
         $result = json_decode(stream_get_contents($stream));

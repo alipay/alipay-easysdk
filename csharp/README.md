@@ -92,19 +92,17 @@ namespace SDKDemo
                 GatewayHost = "openapi.alipay.com",
                 SignType = "RSA2",
 
-                // 请更换为您的AppId
-                AppId = "2019091767145019",
-                // 请更换为您的应用公钥证书文件路径
-                MerchantCertPath = "/home/foo/appCertPublicKey_2019051064521003.crt",
-                // 请更换为您的支付宝公钥证书文件路径
-                AlipayCertPath = "/home/foo/alipayCertPublicKey_RSA2.crt",
-                // 请更换为您的支付宝根证书文件路径
-                AlipayRootCertPath = "/home/foo/alipayRootCert.crt",
-                // 请更换为您的PKCS1格式的应用私钥
-                MerchantPrivateKey = "MIIEvQIBADANB ... ...",
+                AppId = "<-- 请填写您的AppId，例如：2019091767145019 -->",
+                
+                // 为避免私钥随源码泄露，推荐从文件中读取私钥字符串而不是写入源码中
+                MerchantPrivateKey = "<-- 请填写您的应用私钥，例如：MIIEvQIBADANB ... ... -->",
+                
+                MerchantCertPath = "<-- 请填写您的应用公钥证书文件路径，例如：/foo/appCertPublicKey_2019051064521003.crt -->",
+                AlipayCertPath = "<-- 请填写您的支付宝公钥证书文件路径，例如：/foo/alipayCertPublicKey_RSA2.crt -->",
+                AlipayRootCertPath = "<-- 请填写您的支付宝根证书文件路径，例如：/foo/alipayRootCert.crt -->",
 
                 // 如果采用非证书模式，则无需赋值上面的三个证书路径，改为赋值如下的支付宝公钥字符串即可
-                // AlipayPublicKey = "MIIBIjANBg..."
+                // AlipayPublicKey = "<-- 请填写您的支付宝公钥，例如：MIIBIjANBg... -->"
             };
         }
     }
