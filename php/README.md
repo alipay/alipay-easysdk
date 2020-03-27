@@ -49,63 +49,49 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 ```php
 <?php
 
-class Client
-{
-    public function __construct($name = null, array $data = [], $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-        //1、设置参数（全局只需设置一次）
-        $account = new Account();
-        Factory::setOptions($account->getTestAccount());
-    }
+require 'vendor/autoload.php';
+use Alipay\EasySDK\Kernel\Factory;
+use Alipay\EasySDK\Kernel\Config;
 
-    public function handle()
-    {
-        //2、发起API调用（以支付能力下的统一收单交易创建接口为例）
-        $result = Factory::payment()->common()->create("Iphone6 16G",
-            microtime(), "88.88", "2088002656718920");
-        //3、处理响应或异常
-        if (!empty($result['code']) && $result['code'] == 10000) {
-            echo "成功";
-        } else {
-            echo "失败";
-        }
-    }
+//1. 设置参数（全局只需设置一次）
+Factory::setOptions(getOptions());
+
+try {
+	//2. 发起API调用（以支付能力下的统一收单交易创建接口为例）
+	$result = Factory::payment()->common()->create("iPhone6 16G", "20200326235526001", "88.88", "2088002656718920");
+	
+	//3. 处理响应或异常
+	if (!empty($result['code']) && $result['code'] == 10000) {
+		echo "调用成功". PHP_EOL;
+	} else {
+		echo "调用失败，原因：". $result['msg']."，".$result['sub_msg'].PHP_EOL;
+	}
+} catch (Exception $e) {
+	echo "调用失败，". $e->getMessage(). PHP_EOL;;
 }
 
-
-<?php
-
-class Account
+function getOptions()
 {
-    public function getCertAccount()
-    {
-        $options = new Config();
-        $options->protocol = 'https';
-        $options->gatewayHost = 'openapi.alipay.com';
-        $options->signType = 'RSA2';
-        
-        $options->appId = '<-- 请填写您的appId，例如：2019051064521003 -->';
-        
-        // 为避免私钥随源码泄露，推荐从文件中读取私钥字符串而不是写入源码中
-        $options->merchantPrivateKey = $this->getPrivateKey($options->appId);
-        
-        $options->alipayCertPath = '<-- 请填写您的支付宝公钥证书文件路径，例如：/foo/alipayCertPublicKey_RSA2.crt -->';
-        $options->alipayRootCertPath = '<-- 请填写您的支付宝根证书文件路径，例如：/foo/alipayRootCert.crt" -->';
-        $options->merchantCertPath = '<-- 请填写您的应用公钥证书文件路径，例如：/foo/appCertPublicKey_2019051064521003.crt -->';
-        
-        return $options;
-    }
-
-    private function getPrivateKey($appId)
-    {
-        $filePath = '/foo/privateKey.json';
-        $stream = fopen($filePath, 'r');
-        fwrite($stream, '$filePath');
-        $result = json_decode(stream_get_contents($stream));
-        return $result->$appId;
-    }
+    $options = new Config();
+    $options->protocol = 'https';
+    $options->gatewayHost = 'openapi.alipay.com';
+    $options->signType = 'RSA2';
+    
+    $options->appId = '<-- 请填写您的AppId，例如：2019022663440152 -->';
+    
+    // 为避免私钥随源码泄露，推荐从文件中读取私钥字符串而不是写入源码中
+    $options->merchantPrivateKey = '<-- 请填写您的应用私钥，例如：MIIEvQIBADANB ... ... -->';
+    
+    $options->alipayCertPath = '<-- 请填写您的支付宝公钥证书文件路径，例如：/foo/alipayCertPublicKey_RSA2.crt -->';
+    $options->alipayRootCertPath = '<-- 请填写您的支付宝根证书文件路径，例如：/foo/alipayRootCert.crt" -->';
+    $options->merchantCertPath = '<-- 请填写您的应用公钥证书文件路径，例如：/foo/appCertPublicKey_2019051064521003.crt -->';
+    
+    //注：如果采用非证书模式，则无需赋值上面的三个证书路径，改为赋值如下的支付宝公钥字符串即可
+    // $options->alipayPublicKey = '<-- 请填写您的支付宝公钥，例如：MIIBIjANBg... -->';
+    
+    return $options;
 }
+
 ```
 
 ## API组织规范
