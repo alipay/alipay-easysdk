@@ -41,14 +41,14 @@ public class ClientTest {
 
     @Test
     public void testQuery() throws Exception {
-        AlipayTradeQueryResponse response = Factory.Payment.Common().query("6f149ddb-ab8c-4546-81fb-5880b4aaa318");
+        AlipayTradeQueryResponse response = Factory.Payment.Common().query("1234567890");
 
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
         assertThat(response.subMsg, is(nullValue()));
         assertThat(response.httpBody, not(nullValue()));
-        assertThat(response.outTradeNo, is("6f149ddb-ab8c-4546-81fb-5880b4aaa318"));
+        assertThat(response.outTradeNo, is("1234567890"));
     }
 
     @Test
