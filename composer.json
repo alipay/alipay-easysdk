@@ -42,7 +42,7 @@
 		"mtdowling/jmespath.php": "^2.4",
 		"adbario/php-dot-notation": "^2.2",
 		"alibabacloud/tea": "^3.1",
-		"alibabacloud/tea-fileform": "^0.3.2",
+		"alibabacloud/tea-fileform": "^3.2",
 		"phpunit/phpunit": "^7.5"
     },
 	"repositories":{
