@@ -57,17 +57,17 @@ use Alipay\EasySDK\Kernel\Config;
 Factory::setOptions(getOptions());
 
 try {
-	//2. 发起API调用（以支付能力下的统一收单交易创建接口为例）
-	$result = Factory::payment()->common()->create("iPhone6 16G", "20200326235526001", "88.88", "2088002656718920");
+    //2. 发起API调用（以支付能力下的统一收单交易创建接口为例）
+    $result = Factory::payment()->common()->create("iPhone6 16G", "20200326235526001", "88.88", "2088002656718920");
 	
-	//3. 处理响应或异常
-	if (!empty($result['code']) && $result['code'] == 10000) {
-		echo "调用成功". PHP_EOL;
-	} else {
-		echo "调用失败，原因：". $result['msg']."，".$result['sub_msg'].PHP_EOL;
-	}
+    //3. 处理响应或异常
+    if (!empty($result['code']) && $result['code'] == 10000) {
+        echo "调用成功". PHP_EOL;
+    } else {
+        echo "调用失败，原因：". $result['msg']."，".$result['sub_msg'].PHP_EOL;
+    }
 } catch (Exception $e) {
-	echo "调用失败，". $e->getMessage(). PHP_EOL;;
+    echo "调用失败，". $e->getMessage(). PHP_EOL;;
 }
 
 function getOptions()
