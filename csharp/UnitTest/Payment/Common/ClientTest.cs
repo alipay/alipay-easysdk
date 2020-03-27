@@ -32,14 +32,14 @@ namespace UnitTest.Payment.Common
         [Test]
         public void TestQuery()
         {
-            AlipayTradeQueryResponse response = Factory.Payment.Common().Query("1234567890");
+            AlipayTradeQueryResponse response = Factory.Payment.Common().Query("6f149ddb-ab8c-4546-81fb-5880b4aaa318");
 
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.Null(response.SubCode);
             Assert.Null(response.SubMsg);
             Assert.NotNull(response.HttpBody);
-            Assert.AreEqual(response.OutTradeNo, "1234567890");
+            Assert.AreEqual(response.OutTradeNo, "6f149ddb-ab8c-4546-81fb-5880b4aaa318");
         }
 
         [Test]
