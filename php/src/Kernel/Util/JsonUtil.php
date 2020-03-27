@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Alipay\EasySDK\kernel\util;
+namespace Alipay\EasySDK\Kernel\Util;
 
 
 use AlibabaCloud\Tea\Model;

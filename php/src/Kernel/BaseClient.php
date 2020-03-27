@@ -4,7 +4,7 @@ namespace Alipay\EasySDK\Kernel;
 
 use AlibabaCloud\Tea\FileForm\FileForm;
 use AlibabaCloud\Tea\FileForm\FileForm\FileField;
-use Alipay\EasySDK\kernel\util\JsonUtil;
+use Alipay\EasySDK\Kernel\Util\JsonUtil;
 use Alipay\EasySDK\Kernel\Util\SignContentExtractor;
 use Alipay\EasySDK\Kernel\Util\Signer;
 use GuzzleHttp\Psr7\Stream;
