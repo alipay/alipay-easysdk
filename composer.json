@@ -2,7 +2,7 @@
 	"name":"alipaysdk/easysdk",
 	"description":"easysdk",
 	"type":"library",
-	"version":"1.0.0",
+	"version":"1.1.0",
 	"authors":[
 		{
 			"name":"junying.wjy",
@@ -42,7 +42,7 @@
 		"mtdowling/jmespath.php": "^2.4",
 		"adbario/php-dot-notation": "^2.2",
 		"alibabacloud/tea": "^3.1",
-		"alibabacloud/tea-fileform": "^0.2.0",
+		"alibabacloud/tea-fileform": "^3.2",
 		"phpunit/phpunit": "^7.5"
     },
 	"repositories":{

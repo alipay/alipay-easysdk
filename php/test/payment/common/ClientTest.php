@@ -28,7 +28,7 @@ class ClientTest extends TestCase
 
     public function testQuery()
     {
-        $result = Factory::payment()->common()->query('1234567890');
+        $result = Factory::payment()->common()->query('6f149ddb-ab8c-4546-81fb-5880b4aaa318');
         $this->assertEquals('10000', $result['code']);
         $this->assertEquals('Success', $result['msg']);
     }
