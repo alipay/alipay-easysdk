@@ -14,7 +14,7 @@ class ClientTest extends TestCase
         $account = new TestAccount();
         Factory::setOptions($account->getTestAccount());
         $result = Factory::base()->video()->upload("测试视频",
-            "/junying/code/sdk/alipay-easysdk/php/test/resources/fixture/sample.mp4");
+            "test/resources/fixture/sample.mp4");
         $this->assertEquals('10000',$result['code']);
         $this->assertEquals('Success',$result['msg']);
     }
