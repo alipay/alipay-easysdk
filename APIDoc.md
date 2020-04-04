@@ -447,7 +447,7 @@ create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string
 | subject | string | 是  |  订单标题  |
 | outTradeNo | string | 是  | 商户订单号，64个字符以内，可包含字母、数字、下划线，需保证在商户端不重复  |
 | totalAmount | string | 是  | 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
-| buyerId | string | 否  | 买家的支付宝用户ID，如果为空，会从传入的码值信息中获取买家ID  |
+| buyerId | string | 是 | 买家的支付宝用户ID，如果为空，会从传入的码值信息中获取买家ID  |
 
 * 出参说明
 
@@ -529,7 +529,7 @@ create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string
 | subject | string | 是  |  订单标题  |
 | outTradeNo | string | 是  | 商户订单号，64个字符以内，可包含字母、数字、下划线，需保证在商户端不重复  |
 | totalAmount | string | 是  | 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
-| buyerId | string | 否  | 买家的支付宝用户ID，如果为空，会从传入的码值信息中获取买家ID  |
+| buyerId | string | 是 | 买家的支付宝用户ID，如果为空，会从传入的码值信息中获取买家ID  |
 | extendParams | HuabeiConfig | 是  |  花呗交易扩展参数  |
 
 HuabeiConfig对象说明
