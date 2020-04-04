@@ -559,7 +559,7 @@ pay(subject: string, outTradeNo: string, totalAmount: string, authCode: string)
 | subject | string | 是  |  订单标题  |
 | outTradeNo | string | 是  |  交易创建时传入的商户订单号  |
 | totalAmount | string | 是  |  订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
-| authCode | string | 是  |  支付授权码，25~30开头的长度为16~24位的数字，实际字符串长度以开发者获取的付款码长度为准  |
+| authCode | string | 是  |  支付授权码，即买家的付款码数字  |
 
 * 出参说明
 
