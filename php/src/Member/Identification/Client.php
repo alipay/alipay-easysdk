@@ -48,7 +48,7 @@ class Client extends BaseClient{
 
     public function certify($certifyId){
         $systemParams = [
-            "method" => "alipay.user.certify.open.initialize",
+            "method" => "alipay.user.certify.open.certify",
             "app_id" => $this->_getConfig("appId"),
             "timestamp" => $this->_getTimestamp(),
             "format" => "json",
