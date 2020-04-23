@@ -169,7 +169,7 @@ class BaseClient
                 $sortedMap = $textParams;
             }
         }
-        if ($this->getConfig(AlipayConstants::NOTIFY_URL_CONFIG_KEY) != null && !$sortedMap[AlipayConstants::NOTIFY_URL_FIELD]) {
+        if ($this->getConfig(AlipayConstants::NOTIFY_URL_CONFIG_KEY) != null) {
             $sortedMap[AlipayConstants::NOTIFY_URL_FIELD] = $this->getConfig(AlipayConstants::NOTIFY_URL_CONFIG_KEY);
         }
         return $sortedMap;
