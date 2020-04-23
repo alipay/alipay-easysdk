@@ -8,8 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="nunit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1"><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+<PrivateAssets>all</PrivateAssets>
+</PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
@@ -33,6 +35,10 @@
     <Folder Include="Payment\FaceToFace\" />
     <Folder Include="Util\" />
     <Folder Include="Util\Generic\" />
+    <Folder Include="Payment\Wap\" />
+    <Folder Include="Payment\Page\" />
+    <Folder Include="Payment\App\" />
+    <Folder Include="Util\AES\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Payment\FaceToFace\ClientTest %28副本%29.cs" />

@@ -22,6 +22,7 @@ public final class AlipayConstants {
     public static final String MERCHANT_CERT_PATH_CONFIG_KEY    = "merchantCertPath";
     public static final String ALIPAY_ROOT_CERT_PATH_CONFIG_KEY = "alipayRootCertPath";
     public static final String SIGN_TYPE_CONFIG_KEY             = "signType";
+    public static final String NOTIFY_URL_CONFIG_KEY            = "notifyUrl";
 
     /**
      * 与网关HTTP交互中涉及到的字段值
@@ -29,11 +30,13 @@ public final class AlipayConstants {
     public static final String BIZ_CONTENT_FIELD    = "biz_content";
     public static final String ALIPAY_CERT_SN_FIELD = "alipay_cert_sn";
     public static final String SIGN_FIELD           = "sign";
+    public static final String SIGN_TYPE_FIELD      = "sign_type";
     public static final String BODY_FIELD           = "http_body";
+    public static final String NOTIFY_URL_FIELD     = "notify_url";
     public static final String METHOD_FIELD         = "method";
     public static final String RESPONSE_SUFFIX      = "_response";
     public static final String ERROR_RESPONSE       = "error_response";
-    public static final String SDK_VERSION          = "alipay-easysdk-java-1.1.0";
+    public static final String SDK_VERSION          = "alipay-easysdk-java-1.2.0";
 
     /**
      * 默认字符集编码，EasySDK统一固定使用UTF-8编码，无需用户感知编码，用户面对的总是String而不是bytes

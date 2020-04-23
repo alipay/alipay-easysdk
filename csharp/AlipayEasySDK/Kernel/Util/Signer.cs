@@ -2,6 +2,7 @@
 using System.Text;
 using System.Security.Cryptography;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Alipay.EasySDK.Kernel.Util
 {
@@ -62,6 +63,42 @@ namespace Alipay.EasySDK.Kernel.Util
                 throw new Exception(errorMessage, e);
             }
 
+        }
+
+        /// <summary>
+        /// 对参数集合进行验签
+        /// </summary>
+        /// <param name="parameters">参数集合</param>
+        /// <param name="publicKeyPem">支付宝公钥</param>
+        /// <returns>true：验证成功；false：验证失败</returns>
+        public bool VerifyParams(Dictionary<string, string> parameters, string publicKeyPem)
+        {
+            string sign = parameters[AlipayConstants.SIGN_FIELD];
+            parameters.Remove(AlipayConstants.SIGN_FIELD);
+            parameters.Remove(AlipayConstants.SIGN_TYPE_FIELD);
+
+            string content = GetSignContent(parameters);
+
+            return Verify(content, sign, publicKeyPem);
+        }
+
+        private static string GetSignContent(IDictionary<string, string> parameters)
+        {
+            // 把字典按Key的字母顺序排序
+            IDictionary<string, string> sortedParams = new SortedDictionary<string, string>(parameters, StringComparer.Ordinal);
+            IEnumerator<KeyValuePair<string, string>> iterator = sortedParams.GetEnumerator();
+
+            // 把所有参数名和参数值串在一起
+            StringBuilder query = new StringBuilder("");
+            while (iterator.MoveNext())
+            {
+                string key = iterator.Current.Key;
+                string value = iterator.Current.Value;
+                query.Append(key).Append("=").Append(value).Append("&");
+            }
+            string content = query.ToString().Substring(0, query.Length - 1);
+
+            return content;
         }
 
         private RSAParameters ConvertFromPemPublicKey(string pemPublickKey)

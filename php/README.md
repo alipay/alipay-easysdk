@@ -88,7 +88,15 @@ function getOptions()
     
     //注：如果采用非证书模式，则无需赋值上面的三个证书路径，改为赋值如下的支付宝公钥字符串即可
     // $options->alipayPublicKey = '<-- 请填写您的支付宝公钥，例如：MIIBIjANBg... -->';
+
+    //可设置异步通知接收服务地址（可选）
+    $options->notifyUrl = "<-- 请填写您的支付类接口异步通知接收服务地址，例如：https://www.test.com/callback -->";
     
+    //可设置AES密钥，调用AES加解密相关接口时需要（可选）
+    $options->encryptKey = "<-- 请填写您的AES密钥，例如：aa4BtZ4tspm2wnXLb1ThQA== -->";
+
+
+
     return $options;
 }
 
@@ -107,6 +115,7 @@ function getOptions()
 
 Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编程直觉。
 ## 已支持的API列表
+
 | 能力类别      | 场景类别            | 接口方法名称                 | 调用的OpenAPI名称                                              |
 |-----------|-----------------|------------------------|-----------------------------------------------------------|
 | Base      | OAuth           | getToken               | alipay\.system\.oauth\.token                              |
@@ -121,9 +130,16 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 | Payment   | Common          | query                  | alipay\.trade\.query                                      |
 | Payment   | Common          | refund                 | alipay\.trade\.refund                                     |
 | Payment   | Common          | close                  | alipay\.trade\.close                                      |
-| Payment   | Common          | cancel                 | alipay\.trade\.close                                      |
+| Payment   | Common          | cancel                 | alipay\.trade\.cancel                                     |
+| Payment   | Common          | queryRefund            | alipay\.trade\.fastpay\.refund\.query                     |
+| Payment   | Common          | downloadBill           | alipay\.data\.dataservice\.bill\.downloadurl\.query       |
+| Payment   | Common          | verifyNotify           | -                                                         |
 | Payment   | Huabei          | create                 | alipay\.trade\.create                                     |
 | Payment   | FaceToFace      | pay                    | alipay\.trade\.pay                                        |
+| Payment   | FaceToFace      | precreate              | alipay\.trade\.precreate                                  |
+| Payment   | App             | pay                    | alipay\.trade\.app\.pay                                   |
+| Payment   | Page            | pay                    | alipay\.trade\.page\.pay                                  |
+| Payment   | Wap             | pay                    | alipay\.trade\.wap\.pay                                   |
 | Security  | TextRisk        | detect                 | alipay\.security\.risk\.content\.detect                   |
 | Marketing | Pass            | createTemplate         | alipay\.pass\.template\.add                               |
 | Marketing | Pass            | updateTemplate         | alipay\.pass\.template\.update                            |
@@ -138,6 +154,9 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 | Marketing | OpenLife        | recallMessage          | alipay\.open\.public\.life\.msg\.recall                   |
 | Marketing | OpenLife        | setIndustry            | alipay\.open\.public\.template\.message\.industry\.modify |
 | Marketing | OpenLife        | getIndustry            | alipay\.open\.public\.setting\.category\.query            |
+| Util      | AES             | decrypt                | -                                                         |
+| Util      | AES             | encrypt                | -                                                         |
+| Util      | Generic         | execute                | -                                                         |
 
 > 注：更多高频场景的API持续更新中，敬请期待。
 

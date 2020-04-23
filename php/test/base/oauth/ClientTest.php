@@ -17,19 +17,21 @@ class ClientTest extends TestCase
         Factory::setOptions($account->getTestAccount());
     }
 
-    public function testGetTokenWhenGrantTypeIsAuthorizationCode(){
+    public function testGetTokenWhenGrantTypeIsAuthorizationCode()
+    {
         $result = Factory::base()->oauth()->getToken('ee4b3c871f7c4f30a82251908458VB64');
-        $this->assertEquals('40002',$result['code']);
-        $this->assertEquals('Invalid Arguments',$result['msg']);
-        $this->assertEquals('isv.code-invalid',$result['sub_code']);
-        $this->assertEquals('授权码code无效',$result['sub_msg']);
+        $this->assertEquals('40002', $result->code);
+        $this->assertEquals('Invalid Arguments', $result->msg);
+        $this->assertEquals('isv.code-invalid', $result->subCode);
+        $this->assertEquals('授权码code无效', $result->subMsg);
     }
 
-    public function testGetTokenWhenGrantTypeIsRefreshToken(){
+    public function testGetTokenWhenGrantTypeIsRefreshToken()
+    {
         $result = Factory::base()->oauth()->refreshToken('1234567890');
-        $this->assertEquals('40002',$result['code']);
-        $this->assertEquals('Invalid Arguments',$result['msg']);
-        $this->assertEquals('isv.refresh-token-invalid',$result['sub_code']);
-        $this->assertEquals('刷新令牌refresh_token无效',$result['sub_msg']);
+        $this->assertEquals('40002', $result->code);
+        $this->assertEquals('Invalid Arguments', $result->msg);
+        $this->assertEquals('isv.refresh-token-invalid', $result->subCode);
+        $this->assertEquals('刷新令牌refresh_token无效', $result->subMsg);
     }
 }

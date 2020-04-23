@@ -447,7 +447,7 @@ create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string
 | subject | string | 是  |  订单标题  |
 | outTradeNo | string | 是  | 商户订单号，64个字符以内，可包含字母、数字、下划线，需保证在商户端不重复  |
 | totalAmount | string | 是  | 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
-| buyerId | string | 是 | 买家的支付宝用户ID，如果为空，会从传入的码值信息中获取买家ID  |
+| buyerId | string | 是 | 买家的支付宝唯一用户号（2088开头的16位纯数字）  |
 
 * 出参说明
 
@@ -514,6 +514,51 @@ cancel(outTradeNo: string)
 
 可前往[alipay.trade.cancel](https://docs.open.alipay.com/api_1/alipay.trade.cancel)查看更加详细的参数说明。
 
+### 交易退款查询
+* API声明
+
+queryRefund(outTradeNo: string, outRequestNo: string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| outTradeNo | string | 是  |  交易创建时传入的商户订单号  |
+| outRequestNo | string | 是  |  请求退款接口时，传入的退款请求号，如果在退款请求时未传入，则该值为创建交易时的外部交易号  |
+
+* 出参说明
+
+可前往[alipay.trade.fastpay.refund.query](https://opendocs.alipay.com/apis/api_1/alipay.trade.fastpay.refund.query)查看更加详细的参数说明。
+
+
+### 查询对账单下载地址
+* API声明
+
+downloadBill(billType: string, billDate: string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| billType | string | 是  |  账单类型，商户通过接口或商户经开放平台授权后其所属服务商通过接口可以获取以下账单类型：trade、signcustomer；trade指商户基于支付宝交易收单的业务账单；signcustomer是指基于商户支付宝余额收入及支出等资金变动的帐务账单  |
+| billDate | string | 是  |  账单时间：日账单格式为yyyy-MM-dd，最早可下载2016年1月1日开始的日账单；月账单格式为yyyy-MM，最早可下载2016年1月开始的月账单  |
+
+* 出参说明
+
+可前往[alipay.data.dataservice.bill.downloadurl.query](https://opendocs.alipay.com/apis/api_15/alipay.data.dataservice.bill.downloadurl.query)查看更加详细的参数说明。
+
+
+### 异步通知验签
+* API声明
+
+verifyNotify(parameters: map[string]string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| parameters | map[string]string | 是  |  异步通知中收到的待验签的所有参数 |
+
 ---
 
 ## 花呗分期 Huabei
@@ -565,6 +610,86 @@ pay(subject: string, outTradeNo: string, totalAmount: string, authCode: string)
 
 可前往[alipay.trade.pay](https://docs.open.alipay.com/api_1/alipay.trade.pay)查看更加详细的参数说明。
 
+--- 
+### 交易预创建，生成正扫二维码
+* API声明
+
+precreate(subject: string, outTradeNo: string, totalAmount: string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| subject | string | 是  |  订单标题  |
+| outTradeNo | string | 是  |  交易创建时传入的商户订单号  |
+| totalAmount | string | 是  |  订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
+
+* 出参说明
+
+可前往[alipay.trade.precreate](https://docs.open.alipay.com/api_1/alipay.trade.precreate)查看更加详细的参数说明。
+
+--- 
+## 电脑网站 Page
+### 电脑网站支付
+* API声明
+
+pay(subject: string, outTradeNo: string, totalAmount: string, productCode: string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| subject | string | 是  |  订单标题  |
+| outTradeNo | string | 是  |  交易创建时传入的商户订单号  |
+| totalAmount | string | 是  |  订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
+| productCode | string | 是  |  销售产品码，商家和支付宝签约的产品码  |
+
+* 出参说明
+
+可前往[alipay.trade.page.pay](https://docs.open.alipay.com/api_1/alipay.trade.page.pay)查看更加详细的参数说明。
+
+--- 
+
+## 手机网站 Wap
+### 手机网站支付
+* API声明
+
+pay(subject: string, outTradeNo: string, totalAmount: string, quitUrl: string, productCode: string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| subject | string | 是  |  订单标题  |
+| outTradeNo | string | 是  |  交易创建时传入的商户订单号  |
+| totalAmount | string | 是  |  订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
+| quitUrl | string | 是  |  用户付款中途退出返回商户网站的地址  |
+| productCode | string | 是  |  销售产品码，商家和支付宝签约的产品码  |
+
+* 出参说明
+
+可前往[alipay.trade.wap.pay](https://docs.open.alipay.com/api_1/alipay.trade.wap.pay)查看更加详细的参数说明。
+
+--- 
+
+## App支付 App
+### 手机APP支付
+* API声明
+
+pay(subject: string, outTradeNo: string, totalAmount: string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| subject | string | 是  |  订单标题  |
+| outTradeNo | string | 是  |  交易创建时传入的商户订单号  |
+| totalAmount | string | 是  |  订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
+
+* 出参说明
+
+可前往[alipay.trade.app.pay](https://docs.open.alipay.com/api_1/alipay.trade.app.pay)查看更加详细的参数说明。
+
 ---
 
 # 安全能力 Security
@@ -588,6 +713,43 @@ detect(content: string)
 
 # 辅助工具 Util
 
+
+## 加解密 AES
+### AES解密（常用于会员手机号解密）
+* API声明
+
+decrypt(cipherText: string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| cipherText | string | 是  |  密文 |
+
+* 出参说明
+
+| 类型     |  说明 |
+|------|----|
+| string | 明文|
+
+### AES加密
+* API声明
+
+encrypt(plainText: string)
+
+* 入参说明
+
+| 字段名  | 类型     | 必填 | 说明 |
+|------|--------|----|----|
+| plainText | string | 是  |  明文 |
+
+* 出参说明
+
+| 类型     |  说明 |
+|------|----|
+| string | 密文|
+
+
 <a name="generic"/>
 
 ## 通用接口 Generic
@@ -599,12 +761,6 @@ execute(method: string, textParams: map[string]string, bizParams: map[string]any
 * 接口说明
 
 对于Alipay Easy SDK尚未支持的Open API，开发者可以通过调用此方法，通过自行拼装请求参数，完成几乎所有OpenAPI的调用，且调用时可按需设置所有可选参数。本接口同样会自动为您完成请求的加签和响应的验签工作。
-
-注：
-
-> 少部分OpenAPI（例如：`alipay.trade.wap.pay`）调用时不会实际发送HTTP请求，只是本地生成网页表单/URL字符串（Alipay SDK中提供的`pageExecute`用于调用此类OpenAPI），或者本地生成请求支付宝APP的签名串（Alipay SDK中提供的`sdkExecute`用于调用此类OpenAPI）。
-
-> 此类Open API的调用本接口暂不支持，如有需要请使用Alipay SDK完成调用。
 
 * 入参说明
 

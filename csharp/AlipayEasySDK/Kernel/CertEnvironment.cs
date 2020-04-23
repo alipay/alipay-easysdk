@@ -59,6 +59,12 @@ namespace Alipay.EasySDK.Kernel
 
         public string GetAlipayPublicKey(string sn)
         {
+            //如果没有指定sn，则默认取缓存中的第一个值
+            if (string.IsNullOrEmpty(sn))
+            {
+                return CachedAlipayPublicKey.Values.GetEnumerator().Current;
+            }
+
             if (CachedAlipayPublicKey.ContainsKey(sn))
             {
                 return CachedAlipayPublicKey[sn];

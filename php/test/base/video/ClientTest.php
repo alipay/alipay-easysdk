@@ -13,9 +13,9 @@ class ClientTest extends TestCase
     public function testUpload(){
         $account = new TestAccount();
         Factory::setOptions($account->getTestAccount());
-        $result = Factory::base()->video()->upload("测试视频",
-            "test/resources/fixture/sample.mp4");
-        $this->assertEquals('10000',$result['code']);
-        $this->assertEquals('Success',$result['msg']);
+        $filePath = dirname(__FILE__) . '/resources/fixture/sample.mp4';
+        $result = Factory::base()->video()->upload("测试视频", $filePath);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 }

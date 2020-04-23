@@ -125,7 +125,7 @@ namespace Alipay.EasySDK.Kernel
             Dictionary<string, object> bizParams, Dictionary<string, string> textParams)
         {
             IDictionary<string, string> sortedMap = new SortedDictionary<string, string>(systemParams, StringComparer.Ordinal);
-            if (bizParams.Count != 0)
+            if (bizParams != null && bizParams.Count != 0)
             {
                 sortedMap.Add(AlipayConstants.BIZ_CONTENT_FIELD, JsonUtil.ToJsonString(bizParams));
             }
@@ -137,7 +137,18 @@ namespace Alipay.EasySDK.Kernel
                     sortedMap.Add(pair.Key, pair.Value);
                 }
             }
+
+            SetNotifyUrl(sortedMap);
+
             return sortedMap;
+        }
+
+        private void SetNotifyUrl(IDictionary<string, string> paramters)
+        {
+            if (GetConfig(AlipayConstants.NOTIFY_URL_CONFIG_KEY) != null && !paramters.ContainsKey(AlipayConstants.NOTIFY_URL_FIELD))
+            {
+                paramters.Add(AlipayConstants.NOTIFY_URL_FIELD, GetConfig(AlipayConstants.NOTIFY_URL_CONFIG_KEY));
+            }
         }
 
         /// <summary>
@@ -171,12 +182,11 @@ namespace Alipay.EasySDK.Kernel
         /// 将业务参数和其他额外文本参数按www-form-urlencoded格式转换成HTTP Body中的字节数组，注意要做URL Encode
         /// </summary>
         /// <param name="bizParams">业务参数</param>
-        /// <param name="textParams">其他额外文本参数</param>
         /// <returns>HTTP Body中的字节数组</returns>
-        protected byte[] _toUrlEncodedRequestBody(Dictionary<string, object> bizParams, Dictionary<string, string> textParams)
+        protected byte[] _toUrlEncodedRequestBody(Dictionary<string, object> bizParams)
         {
 
-            IDictionary<string, string> sortedMap = GetSortedMap(new Dictionary<string, string>(), bizParams, textParams);
+            IDictionary<string, string> sortedMap = GetSortedMap(new Dictionary<string, string>(), bizParams, null);
             return AlipayConstants.DEFAULT_CHARSET.GetBytes(BuildQueryString(sortedMap));
         }
 
@@ -230,6 +240,7 @@ namespace Alipay.EasySDK.Kernel
             MemoryStream stream = new MemoryStream();
 
             //组装其他额外文本参数
+            SetNotifyUrl(textParams);
             foreach (var pair in textParams)
             {
                 if (!string.IsNullOrEmpty(pair.Key) && !string.IsNullOrEmpty(pair.Value))
@@ -356,13 +367,13 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="textParams">其他额外文本参数集合</param>
         /// <param name="sign">所有参数的签名值</param>
         /// <returns>生成的URL字符串或表单</returns>
-        protected string _generatePage(string method, Dictionary<String, String> systemParams, Dictionary<String, Object> bizParams,
-                                   Dictionary<String, String> textParams, String sign)
+        protected string _generatePage(string method, Dictionary<string, string> systemParams, Dictionary<string, object> bizParams,
+            Dictionary<string, string> textParams, string sign)
         {
             if (AlipayConstants.GET.Equals(method))
             {
                 //采集并排序所有参数
-                IDictionary<String, String> sortedMap = GetSortedMap(systemParams, bizParams, textParams);
+                IDictionary<string, string> sortedMap = GetSortedMap(systemParams, bizParams, textParams);
                 sortedMap.Add(AlipayConstants.SIGN_FIELD, sign);
 
                 //将所有参数置于URL中
@@ -371,10 +382,8 @@ namespace Alipay.EasySDK.Kernel
             else if (AlipayConstants.POST.Equals(method))
             {
                 //将系统参数排序后置于URL中
-                IDictionary<string, string> urlParams = new SortedDictionary<string, string>(systemParams, StringComparer.Ordinal)
-                {
-                    { AlipayConstants.SIGN_FIELD, sign }
-                };
+                IDictionary<string, string> urlParams = GetSortedMap(systemParams, null, null);
+                urlParams.Add(AlipayConstants.SIGN_FIELD, sign);
                 string actionUrl = GetGatewayServerUrl() + "?" + BuildQueryString(urlParams);
 
                 //将非系统参数排序后置于form表单中
@@ -390,9 +399,61 @@ namespace Alipay.EasySDK.Kernel
             }
         }
 
+        /// <summary>
+        /// 生成订单串
+        /// </summary>
+        /// <param name="systemParams">系统参数集合</param>
+        /// <param name="bizParams">业务参数集合</param>
+        /// <param name="textParams">其他文本参数集合</param>
+        /// <param name="sign">所有参数的签名值</param>
+        /// <returns>订单串</returns>
+        protected string _generateOrderString(Dictionary<string, string> systemParams, Dictionary<string, object> bizParams,
+            Dictionary<string, string> textParams, string sign)
+        {
+            //采集并排序所有参数
+            IDictionary<string, string> sortedMap = GetSortedMap(systemParams, bizParams, textParams);
+            sortedMap.Add(AlipayConstants.SIGN_FIELD, sign);
+
+            //将所有参数置于URL中
+            return BuildQueryString(sortedMap);
+        }
+
         private string GetGatewayServerUrl()
         {
             return GetConfig(AlipayConstants.PROTOCOL_CONFIG_KEY) + "://" + GetConfig(AlipayConstants.HOST_CONFIG_KEY) + "/gateway.do";
+        }
+
+        /// <summary>
+        /// AES加密
+        /// </summary>
+        /// <param name="plainText">明文</param>
+        /// <param name="key">密钥</param>
+        /// <returns>密文</returns>
+        protected string _aesEncrypt(string plainText, string key)
+        {
+            return AES.Encrypt(plainText, key);
+        }
+
+        /// <summary>
+        /// AES解密
+        /// </summary>
+        /// <param name="chiperText">密文</param>
+        /// <param name="key">密钥</param>
+        /// <returns>明文</returns>
+        protected string _aesDecrypt(string chiperText, string key)
+        {
+            return AES.Decrypt(chiperText, key);
+        }
+
+        /// <summary>
+        /// 对支付类请求的异步通知的参数集合进行验签
+        /// </summary>
+        /// <param name="parameters">参数集合</param>
+        /// <param name="alipayPublicKey">支付宝公钥</param>
+        /// <returns>true：验证成功；false：验证失败</returns>
+        protected bool _verifyParams(Dictionary<string, string> parameters, string alipayPublicKey)
+        {
+            return Signer.VerifyParams(parameters, alipayPublicKey);
         }
 
         /// <summary>

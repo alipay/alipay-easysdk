@@ -8,29 +8,31 @@ use AlibabaCloud\Tea\Model;
 
 class JsonUtil
 {
-    public function toJsonString(array $input){
+    public function toJsonString(array $input)
+    {
         $result = [];
         foreach ($input as $k => $v) {
-            if($v instanceof Model){
+            if ($v instanceof Model) {
                 $result[$k] = $this->getTeaModelMap($v);
-            }else{
+            } else {
                 $result[$k] = $v;
             }
         }
         return $result;
     }
 
-    private function getTeaModelMap(Model $teaModel){
+    private function getTeaModelMap(Model $teaModel)
+    {
         $result = [];
-        foreach ($teaModel as $k => $v){
-            if($v instanceof Model){
+        foreach ($teaModel as $k => $v) {
+            if ($v instanceof Model) {
                 $k = $this->toUnderScore($k);
                 $result[$k] = $this->getTeaModelMap($v);
-            }else{
-                if(empty($result)){
+            } else {
+                if (empty($result)) {
                     $k = $this->toUnderScore($k);
                     $result[$k] = $v;
-                }else{
+                } else {
                     $k = $this->toUnderScore($k);
                     $result[$k] = $v;
                 }
@@ -46,11 +48,9 @@ class JsonUtil
      */
     private function toUnderScore($str)
     {
-        $dstr = preg_replace_callback('/([A-Z]+)/',function($matchs)
-        {
-            return '_'.strtolower($matchs[0]);
-            },$str);
-        return trim(preg_replace('/_{2,}/','_',$dstr),'_');
+        $dstr = preg_replace_callback('/([A-Z]+)/', function ($matchs) {
+            return '_' . strtolower($matchs[0]);
+        }, $str);
+        return trim(preg_replace('/_{2,}/', '_', $dstr), '_');
     }
-
 }

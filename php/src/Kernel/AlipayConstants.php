@@ -15,6 +15,7 @@ class AlipayConstants
     const MERCHANT_CERT_PATH_CONFIG_KEY    = "merchantCertPath";
     const ALIPAY_ROOT_CERT_PATH_CONFIG_KEY = "alipayRootCertPath";
     const SIGN_TYPE_CONFIG_KEY             = "signType";
+    const NOTIFY_URL_CONFIG_KEY            = "notifyUrl";
 
     /**
      * 与网关HTTP交互中涉及到的字段值
@@ -23,6 +24,7 @@ class AlipayConstants
     const ALIPAY_CERT_SN_FIELD = "alipay_cert_sn";
     const SIGN_FIELD           = "sign";
     const BODY_FIELD           = "http_body";
+    const NOTIFY_URL_FIELD     = "notify_url";
     const METHOD_FIELD         = "method";
     const RESPONSE_SUFFIX      = "_response";
     const ERROR_RESPONSE       = "error_response";

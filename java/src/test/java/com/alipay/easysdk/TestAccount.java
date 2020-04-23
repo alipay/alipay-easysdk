@@ -39,7 +39,7 @@ public class TestAccount {
     public static class Mini {
         public static final BaseClient.Config CONFIG = getConfig();
 
-        private static BaseClient.Config getConfig() {
+        public static BaseClient.Config getConfig() {
             BaseClient.Config config = new BaseClient.Config();
             config.protocol = "https";
             config.gatewayHost = "openapi.alipay.com";
@@ -52,6 +52,7 @@ public class TestAccount {
                     + "AW0j47XqzhWJ7awAx60fwgNBq6ZOEPJnODqH20TAdTLNxPSl4qGxamjBO+RuInBy+Bc2hFHq3pNv6hTAfktggRKkKzDlDEUwg"
                     + "SLE7d2eL7P6rwIDAQAB --->";
             config.merchantPrivateKey = getPrivateKey(config.appId);
+            config.notifyUrl = "<-- 请填写您的异步通知接收服务器地址，例如：https://www.test.com/callback -->";
             return config;
         }
     }

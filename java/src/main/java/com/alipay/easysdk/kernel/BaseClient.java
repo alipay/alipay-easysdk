@@ -3,6 +3,7 @@
  */
 package com.alipay.easysdk.kernel;
 
+import com.alipay.easysdk.kernel.util.AES;
 import com.alipay.easysdk.kernel.util.JsonUtil;
 import com.alipay.easysdk.kernel.util.MultipartUtil;
 import com.alipay.easysdk.kernel.util.PageUtil;
@@ -41,6 +42,10 @@ import java.util.TreeMap;
  * @version $Id: BaseClient.java, v 0.1 2019年12月17日 10:53 PM zhongyu Exp $
  */
 public class BaseClient {
+    /**
+     * 加密工具
+     */
+    private final AES    AES    = new AES();
     /**
      * SHA256WithRSA签名器
      */
@@ -109,12 +114,11 @@ public class BaseClient {
     /**
      * 将业务参数和其他额外文本参数按www-form-urlencoded格式转换成HTTP Body中的字节数组，注意要做URL Encode
      *
-     * @param bizParams  业务参数
-     * @param textParams 其他额外文本参数
+     * @param bizParams 业务参数
      * @return HTTP Body中的字节数组
      */
-    protected byte[] _toUrlEncodedRequestBody(Map<String, Object> bizParams, Map<String, String> textParams) throws Exception {
-        Map<String, String> sortedMap = getSortedMap(Collections.<String, String>emptyMap(), bizParams, textParams);
+    protected byte[] _toUrlEncodedRequestBody(Map<String, Object> bizParams) throws Exception {
+        Map<String, String> sortedMap = getSortedMap(Collections.<String, String>emptyMap(), bizParams, null);
         return buildQueryString(sortedMap).getBytes(AlipayConstants.DEFAULT_CHARSET);
     }
 
@@ -166,6 +170,7 @@ public class BaseClient {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
         //组装其他额外文本参数
+        setNotifyUrl(textParams);
         for (Map.Entry<String, String> pair : textParams.entrySet()) {
             if (!Strings.isNullOrEmpty(pair.getKey()) && !Strings.isNullOrEmpty(pair.getValue())) {
                 stream.write(MultipartUtil.getEntryBoundary(boundary));
@@ -213,15 +218,22 @@ public class BaseClient {
     }
 
     private Map<String, String> getSortedMap(Map<String, String> systemParams, Map<String, Object> bizParams,
-                                             Map<String, String> textParams) throws Exception {
+                                             Map<String, String> textParams) {
         Map<String, String> sortedMap = new TreeMap<>(systemParams);
-        if (!bizParams.isEmpty()) {
+        if (bizParams != null && !bizParams.isEmpty()) {
             sortedMap.put(AlipayConstants.BIZ_CONTENT_FIELD, JsonUtil.toJsonString(bizParams));
         }
         if (textParams != null) {
             sortedMap.putAll(textParams);
         }
+        setNotifyUrl(sortedMap);
         return sortedMap;
+    }
+
+    private void setNotifyUrl(Map<String, String> params) {
+        if (getConfig(AlipayConstants.NOTIFY_URL_CONFIG_KEY) != null && !params.containsKey(AlipayConstants.NOTIFY_URL_FIELD)) {
+            params.put(AlipayConstants.NOTIFY_URL_FIELD, getConfig(AlipayConstants.NOTIFY_URL_CONFIG_KEY));
+        }
     }
 
     /**
@@ -366,7 +378,7 @@ public class BaseClient {
             return getGatewayServerUrl() + "?" + buildQueryString(sortedMap);
         } else if (AlipayConstants.POST.equalsIgnoreCase(method)) {
             //将系统参数排序后置于URL中
-            Map<String, String> urlParams = new TreeMap<>(systemParams);
+            Map<String, String> urlParams = getSortedMap(systemParams, null, textParams);
             urlParams.put(AlipayConstants.SIGN_FIELD, sign);
             String actionUrl = getGatewayServerUrl() + "?" + buildQueryString(urlParams);
 
@@ -377,6 +389,58 @@ public class BaseClient {
         } else {
             throw new RuntimeException("_generatePage中method只支持传入GET或POST");
         }
+    }
+
+    /**
+     * 生成订单串
+     *
+     * @param systemParams 系统参数集合
+     * @param bizParams    业务参数集合
+     * @param textParams   其他额外文本参数集合
+     * @param sign         所有参数的签名值
+     * @return 订单串
+     */
+    protected String _generateOrderString(Map<String, String> systemParams, Map<String, Object> bizParams,
+                                          Map<String, String> textParams, String sign) throws Exception {
+        //采集并排序所有参数
+        Map<String, String> sortedMap = getSortedMap(systemParams, bizParams, textParams);
+        sortedMap.put(AlipayConstants.SIGN_FIELD, sign);
+
+        //将所有参数置于URL中
+        return buildQueryString(sortedMap);
+    }
+
+    /**
+     * AES加密
+     *
+     * @param plainText 明文
+     * @param key       密钥
+     * @return 密文
+     */
+    protected String _aesEncrypt(String plainText, String key) {
+        return AES.encrypt(plainText, key);
+    }
+
+    /**
+     * AES解密
+     *
+     * @param cipherText 密文
+     * @param key        密钥
+     * @return 明文
+     */
+    protected String _aesDecrypt(String cipherText, String key) {
+        return AES.decrypt(cipherText, key);
+    }
+
+    /**
+     * 对支付类请求的异步通知的参数集合进行验签
+     *
+     * @param parameters 参数集合
+     * @param publicKey  支付宝公钥
+     * @return true：验证成功；false：验证失败
+     */
+    protected boolean _verifyParams(Map<String, String> parameters, String publicKey) {
+        return signer.verifyParams(parameters, publicKey);
     }
 
     private String getGatewayServerUrl() {
@@ -396,36 +460,77 @@ public class BaseClient {
      * 配置参数模型
      */
     public static class Config extends TeaModel {
+        /**
+         * 通信协议，通常填写https
+         */
         @NameInMap("protocol")
         @Validation(required = true)
         public String protocol;
 
+        /**
+         * 网关域名
+         * 线上为：openapi.alipay.com
+         * 沙箱为：openapi.alipaydev.com
+         */
         @NameInMap("gatewayHost")
         @Validation(required = true)
         public String gatewayHost;
 
+        /**
+         * AppId
+         */
         @NameInMap("appId")
         @Validation(required = true)
         public String appId;
 
+        /**
+         * 签名类型，Alipay Easy SDK只推荐使用RSA2，估此处固定填写RSA2
+         */
         @NameInMap("signType")
         @Validation(required = true)
         public String signType;
 
+        /**
+         * 支付宝公钥
+         */
         @NameInMap("alipayPublicKey")
         public String alipayPublicKey;
 
+        /**
+         * 应用私钥
+         */
         @NameInMap("merchantPrivateKey")
         @Validation(required = true)
         public String merchantPrivateKey;
 
+        /**
+         * 应用公钥证书文件路径
+         */
         @NameInMap("merchantCertPath")
         public String merchantCertPath;
 
+        /**
+         * 支付宝公钥证书文件路径
+         */
         @NameInMap("alipayCertPath")
         public String alipayCertPath;
 
+        /**
+         * 支付宝根证书文件路径
+         */
         @NameInMap("alipayRootCertPath")
         public String alipayRootCertPath;
+
+        /**
+         * 异步通知回调地址（可选）
+         */
+        @NameInMap("notifyUrl")
+        public String notifyUrl;
+
+        /**
+         * AES密钥（可选）
+         */
+        @NameInMap("encryptKey")
+        public String encryptKey;
     }
 }

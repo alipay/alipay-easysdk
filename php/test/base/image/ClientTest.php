@@ -13,9 +13,9 @@ class ClientTest extends TestCase
     public function testUpload(){
         $account = new TestAccount();
         Factory::setOptions($account->getTestAccount());
-        $result =  Factory::base()->image()->upload("测试图片",
-            "test/resources/fixture/sample.png");
-        $this->assertEquals('10000',$result['code']);
-        $this->assertEquals('Success',$result['msg']);
+        $filePath = dirname(__FILE__) . '/resources/fixture/sample.png';
+        $result =  Factory::base()->image()->upload("测试图片", $filePath);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 }

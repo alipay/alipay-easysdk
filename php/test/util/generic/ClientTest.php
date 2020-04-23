@@ -7,7 +7,6 @@ namespace Alipay\EasySDK\Test\util\generic;
 use Alipay\EasySDK\Kernel\Factory;
 use Alipay\EasySDK\Test\TestAccount;
 use PHPUnit\Framework\TestCase;
-use function Sodium\add;
 
 class ClientTest extends TestCase
 {
@@ -21,16 +20,16 @@ class ClientTest extends TestCase
     public function testExecuteWithoutAppAuthToken()
     {
         $result = Factory::util()->generic()->execute("alipay.trade.create", null, $this->getBizParams(microtime()));
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testExecuteWithAppAuthToken(){
         $result = Factory::util()->generic()->execute("alipay.trade.create", $this->getTextParams(), $this->getBizParams(microtime()));
-        $this->assertEquals('20001', $result['code']);
-        $this->assertEquals('Insufficient Token Permissions', $result['msg']);
-        $this->assertEquals('aop.invalid-app-auth-token', $result['sub_code']);
-        $this->assertEquals('无效的应用授权令牌', $result['sub_msg']);
+        $this->assertEquals('20001', $result->code);
+        $this->assertEquals('Insufficient Token Permissions',$result->msg);
+        $this->assertEquals('aop.invalid-app-auth-token', $result->subCode);
+        $this->assertEquals('无效的应用授权令牌', $result->subMsg);
     }
 
     private function getTextParams()

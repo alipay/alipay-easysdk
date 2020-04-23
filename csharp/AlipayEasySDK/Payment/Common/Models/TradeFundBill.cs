@@ -25,6 +25,10 @@ namespace Alipay.EasySDK.Payment.Common.Models
         [Validation(Required=true)]
         public string RealAmount { get; set; }
 
+        [NameInMap("fund_type")]
+        [Validation(Required=true)]
+        public string FundType { get; set; }
+
     }
 
 }

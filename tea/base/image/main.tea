@@ -5,7 +5,7 @@ module Main {
   type @sign = (map[string]string, map[string]any, map[string]string, string): string
   type @getMerchantCertSN = (): string
   type @getAlipayRootCertSN = (): string
-  type @toUrlEncodedRequestBody = (map[string]any, map[string]string): bytes
+  type @toUrlEncodedRequestBody = (map[string]any): bytes
   type @getRandomBoundary = (): string
   type @concatStr = (string, string): string
   type @toMultipartRequestBody = (map[string]string, map[string]string, string): readable

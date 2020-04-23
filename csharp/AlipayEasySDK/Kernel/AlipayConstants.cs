@@ -17,6 +17,7 @@ namespace Alipay.EasySDK.Kernel
         public const string MERCHANT_CERT_PATH_CONFIG_KEY = "merchantCertPath";
         public const string ALIPAY_ROOT_CERT_PATH_CONFIG_KEY = "alipayRootCertPath";
         public const string SIGN_TYPE_CONFIG_KEY = "signType";
+        public const string NOTIFY_URL_CONFIG_KEY = "notifyUrl";
 
         /// <summary>
         /// 与网关HTTP交互中涉及到的字段值
@@ -24,11 +25,13 @@ namespace Alipay.EasySDK.Kernel
         public const string BIZ_CONTENT_FIELD = "biz_content";
         public const string ALIPAY_CERT_SN_FIELD = "alipay_cert_sn";
         public const string SIGN_FIELD = "sign";
+        public const string SIGN_TYPE_FIELD = "sign_type";
         public const string BODY_FIELD = "http_body";
+        public const string NOTIFY_URL_FIELD = "notify_url";
         public const string METHOD_FIELD = "method";
         public const string RESPONSE_SUFFIX = "_response";
         public const string ERROR_RESPONSE = "error_response";
-        public const string SDK_VERSION = "alipay-easysdk-net-1.1.2";
+        public const string SDK_VERSION = "alipay-easysdk-net-1.2.0";
 
         /// <summary>
         /// 默认字符集编码，EasySDK统一固定使用UTF-8编码，无需用户感知编码，用户面对的总是String而不是bytes

@@ -18,5 +18,7 @@ class Config extends Model
     public $merchantCertSN;
     public $alipayCertSN;
     public $alipayRootCertSN;
+    public $notifyUrl;
+    public $encryptKey;
 
 }
