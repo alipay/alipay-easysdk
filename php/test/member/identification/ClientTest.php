@@ -31,24 +31,24 @@ class ClientTest extends TestCase
         $merchantConfig->returnUrl = "www.taobao.com";
 
         $result = Factory::member()->identification()->init(microtime(),'FACE',$identityParam,$merchantConfig);
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testCertify()
     {
         $result = Factory::member()->identification()->certify("16cbbf40de9829e337d51818a76eacc2");
-        $this->assertEquals(true, strpos($result,'sign')>0);
-        $this->assertEquals(true, strpos($result,'gateway.do')>0);
+        $this->assertEquals(true, strpos($result->body,'sign')>0);
+        $this->assertEquals(true, strpos($result->body,'gateway.do')>0);
     }
 
     public function testQuery()
     {
         $result = Factory::member()->identification()->query("16cbbf40de9829e337d51818a76eacc2");
-        $this->assertEquals('40004', $result['code']);
-        $this->assertEquals('Business Failed', $result['msg']);
-        $this->assertEquals('CERTIFY_ID_EXPIRED',$result['sub_code']);
-        $this->assertEquals('认证已失效',$result['sub_msg']);
+        $this->assertEquals('40004', $result->code);
+        $this->assertEquals('Business Failed', $result->msg);
+        $this->assertEquals('CERTIFY_ID_EXPIRED',$result->subCode);
+        $this->assertEquals('认证已失效',$result->subMsg);
 
     }
 

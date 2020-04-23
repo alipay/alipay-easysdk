@@ -1,0 +1,56 @@
+module Main {
+  type @getConfig = (string): string
+  type @isCertMode = (): boolean
+  type @getTimestamp = (): string
+  type @sign = (map[string]string, map[string]any, map[string]string, string): string
+  type @getMerchantCertSN = (): string
+  type @getAlipayRootCertSN = (): string
+  type @toUrlEncodedRequestBody = (map[string]any): bytes
+  type @readAsJson = ($Response, string): object
+  type @getAlipayCertSN = (object): string
+  type @extractAlipayPublicKey = (string): string
+  type @verify = (object, string): boolean
+  type @toRespModel = (object): object
+  type @generateOrderString = (map[string]string, map[string]any, map[string]string, string): string
+  type @getSdkVersion = (): string
+
+  init();
+
+
+  model AlipayTradeAppPayResponse {
+    body: string(name='body', description='订单信息，字符串形式')
+  }
+
+  function pay(subject: string, outTradeNo: string, totalAmount: string): AlipayTradeAppPayResponse {
+    var systemParams: map[string]string = {
+      method = 'alipay.trade.app.pay',
+
+      app_id = @getConfig('appId'),
+      timestamp = @getTimestamp(),
+      format = 'json',
+      version = '1.0',
+      alipay_sdk = @getSdkVersion(),
+      charset = 'UTF-8',
+      sign_type = @getConfig('signType'),
+      app_cert_sn = @getMerchantCertSN(),
+      alipay_root_cert_sn = @getAlipayRootCertSN()
+    };
+
+    var bizParams: map[string]any = {
+      subject = subject,
+      out_trade_no = outTradeNo,
+      total_amount = totalAmount
+    };
+
+    var textParams: map[string]string = {
+    };
+
+    var sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey'));
+
+        var response: map[string]string = {
+          body = @generateOrderString(systemParams, bizParams, textParams, sign)
+        };
+        return response;
+  }
+
+}

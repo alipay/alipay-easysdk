@@ -85,9 +85,10 @@ namespace Alipay.EasySDK.Payment.Huabei
                         {
                             {"sign", _sign(systemParams, bizParams, textParams, _getConfig("merchantPrivateKey"))},
                         },
-                        systemParams
+                        systemParams,
+                        textParams
                     );
-                    request_.Body = TeaCore.BytesReadable(_toUrlEncodedRequestBody(bizParams, textParams));
+                    request_.Body = TeaCore.BytesReadable(_toUrlEncodedRequestBody(bizParams));
                     _lastRequest = request_;
                     TeaResponse response_ = TeaCore.DoAction(request_, runtime_);
 
@@ -191,9 +192,10 @@ namespace Alipay.EasySDK.Payment.Huabei
                         {
                             {"sign", _sign(systemParams, bizParams, textParams, _getConfig("merchantPrivateKey"))},
                         },
-                        systemParams
+                        systemParams,
+                        textParams
                     );
-                    request_.Body = TeaCore.BytesReadable(_toUrlEncodedRequestBody(bizParams, textParams));
+                    request_.Body = TeaCore.BytesReadable(_toUrlEncodedRequestBody(bizParams));
                     _lastRequest = request_;
                     TeaResponse response_ = await TeaCore.DoActionAsync(request_, runtime_);
 

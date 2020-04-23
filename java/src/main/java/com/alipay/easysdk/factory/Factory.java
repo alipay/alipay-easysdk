@@ -36,8 +36,12 @@ public class Factory {
             registerClient(new com.alipay.easysdk.payment.common.Client(options));
             registerClient(new com.alipay.easysdk.payment.huabei.Client(options));
             registerClient(new com.alipay.easysdk.payment.facetoface.Client(options));
+            registerClient(new com.alipay.easysdk.payment.page.Client(options));
+            registerClient(new com.alipay.easysdk.payment.wap.Client(options));
+            registerClient(new com.alipay.easysdk.payment.app.Client(options));
             registerClient(new com.alipay.easysdk.security.textrisk.Client(options));
             registerClient(new com.alipay.easysdk.util.generic.Client(options));
+            registerClient(new com.alipay.easysdk.util.aes.Client(options));
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -83,6 +87,33 @@ public class Factory {
          */
         public static com.alipay.easysdk.payment.facetoface.Client FaceToFace() {
             return getClient(com.alipay.easysdk.payment.facetoface.Client.class);
+        }
+
+        /**
+         * 获取电脑网站支付相关API Client
+         *
+         * @return 电脑网站支付相关API Client
+         */
+        public static com.alipay.easysdk.payment.page.Client Page() {
+            return getClient(com.alipay.easysdk.payment.page.Client.class);
+        }
+
+        /**
+         * 获取手机网站支付相关API Client
+         *
+         * @return 手机网站支付相关API Client
+         */
+        public static com.alipay.easysdk.payment.wap.Client Wap() {
+            return getClient(com.alipay.easysdk.payment.wap.Client.class);
+        }
+
+        /**
+         * 获取手机APP支付相关API Client
+         *
+         * @return 手机APP支付相关API Client
+         */
+        public static com.alipay.easysdk.payment.app.Client App() {
+            return getClient(com.alipay.easysdk.payment.app.Client.class);
         }
     }
 
@@ -198,6 +229,15 @@ public class Factory {
          */
         public static com.alipay.easysdk.util.generic.Client Generic() {
             return getClient(com.alipay.easysdk.util.generic.Client.class);
+        }
+
+        /**
+         * 获取AES128加解密相关API Client，常用于会员手机号的解密
+         *
+         * @return AES128加解密相关API Client
+         */
+        public static com.alipay.easysdk.util.aes.Client AES() {
+            return getClient(com.alipay.easysdk.util.aes.Client.class);
         }
     }
 }

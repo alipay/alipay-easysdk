@@ -14,6 +14,10 @@ import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * SHA256WithRSA签名器
@@ -23,6 +27,22 @@ import java.security.spec.X509EncodedKeySpec;
  */
 public class Signer {
     private static final Logger LOGGER = LoggerFactory.getLogger(Signer.class);
+
+    public static String getSignCheckContent(Map<String, String> params) {
+        if (params == null) {
+            return null;
+        }
+
+        StringBuilder content = new StringBuilder();
+        List<String> keys = new ArrayList<>(params.keySet());
+        Collections.sort(keys);
+        for (int i = 0; i < keys.size(); i++) {
+            String key = keys.get(i);
+            String value = params.get(key);
+            content.append(i == 0 ? "" : "&").append(key).append("=").append(value);
+        }
+        return content.toString();
+    }
 
     /**
      * 计算签名
@@ -74,5 +94,22 @@ public class Signer {
             LOGGER.error(errorMessage, e);
             throw new RuntimeException(errorMessage, e);
         }
+    }
+
+    /**
+     * 对参数集合进行验签
+     *
+     * @param parameters 参数集合
+     * @param publicKey  支付宝公钥
+     * @return true：验证成功；false：验证失败
+     */
+    public boolean verifyParams(Map<String, String> parameters, String publicKey) {
+        String sign = parameters.get(AlipayConstants.SIGN_FIELD);
+        parameters.remove(AlipayConstants.SIGN_FIELD);
+        parameters.remove(AlipayConstants.SIGN_TYPE_FIELD);
+
+        String content = getSignCheckContent(parameters);
+
+        return verify(content, sign, publicKey);
     }
 }

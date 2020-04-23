@@ -27,7 +27,6 @@ public class ClientTest {
         String outTradeNo = UUID.randomUUID().toString();
         AlipayOpenApiGenericResponse response = Factory.Util.Generic().execute(
                 "alipay.trade.create", null, getBizParams(outTradeNo));
-
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));

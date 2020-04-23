@@ -1,0 +1,15 @@
+module Main {
+  type @aesDecrypt = (string, string): string
+  type @aesEncrypt = (string, string): string
+  type @getConfig = (string): string
+
+  init();
+
+  function decrypt(cipherText: string): string {
+  	return @aesDecrypt(cipherText, @getConfig('encryptKey'));
+  }
+
+  function encrypt(plainText: string): string {
+    return @aesEncrypt(plainText, @getConfig('encryptKey'));
+  }
+}

@@ -66,6 +66,11 @@ public class CertEnvironment {
     }
 
     public String getAlipayPublicKey(String sn) {
+        //如果没有指定sn，则默认取缓存中的第一个值
+        if (Strings.isNullOrEmpty(sn)) {
+            return cachedAlipayPublicKey.values().iterator().next();
+        }
+
         if (cachedAlipayPublicKey.containsKey(sn)) {
             return cachedAlipayPublicKey.get(sn);
         } else {

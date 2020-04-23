@@ -5,7 +5,7 @@ module Main {
   type @sign = (map[string]string, map[string]any, map[string]string, string): string
   type @getMerchantCertSN = (): string
   type @getAlipayRootCertSN = (): string
-  type @toUrlEncodedRequestBody = (map[string]any, map[string]string): bytes
+  type @toUrlEncodedRequestBody = (map[string]any): bytes
   type @readAsJson = ($Response, string): object
   type @getAlipayCertSN = (object): string
   type @extractAlipayPublicKey = (string): string
@@ -60,10 +60,11 @@ module Main {
 
     query = {
       sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
-      ... systemParams
+      ... systemParams,
+      ... textParams
     };
 
-    body = @toUrlEncodedRequestBody(bizParams, textParams);
+    body = @toUrlEncodedRequestBody(bizParams);
   } returns {
     var respMap: object = @readAsJson(__response, "alipay.open.app.qrcode.create");
 

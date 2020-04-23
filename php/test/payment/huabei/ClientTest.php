@@ -19,7 +19,7 @@ class ClientTest extends TestCase
         $config->hbFqNum = '3';
         $config->hbFqSellerPercent = '0';
         $result = Factory::payment()->huabei()->create("Iphone6 16G",  microtime(), "0.10", "2088002656718920", $config);
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 }

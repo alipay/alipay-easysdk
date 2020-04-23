@@ -20,6 +20,10 @@ public class TradeFundBill extends TeaModel {
     @Validation(required = true)
     public String realAmount;
 
+    @NameInMap("fund_type")
+    @Validation(required = true)
+    public String fundType;
+
     public static TradeFundBill build(java.util.Map<String, ?> map) throws Exception {
         TradeFundBill self = new TradeFundBill();
         return TeaModel.build(map, self);

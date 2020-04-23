@@ -10,11 +10,15 @@ use Alipay\EasySDK\Marketing\OpenLife\Client as openLifeClient;
 use Alipay\EasySDK\Marketing\Pass\Client as passClient;
 use Alipay\EasySDK\Marketing\TemplateMessage\Client as templateMessageClient;
 use Alipay\EasySDK\Member\Identification\Client as identificationClient;
+use Alipay\EasySDK\Payment\App\Client as appClient;
 use Alipay\EasySDK\Payment\Common\Client as commonClient;
 use Alipay\EasySDK\Payment\FaceToFace\Client as faceToFaceClient;
 use Alipay\EasySDK\Payment\Huabei\Client as huabeiClient;
+use Alipay\EasySDK\Payment\Page\Client as pageClient;
+use Alipay\EasySDK\Payment\Wap\Client as wapClient;
 use Alipay\EasySDK\Security\TextRisk\Client as textRiskClient;
 use Alipay\EasySDK\Util\Generic\Client as genericClient;
+use Alipay\EasySDK\Util\AES\Client as aesClient;
 
 class Factory
 {
@@ -172,6 +176,11 @@ class Payment
         $this->config = $config;
     }
 
+    public function app()
+    {
+        return new appClient($this->config);
+    }
+
     public function common()
     {
         return new commonClient($this->config);
@@ -185,6 +194,16 @@ class Payment
     public function huabei()
     {
         return new huabeiClient($this->config);
+    }
+
+    public function page()
+    {
+        return new pageClient($this->config);
+    }
+
+    public function wap()
+    {
+        return new wapClient($this->config);
     }
 }
 
@@ -215,6 +234,10 @@ class Util
     public function generic()
     {
         return new genericClient($this->config);
+    }
+
+    public function aes(){
+        return new aesClient($this->config);
     }
 }
 

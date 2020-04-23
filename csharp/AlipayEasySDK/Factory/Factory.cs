@@ -28,8 +28,12 @@ namespace Alipay.EasySDK.Factory
             RegisterClient(new EasySDK.Payment.Common.Client(options));
             RegisterClient(new EasySDK.Payment.FaceToFace.Client(options));
             RegisterClient(new EasySDK.Payment.Huabei.Client(options));
+            RegisterClient(new EasySDK.Payment.App.Client(options));
+            RegisterClient(new EasySDK.Payment.Page.Client(options));
+            RegisterClient(new EasySDK.Payment.Wap.Client(options));
             RegisterClient(new EasySDK.Security.TextRisk.Client(options));
             RegisterClient(new EasySDK.Util.Generic.Client(options));
+            RegisterClient(new EasySDK.Util.AES.Client(options));
         }
 
         private static void RegisterClient(BaseClient client)
@@ -147,7 +151,7 @@ namespace Alipay.EasySDK.Factory
             /// <summary>
             /// 获取支付通用API Client
             /// </summary>
-            /// <returns></returns>
+            /// <returns>支付通用API Client</returns>
             public static EasySDK.Payment.Common.Client Common()
             {
                 return GetClient<EasySDK.Payment.Common.Client>(typeof(EasySDK.Payment.Common.Client));
@@ -156,7 +160,7 @@ namespace Alipay.EasySDK.Factory
             /// <summary>
             /// 获取当面付API Client
             /// </summary>
-            /// <returns></returns>
+            /// <returns>当面付API Client</returns>
             public static EasySDK.Payment.FaceToFace.Client FaceToFace()
             {
                 return GetClient<EasySDK.Payment.FaceToFace.Client>(typeof(EasySDK.Payment.FaceToFace.Client));
@@ -165,10 +169,37 @@ namespace Alipay.EasySDK.Factory
             /// <summary>
             /// 获取花呗API Client
             /// </summary>
-            /// <returns></returns>
+            /// <returns>花呗API Client</returns>
             public static EasySDK.Payment.Huabei.Client Huabei()
             {
                 return GetClient<EasySDK.Payment.Huabei.Client>(typeof(EasySDK.Payment.Huabei.Client));
+            }
+
+            /// <summary>
+            /// 获取手机APP支付API Client
+            /// </summary>
+            /// <returns>手机APP支付API Client</returns>
+            public static EasySDK.Payment.App.Client App()
+            {
+                return GetClient<EasySDK.Payment.App.Client>(typeof(EasySDK.Payment.App.Client));
+            }
+
+            /// <summary>
+            /// 获取电脑网站支付API Client
+            /// </summary>
+            /// <returns>电脑网站支付API</returns>
+            public static EasySDK.Payment.Page.Client Page()
+            {
+                return GetClient<EasySDK.Payment.Page.Client>(typeof(EasySDK.Payment.Page.Client));
+            }
+
+            /// <summary>
+            /// 获取手机网站支付API Client
+            /// </summary>
+            /// <returns>手机网站支付API</returns>
+            public static EasySDK.Payment.Wap.Client Wap()
+            {
+                return GetClient<EasySDK.Payment.Wap.Client>(typeof(EasySDK.Payment.Wap.Client));
             }
         }
 
@@ -199,6 +230,15 @@ namespace Alipay.EasySDK.Factory
             public static EasySDK.Util.Generic.Client Generic()
             {
                 return GetClient<EasySDK.Util.Generic.Client>(typeof(EasySDK.Util.Generic.Client));
+            }
+
+            /// <summary>
+            /// 获取AES128加解密相关API Client，常用于会员手机号的解密
+            /// </summary>
+            /// <returns>AES128加解密相关API Client</returns>
+            public static EasySDK.Util.AES.Client AES()
+            {
+                return GetClient<EasySDK.Util.AES.Client>(typeof(EasySDK.Util.AES.Client));
             }
         }
     }

@@ -25,6 +25,20 @@ namespace UnitTest.Payment.FaceToFace
             Assert.NotNull(response.HttpBody);
         }
 
+        [Test]
+        public void TestPreCreate()
+        {
+            AlipayTradePrecreateResponse response = Factory.Payment.FaceToFace().PreCreate("iPhone6 16G",
+                    CreateNewAndReturnOutTradeNo(), "0.10");
+
+            Assert.AreEqual(response.Code, "10000");
+            Assert.AreEqual(response.Msg, "Success");
+            Assert.IsNull(response.SubCode);
+            Assert.IsNull(response.SubMsg);
+            Assert.NotNull(response.HttpBody);
+            Assert.IsTrue(response.QrCode.StartsWith("https://qr.alipay.com/"));
+        }
+
         private string CreateNewAndReturnOutTradeNo()
         {
             return Factory.Payment.Common().Create("Iphone6 16G", Guid.NewGuid().ToString(),

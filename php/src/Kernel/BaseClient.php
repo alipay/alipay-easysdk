@@ -4,7 +4,10 @@ namespace Alipay\EasySDK\Kernel;
 
 use AlibabaCloud\Tea\FileForm\FileForm;
 use AlibabaCloud\Tea\FileForm\FileForm\FileField;
+use AlibabaCloud\Tea\Model;
+use Alipay\EasySDK\Kernel\Util\AES;
 use Alipay\EasySDK\Kernel\Util\JsonUtil;
+use Alipay\EasySDK\Kernel\Util\PageUtil;
 use Alipay\EasySDK\Kernel\Util\SignContentExtractor;
 use Alipay\EasySDK\Kernel\Util\Signer;
 use GuzzleHttp\Psr7\Stream;
@@ -53,32 +56,31 @@ class BaseClient
      */
     protected function _toMultipartRequestBody($textParams, $fileParams, $boundary)
     {
-        $fileField              = new FileField();
-        $fileField->filename    = $fileParams['image_content'];
-        $fileField->contentType = 'multipart/form-data;charset=utf-8;boundary='.$boundary;
-        $fileField->content     = new Stream(fopen($fileParams['image_content'], 'r'));
+        $fileField = new FileField();
+        $fileField->filename = $fileParams['image_content'];
+        $fileField->contentType = 'multipart/form-data;charset=utf-8;boundary=' . $boundary;
+        $fileField->content = new Stream(fopen($fileParams['image_content'], 'r'));
         $map = [
-            'image_type'      => $textParams['image_type'],
-            'image_name'      =>  $textParams['image_name'],
-            'image_content'   => $fileField
+            'image_type' => $textParams['image_type'],
+            'image_name' => $textParams['image_name'],
+            'image_content' => $fileField
         ];
         $stream = FileForm::toFileForm($map, $boundary);
         do {
             $readLength = $stream->read(1024);
         } while (0 != $readLength);
-        return  $stream;
+        return $stream;
     }
 
     /**
      * 将业务参数和其他额外文本参数按www-form-urlencoded格式转换成HTTP Body中的字节数组，注意要做URL Encode
      *
      * @param $bizParams array 业务参数
-     * @param $textParams array 其他额外文本参数
      * @return false|string|null
      */
-    protected function _toUrlEncodedRequestBody($bizParams, $textParams)
+    protected function _toUrlEncodedRequestBody($bizParams)
     {
-        $sortedMap = $this->getSortedMap(null, $bizParams, $textParams);
+        $sortedMap = $this->getSortedMap(null, $bizParams, null);
         if (empty($sortedMap)) {
             return null;
         }
@@ -167,6 +169,9 @@ class BaseClient
                 $sortedMap = $textParams;
             }
         }
+        if ($this->getConfig(AlipayConstants::NOTIFY_URL_CONFIG_KEY) != null && !$sortedMap[AlipayConstants::NOTIFY_URL_FIELD]) {
+            $sortedMap[AlipayConstants::NOTIFY_URL_FIELD] = $this->getConfig(AlipayConstants::NOTIFY_URL_CONFIG_KEY);
+        }
         return $sortedMap;
     }
 
@@ -179,7 +184,6 @@ class BaseClient
     function getSignContent($params)
     {
         ksort($params);
-
         $stringToBeSigned = "";
         $i = 0;
         foreach ($params as $k => $v) {
@@ -223,6 +227,7 @@ class BaseClient
      * @param $respMap  string 响应内容，可以从中提取出sign和body
      * @param $alipayPublicKey string 支付宝公钥
      * @return bool  true：验签通过；false：验签不通过
+     * @throws \Exception
      */
     protected function _verify($respMap, $alipayPublicKey)
     {
@@ -246,16 +251,16 @@ class BaseClient
         $body = $respMap[AlipayConstants::BODY_FIELD];
         $methodName = $respMap[AlipayConstants::METHOD_FIELD];
         $responseNodeName = str_replace(".", "_", $methodName) . AlipayConstants::RESPONSE_SUFFIX;
+
         $model = json_decode($body, true);
         if (strpos($body, AlipayConstants::ERROR_RESPONSE)) {
             $result = $model[AlipayConstants::ERROR_RESPONSE];
             $result[AlipayConstants::BODY_FIELD] = $body;
-            return $result;
         } else {
             $result = $model[$responseNodeName];
             $result[AlipayConstants::BODY_FIELD] = $body;
-            return $result;
         }
+        return $result;
     }
 
     /**
@@ -317,6 +322,16 @@ class BaseClient
         return AlipayConstants::SDK_VERSION;
     }
 
+    /**
+     * 生成页面类请求所需URL或Form表单
+     * @param $method
+     * @param $systemParams
+     * @param $bizParams
+     * @param $textParams
+     * @param $sign
+     * @return string
+     * @throws \Exception
+     */
     protected function _generatePage($method, $systemParams, $bizParams, $textParams, $sign)
     {
         if ($method == AlipayConstants::GET) {
@@ -324,9 +339,64 @@ class BaseClient
             $sortedMap = $this->getSortedMap($systemParams, $bizParams, $textParams);
             $sortedMap[AlipayConstants::SIGN_FIELD] = $sign;
             return $this->getGatewayServerUrl() . '?' . $this->buildQueryString($sortedMap);
-        }else{
-            throw new \Exception("不支持".$method);
+        } elseif ($method == AlipayConstants::POST) {
+            //采集并排序所有参数
+            $sortedMap = $this->getSortedMap($systemParams, $bizParams, $textParams);
+            $sortedMap[AlipayConstants::SIGN_FIELD] = $sign;
+            $pageUtil = new PageUtil();
+            return $pageUtil->buildForm($this->getGatewayServerUrl(), $sortedMap);
+        } else {
+            throw new \Exception("不支持" . $method);
         }
+    }
+
+    /**
+     * 生成sdkExecute类请求所需URL
+     *
+     * @param $systemParams
+     * @param $bizParams
+     * @param $textParams
+     * @param $sign
+     * @return string
+     */
+    protected function _generateOrderString($systemParams, $bizParams, $textParams, $sign)
+    {
+        //采集并排序所有参数
+        $sortedMap = $this->getSortedMap($systemParams, $bizParams, $textParams);
+        $sortedMap[AlipayConstants::SIGN_FIELD] = $sign;
+        return http_build_query($sortedMap);
+    }
+
+    /**
+     * AES解密
+     *
+     * @param $content
+     * @param $encryptKey
+     * @return string
+     */
+    protected function _aesDecrypt($content, $encryptKey)
+    {
+        $aes = new AES();
+        return $aes->aesDecrypt($content, $encryptKey);
+    }
+
+    /**
+     * AES加密
+     *
+     * @param $content
+     * @param $encryptKey
+     * @return string
+     */
+    protected function _aesEncrypt($content, $encryptKey)
+    {
+        $aes = new AES();
+        return $aes->aesEncrypt($content, $encryptKey);
+    }
+
+    protected function _verifyParams($parameters, $publicKey)
+    {
+        $sign = new Signer();
+        return $sign->verifyParams($parameters, $publicKey);
     }
 
     private function getGatewayServerUrl()

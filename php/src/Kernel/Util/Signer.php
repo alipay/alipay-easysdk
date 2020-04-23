@@ -42,4 +42,31 @@ class Signer
         return $result;
     }
 
+    public function verifyParams($parameters, $publicKey)
+    {
+        $sign = $parameters['sign'];
+        $content = $this->getSignContent($parameters);
+        return $this->verify($content, $sign, $publicKey);
+    }
+
+    public function getSignContent($params)
+    {
+        ksort($params);
+        unset($params['sign']);
+        unset($params['sign_type']);
+        $stringToBeSigned = "";
+        $i = 0;
+        foreach ($params as $k => $v) {
+            if ("@" != substr($v, 0, 1)) {
+                if ($i == 0) {
+                    $stringToBeSigned .= "$k" . "=" . "$v";
+                } else {
+                    $stringToBeSigned .= "&" . "$k" . "=" . "$v";
+                }
+                $i++;
+            }
+        }
+        unset ($k, $v);
+        return $stringToBeSigned;
+    }
 }

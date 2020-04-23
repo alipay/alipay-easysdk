@@ -21,38 +21,52 @@ class ClientTest extends TestCase
     {
         $result = Factory::payment()->common()->create("Iphone6 16G",
             microtime(), "88.88", "2088002656718920");
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
-        return $result['out_trade_no'];
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
+        return $result->outTradeNo;
     }
 
     public function testQuery()
     {
         $result = Factory::payment()->common()->query('6f149ddb-ab8c-4546-81fb-5880b4aaa318');
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testCancel()
     {
         $result = Factory::payment()->common()->cancel($this->testCrate());
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testClose()
     {
         $result = Factory::payment()->common()->close($this->testCrate());
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testRefund()
     {
         $result = Factory::payment()->common()->refund($this->testCrate(), '0.01');
-        $this->assertEquals('40004', $result['code']);
-        $this->assertEquals('Business Failed', $result['msg']);
-        $this->assertEquals('ACQ.TRADE_STATUS_ERROR', $result['sub_code']);
-        $this->assertEquals('交易状态不合法', $result['sub_msg']);
+        $this->assertEquals('40004', $result->code);
+        $this->assertEquals('Business Failed', $result->msg);
+        $this->assertEquals('ACQ.TRADE_STATUS_ERROR', $result->subCode);
+        $this->assertEquals('交易状态不合法', $result->subMsg);
+    }
+
+    public function testRefundQuery()
+    {
+        $result = Factory::payment()->common()->queryRefund($this->testCrate(), "20200401010101001");
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
+    }
+
+    public function testDownloadBill()
+    {
+        $result = Factory::payment()->common()->downloadBill("trade", "2020-01");
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 }

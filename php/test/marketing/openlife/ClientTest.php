@@ -27,8 +27,8 @@ class ClientTest extends TestCase
             "http://dl.django.t.taobao.com/rest/1.0/image?fileIds=hOTQ1lT1TtOjcxGflvnUXgAAACMAAQED",
             "示例", "T", "activity", "满100减10",
             "关键,热度", "13434343432,xxx@163.com");
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testModifyImageTextContent()
@@ -38,14 +38,14 @@ class ClientTest extends TestCase
             "http://dl.django.t.taobao.com/rest/1.0/image?fileIds=hOTQ1lT1TtOjcxGflvnUXgAAACMAAQED",
             "新示例", "T", "activity", "满100减20",
             "关键,热度", "13434343432,xxx@163.com");
-        if($result['code'] == '10000'){
-            $this->assertEquals('10000', $result['code']);
-            $this->assertEquals('Success', $result['msg']);
-        }else{
-            $this->assertEquals('40004', $result['code']);
-            $this->assertEquals('Business Failed', $result['msg']);
-            $this->assertEquals('PUB.MSG_BATCH_SD_OVER', $result['sub_code']);
-            $this->assertEquals('批量发送消息频率超限', $result['sub_msg']);
+        if ($result->code == '10000') {
+            $this->assertEquals('10000', $result->code);
+            $this->assertEquals('Success', $result->msg);
+        } else {
+            $this->assertEquals('40004', $result->code);
+            $this->assertEquals('Business Failed', $result->msg);
+            $this->assertEquals('PUB.MSG_BATCH_SD_OVER', $result->subCode);
+            $this->assertEquals('批量发送消息频率超限', $result->subMsg);
         }
 
     }
@@ -53,14 +53,14 @@ class ClientTest extends TestCase
     public function testSendText()
     {
         $result = Factory::marketing()->openLife()->sendText("测试");
-        if($result['code'] == '10000'){
-            $this->assertEquals('10000', $result['code']);
-            $this->assertEquals('Success', $result['msg']);
-        }else{
-            $this->assertEquals('40004', $result['code']);
-            $this->assertEquals('Business Failed', $result['msg']);
-            $this->assertEquals('PUB.MSG_BATCH_SD_OVER', $result['sub_code']);
-            $this->assertEquals('批量发送消息频率超限', $result['sub_msg']);
+        if ($result->code == '10000') {
+            $this->assertEquals('10000', $result->code);
+            $this->assertEquals('Success', $result->msg);
+        } else {
+            $this->assertEquals('40004', $result->code);
+            $this->assertEquals('Business Failed', $result->msg);
+            $this->assertEquals('PUB.MSG_BATCH_SD_OVER', $result->subCode);
+            $this->assertEquals('批量发送消息频率超限', $result->subMsg);
         }
     }
 
@@ -73,14 +73,14 @@ class ClientTest extends TestCase
         $article->imageUrl = 'http://dl.django.t.taobao.com/rest/1.0/image?fileIds=hOTQ1lT1TtOjcxGflvnUXgAAACMAAQED';
         $article->url = 'https://docs.open.alipay.com/api_6/alipay.open.public.message.total.send';
         $result = Factory::marketing()->openLife()->sendImageText((array)$article);
-        if($result['code'] == '10000'){
-            $this->assertEquals('10000', $result['code']);
-            $this->assertEquals('Success', $result['msg']);
-        }else{
-            $this->assertEquals('40004', $result['code']);
-            $this->assertEquals('Business Failed', $result['msg']);
-            $this->assertEquals('PUB.MSG_BATCH_SD_OVER', $result['sub_code']);
-            $this->assertEquals('批量发送消息频率超限', $result['sub_msg']);
+        if ($result->code == '10000') {
+            $this->assertEquals('10000', $result->code);
+            $this->assertEquals('Success', $result->msg);
+        } else {
+            $this->assertEquals('40004', $result->code);
+            $this->assertEquals('Business Failed', $result->msg);
+            $this->assertEquals('PUB.MSG_BATCH_SD_OVER', $result->subCode);
+            $this->assertEquals('批量发送消息频率超限', $result->subMsg);
         }
     }
 
@@ -105,16 +105,16 @@ class ClientTest extends TestCase
 
         $result = Factory::marketing()->openLife()->sendSingleMessage("2088002656718920", $template);
 
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testRecallMessage()
     {
         $result = Factory::marketing()->openLife()->recallMessage("201905106452100327f456f6-8dd2-4a06-8b0e-ec8a3a85c46a");
 
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testSetIndustry()
@@ -123,23 +123,23 @@ class ClientTest extends TestCase
             "10001/20102", "IT科技/IT软件与服务",
             "10001/20102", "IT科技/IT软件与服务");
 
-        if($result['code'] == '10000'){
-            $this->assertEquals('10000', $result['code']);
-            $this->assertEquals('Success', $result['msg']);
-        }else{
-            $this->assertEquals('40004', $result['code']);
-            $this->assertEquals('Business Failed', $result['msg']);
-            $this->assertEquals('3002', $result['sub_code']);
-            $this->assertEquals('模板消息行业一月只能修改一次', $result['sub_msg']);
+        if ($result->code == '10000') {
+            $this->assertEquals('10000', $result->code);
+            $this->assertEquals('Success', $result->msg);
+        } else {
+            $this->assertEquals('40004', $result->code);
+            $this->assertEquals('Business Failed', $result->msg);
+            $this->assertEquals('3002', $result->subCode);
+            $this->assertEquals('模板消息行业一月只能修改一次', $result->subMsg);
         }
     }
 
     public function testGetIndustry()
     {
         $result = Factory::marketing()->openLife()->getIndustry();
-        $this->assertEquals('10000', $result['code']);
-        $this->assertEquals('Success', $result['msg']);
-        $this->assertEquals('IT科技/IT软件与服务', $result['primary_category']);
-        $this->assertEquals('IT科技/IT软件与服务', $result['secondary_category']);
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
+        $this->assertEquals('IT科技/IT软件与服务', $result->primaryCategory);
+        $this->assertEquals('IT科技/IT软件与服务', $result->secondaryCategory);
     }
 }

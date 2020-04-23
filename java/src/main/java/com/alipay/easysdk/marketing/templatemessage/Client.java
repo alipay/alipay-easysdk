@@ -63,9 +63,10 @@ public class Client extends BaseClient {
                     TeaConverter.buildMap(
                         new TeaPair("sign", _sign(systemParams, bizParams, textParams, _getConfig("merchantPrivateKey")))
                     ),
-                    systemParams
+                    systemParams,
+                    textParams
                 );
-                request_.body = Tea.toReadable(_toUrlEncodedRequestBody(bizParams, textParams));
+                request_.body = Tea.toReadable(_toUrlEncodedRequestBody(bizParams));
                 _lastRequest = request_;
                 TeaResponse response_ = Tea.doAction(request_, runtime_);
 

@@ -43,20 +43,26 @@ namespace UnitTest
         /// </summary>
         public static class Mini
         {
-            public static Config CONFIG = new Config
-            {
-                Protocol = "https",
-                GatewayHost = "openapi.alipay.com",
-                AppId = "<-- 请填写您的AppId，例如：2019022663440152 -->",
-                SignType = "RSA2",
+            public static Config CONFIG = GetConfig();
 
-                AlipayPublicKey = "<-- 请填写您的支付宝公钥，例如：MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAumX1EaLM4ddn1Pia4SxTRb62aVYxU8I2mHMqrc"
+            public static Config GetConfig()
+            {
+                return new Config
+                {
+                    Protocol = "https",
+                    GatewayHost = "openapi.alipay.com",
+                    AppId = "<-- 请填写您的AppId，例如：2019022663440152 -->",
+                    SignType = "RSA2",
+
+                    AlipayPublicKey = "<-- 请填写您的支付宝公钥，例如：MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAumX1EaLM4ddn1Pia4SxTRb62aVYxU8I2mHMqrc"
                        + "pQU6F01mIO/DjY7R4xUWcLi0I2oH/BK/WhckEDCFsGrT7mO+JX8K4sfaWZx1aDGs0m25wOCNjp+DCVBXotXSCurqgGI/9UrY+"
                        + "QydYDnsl4jB65M3p8VilF93MfS01omEDjUW+1MM4o3FP0khmcKsoHnYGs21btEeh0LK1gnnTDlou6Jwv3Ew36CbCNY2cYkuyP"
                        + "AW0j47XqzhWJ7awAx60fwgNBq6ZOEPJnODqH20TAdTLNxPSl4qGxamjBO+RuInBy+Bc2hFHq3pNv6hTAfktggRKkKzDlDEUwg"
                        + "SLE7d2eL7P6rwIDAQAB -->",
-                MerchantPrivateKey = GetPrivateKey("2019022663440152")
-            };
+                    MerchantPrivateKey = GetPrivateKey("<-- 请填写您的AppId，例如：2019022663440152 -->"),
+                    NotifyUrl = "<-- 请填写您的异步通知接收服务器地址，例如：https://www.test.com/callback"
+                };
+            }
         }
 
         /// <summary>
@@ -74,7 +80,7 @@ namespace UnitTest
                 AlipayCertPath = "<-- 请填写您的支付宝公钥证书文件路径，例如：GetSolutionBasePath() + \"/UnitTest/Fixture/alipayCertPublicKey_RSA2.crt\" -->",
                 AlipayRootCertPath = "<-- 请填写您的支付宝根证书文件路径，例如：GetSolutionBasePath() + \"/UnitTest/Fixture/alipayRootCert.crt\" -->",
                 MerchantCertPath = "<-- 请填写您的应用公钥证书文件路径，例如：GetSolutionBasePath() + \"/UnitTest/Fixture/appCertPublicKey_2019051064521003.crt\" -->",
-                MerchantPrivateKey = GetPrivateKey("2019051064521003")
+                MerchantPrivateKey = GetPrivateKey("<-- 请填写您的AppId，例如：2019051064521003 -->")
             };
         }
     }

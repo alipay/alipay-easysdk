@@ -5,21 +5,33 @@ module Main {
   type @sign = (map[string]string, map[string]any, map[string]string, string): string
   type @getMerchantCertSN = (): string
   type @getAlipayRootCertSN = (): string
-  type @toUrlEncodedRequestBody = (map[string]any, map[string]string): bytes
+  type @toUrlEncodedRequestBody = (map[string]any): bytes
   type @readAsJson = ($Response, string): object
   type @getAlipayCertSN = (object): string
   type @extractAlipayPublicKey = (string): string
   type @verify = (object, string): boolean
   type @toRespModel = (object): object
   type @getSdkVersion = (): string
+  type @verifyParams =  (map[string]string, string): boolean
 
-  init(); 
+  init();
+
+  model RefundRoyaltyResult{
+    refundAmount: string(name='refund_amount'),
+    royaltyType: string(name='royalty_type'),
+    resultCode: string(name='result_code'),
+    transOut: string(name='trans_out'),
+    transOutEmail: string(name='trans_out_email'),
+    transIn: string(name='trans_in'),
+    transInEmail: string(name='trans_in_email'),
+  }
 
   model TradeFundBill {
     fundChannel: string(name='fund_channel'),
     bankCode: string(name='bank_code'),
     amount: string(name='amount'),
-    realAmount: string(name='real_amount')
+    realAmount: string(name='real_amount'),
+    fundType: string(name='fund_type')
   }
 
   model TradeSettleDetail {
@@ -145,6 +157,43 @@ module Main {
     refundSettlementId: string(name='refund_settlement_id')
   }
 
+  model AlipayTradeFastpayRefundQueryResponse {
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    errorCode: string(name='error_code'),
+    gmtRefundPay: string(name='gmt_refund_pay'),
+    industrySepcDetail: string(name='industry_sepc_detail'),
+    outRequestNo: string(name='out_request_no'),
+    outTradeNo: string(name='out_trade_no'),
+    presentRefundBuyerAmount: string(name='present_refund_buyer_amount'),
+    presentRefundDiscountAmount: string(name='present_refund_discount_amount'),
+    presentRefundMdiscountAmount: string(name='present_refund_mdiscount_amount'),
+    refundAmount: string(name='refund_amount'),
+    refundChargeAmount: string(name='refund_charge_amount'),
+    refundDetailItemList: [ TradeFundBill ](name='refund_detail_item_list'),
+    refundReason: string(name='refund_reason'),
+    refundRoyaltys: [ RefundRoyaltyResult ](name='refund_royaltys'),
+    refundSettlementId: string(name='refund_settlement_id'),
+    refundStatus: string(name='refund_status'),
+    sendBackFee: string(name='send_back_fee'),
+    totalAmount: string(name='total_amount'),
+    tradeNo: string(name='trade_no')
+  }
+
+  model AlipayDataDataserviceBillDownloadurlQueryResponse{
+    httpBody: string(name='http_body', description='响应原始字符串'),
+    code: string(name='code'),
+    msg: string(name='msg'),
+    subCode: string(name='sub_code'),
+    subMsg: string(name='sub_msg'),
+
+    billDownloadUrl: string(name='bill_download_url'),
+  }
+
   api create(subject: string, outTradeNo: string, totalAmount: string, buyerId: string): AlipayTradeCreateResponse {
     var systemParams: map[string]string = {
       method = 'alipay.trade.create',
@@ -181,10 +230,11 @@ module Main {
 
     query = {
       sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
-      ... systemParams
+      ... systemParams,
+      ... textParams
     };
 
-    body = @toUrlEncodedRequestBody(bizParams, textParams);
+    body = @toUrlEncodedRequestBody(bizParams);
   } returns {
     var respMap: object = @readAsJson(__response, "alipay.trade.create");
 
@@ -243,10 +293,11 @@ module Main {
 
     query = {
       sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
-      ... systemParams
+      ... systemParams,
+      ... textParams
     };
 
-    body = @toUrlEncodedRequestBody(bizParams, textParams);
+    body = @toUrlEncodedRequestBody(bizParams);
   } returns {
     var respMap: object = @readAsJson(__response, "alipay.trade.query");
 
@@ -306,10 +357,11 @@ module Main {
 
     query = {
       sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
-      ... systemParams
+      ... systemParams,
+      ... textParams
     };
 
-    body = @toUrlEncodedRequestBody(bizParams, textParams);
+    body = @toUrlEncodedRequestBody(bizParams);
   } returns {
     var respMap: object = @readAsJson(__response, "alipay.trade.refund");
 
@@ -368,10 +420,11 @@ module Main {
 
     query = {
       sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
-      ... systemParams
+      ... systemParams,
+      ... textParams
     };
 
-    body = @toUrlEncodedRequestBody(bizParams, textParams);
+    body = @toUrlEncodedRequestBody(bizParams);
   } returns {
     var respMap: object = @readAsJson(__response, "alipay.trade.close");
 
@@ -430,10 +483,11 @@ module Main {
 
     query = {
       sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
-      ... systemParams
+      ... systemParams,
+      ... textParams
     };
 
-    body = @toUrlEncodedRequestBody(bizParams, textParams);
+    body = @toUrlEncodedRequestBody(bizParams);
   } returns {
     var respMap: object = @readAsJson(__response, "alipay.trade.cancel");
 
@@ -456,6 +510,142 @@ module Main {
     readTimeout = 15000,
     retry = {
       maxAttempts = 0
+    }
+  }
+
+  api queryRefund(outTradeNo: string, outRequestNo: string): AlipayTradeFastpayRefundQueryResponse {
+      var systemParams: map[string]string = {
+        method = 'alipay.trade.fastpay.refund.query',
+
+        app_id = @getConfig('appId'),
+        timestamp = @getTimestamp(),
+        format = 'json',
+        version = '1.0',
+        alipay_sdk = @getSdkVersion(),
+        charset = 'UTF-8',
+        sign_type = @getConfig('signType'),
+        app_cert_sn = @getMerchantCertSN(),
+        alipay_root_cert_sn = @getAlipayRootCertSN()
+      };
+
+      var bizParams: map[string]any = {
+        out_trade_no = outTradeNo,
+        out_request_no = outRequestNo
+      };
+
+      var textParams: map[string]string = {
+      };
+
+      protocol = @getConfig('protocol');
+      method = 'POST';
+      pathname = '/gateway.do';
+
+      headers = {
+        host = @getConfig('gatewayHost'),
+        content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+      };
+
+      query = {
+        sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+        ... systemParams,
+      ... textParams
+      };
+
+      body = @toUrlEncodedRequestBody(bizParams);
+    } returns {
+      var respMap: object = @readAsJson(__response, "alipay.trade.fastpay.refund.query");
+
+      if (@isCertMode()) {
+        if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+          return @toRespModel(respMap);
+        }
+      } else {
+        if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+          return @toRespModel(respMap);
+        }
+      }
+
+      throw {
+        message = '验签失败，请检查支付宝公钥设置是否正确。'
+      }
+
+    } runtime {
+      connectTimeout = 15000,
+      readTimeout = 15000,
+      retry = {
+        maxAttempts = 0
+      }
+    }
+
+    api downloadBill(billType: string, billDate: string): AlipayDataDataserviceBillDownloadurlQueryResponse {
+      var systemParams: map[string]string = {
+        method = 'alipay.data.dataservice.bill.downloadurl.query',
+
+        app_id = @getConfig('appId'),
+        timestamp = @getTimestamp(),
+        format = 'json',
+        version = '1.0',
+        alipay_sdk = @getSdkVersion(),
+        charset = 'UTF-8',
+        sign_type = @getConfig('signType'),
+        app_cert_sn = @getMerchantCertSN(),
+        alipay_root_cert_sn = @getAlipayRootCertSN()
+      };
+
+      var bizParams: map[string]any = {
+        bill_type = billType,
+        bill_date = billDate
+      };
+
+      var textParams: map[string]string = {
+      };
+
+      protocol = @getConfig('protocol');
+      method = 'POST';
+      pathname = '/gateway.do';
+
+      headers = {
+        host = @getConfig('gatewayHost'),
+        content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+      };
+
+      query = {
+        sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
+        ... systemParams,
+      ... textParams
+      };
+
+      body = @toUrlEncodedRequestBody(bizParams);
+    } returns {
+      var respMap: object = @readAsJson(__response, "alipay.data.dataservice.bill.downloadurl.query");
+
+      if (@isCertMode()) {
+        if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
+          return @toRespModel(respMap);
+        }
+      } else {
+        if (@verify(respMap, @getConfig('alipayPublicKey'))) {
+          return @toRespModel(respMap);
+        }
+      }
+
+      throw {
+        message = '验签失败，请检查支付宝公钥设置是否正确。'
+      }
+
+    } runtime {
+      connectTimeout = 15000,
+      readTimeout = 15000,
+      retry = {
+        maxAttempts = 0
+      }
+    }
+
+  function verifyNotify(parameters: map[string]string): boolean {
+    if (@isCertMode()) {
+      return @verifyParams(parameters, @extractAlipayPublicKey(''));
+    } else {
+      return @verifyParams(parameters, @getConfig('alipayPublicKey'));
     }
   }
 }

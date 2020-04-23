@@ -19,7 +19,7 @@ public class ClientTest {
 
     @Test
     public void testGetToken() throws Exception {
-        AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().getToken("ee4b3c871f7c4f30a82251908458VB64");
+        AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().getToken("fe1ae5abacd54ba2a6c8f6902533TX64");
 
         assertThat(response.code, is("40002"));
         assertThat(response.msg, is("Invalid Arguments"));
