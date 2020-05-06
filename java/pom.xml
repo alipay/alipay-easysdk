@@ -6,7 +6,7 @@
 
     <groupId>com.alipay.sdk</groupId>
     <artifactId>alipay-easysdk</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 
     <name>Alipay Easy SDK</name>
     <url>https://open.alipay.com</url>

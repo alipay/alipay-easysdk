@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <PackOnBuild>true</PackOnBuild>
-    <PackageVersion>1.2.0</PackageVersion>
+    <PackageVersion>1.2.1</PackageVersion>
     <Authors>antopen</Authors>
     <NeutralLanguage>zh</NeutralLanguage>
     <PackageLicenseUrl>https://github.com/alipay/alipay-easysdk/blob/master/LICENSE</PackageLicenseUrl>
