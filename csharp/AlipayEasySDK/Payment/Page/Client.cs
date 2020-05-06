@@ -20,7 +20,7 @@ namespace Alipay.EasySDK.Payment.Page
         { }
 
 
-        public AlipayTradePagePayResponse Pay(string subject, string outTradeNo, string totalAmount)
+        public AlipayTradePagePayResponse Pay(string subject, string outTradeNo, string totalAmount, string returnUrl)
         {
             Dictionary<string, string> systemParams = new Dictionary<string, string>()
             {
@@ -42,7 +42,10 @@ namespace Alipay.EasySDK.Payment.Page
                 {"total_amount", totalAmount},
                 {"product_code", "FAST_INSTANT_TRADE_PAY"},
             };
-            Dictionary<string, string> textParams = new Dictionary<string, string>(){};
+            Dictionary<string, string> textParams = new Dictionary<string, string>()
+            {
+                {"return_url", returnUrl},
+            };
             string sign = _sign(systemParams, bizParams, textParams, _getConfig("merchantPrivateKey"));
             Dictionary<string, string> response = new Dictionary<string, string>()
             {

@@ -381,13 +381,13 @@ namespace Alipay.EasySDK.Kernel
             }
             else if (AlipayConstants.POST.Equals(method))
             {
-                //将系统参数排序后置于URL中
-                IDictionary<string, string> urlParams = GetSortedMap(systemParams, null, null);
+                //将系统参数、额外文本参数排序后置于URL中
+                IDictionary<string, string> urlParams = GetSortedMap(systemParams, null, textParams);
                 urlParams.Add(AlipayConstants.SIGN_FIELD, sign);
                 string actionUrl = GetGatewayServerUrl() + "?" + BuildQueryString(urlParams);
 
-                //将非系统参数排序后置于form表单中
-                IDictionary<string, string> formParams = new SortedDictionary<string, string>(textParams)
+                //将业务参数排序后置于form表单中
+                IDictionary<string, string> formParams = new SortedDictionary<string, string>()
                 {
                     { AlipayConstants.BIZ_CONTENT_FIELD, JsonUtil.ToJsonString(bizParams)}
                 };

@@ -36,7 +36,7 @@ public final class AlipayConstants {
     public static final String METHOD_FIELD         = "method";
     public static final String RESPONSE_SUFFIX      = "_response";
     public static final String ERROR_RESPONSE       = "error_response";
-    public static final String SDK_VERSION          = "alipay-easysdk-java-1.2.0";
+    public static final String SDK_VERSION          = "alipay-easysdk-java-1.2.1";
 
     /**
      * 默认字符集编码，EasySDK统一固定使用UTF-8编码，无需用户感知编码，用户面对的总是String而不是bytes

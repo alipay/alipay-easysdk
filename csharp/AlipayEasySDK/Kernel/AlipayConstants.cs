@@ -31,7 +31,7 @@ namespace Alipay.EasySDK.Kernel
         public const string METHOD_FIELD = "method";
         public const string RESPONSE_SUFFIX = "_response";
         public const string ERROR_RESPONSE = "error_response";
-        public const string SDK_VERSION = "alipay-easysdk-net-1.2.0";
+        public const string SDK_VERSION = "alipay-easysdk-net-1.2.1";
 
         /// <summary>
         /// 默认字符集编码，EasySDK统一固定使用UTF-8编码，无需用户感知编码，用户面对的总是String而不是bytes

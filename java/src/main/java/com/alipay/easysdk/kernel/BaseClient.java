@@ -377,13 +377,13 @@ public class BaseClient {
             //将所有参数置于URL中
             return getGatewayServerUrl() + "?" + buildQueryString(sortedMap);
         } else if (AlipayConstants.POST.equalsIgnoreCase(method)) {
-            //将系统参数排序后置于URL中
+            //将系统参数、额外文本参数排序后置于URL中
             Map<String, String> urlParams = getSortedMap(systemParams, null, textParams);
             urlParams.put(AlipayConstants.SIGN_FIELD, sign);
             String actionUrl = getGatewayServerUrl() + "?" + buildQueryString(urlParams);
 
-            //将非系统参数排序后置于form表单中
-            Map<String, String> formParams = new TreeMap<>(textParams);
+            //将业务参数置于form表单中
+            Map<String, String> formParams = new TreeMap<>();
             formParams.put(AlipayConstants.BIZ_CONTENT_FIELD, JsonUtil.toJsonString(bizParams));
             return PageUtil.buildForm(actionUrl, formParams);
         } else {

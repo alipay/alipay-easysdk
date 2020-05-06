@@ -633,7 +633,7 @@ precreate(subject: string, outTradeNo: string, totalAmount: string)
 ### 电脑网站支付
 * API声明
 
-pay(subject: string, outTradeNo: string, totalAmount: string, productCode: string)
+pay(subject: string, outTradeNo: string, totalAmount: string, returnUrl: string)
 
 * 入参说明
 
@@ -642,7 +642,7 @@ pay(subject: string, outTradeNo: string, totalAmount: string, productCode: strin
 | subject | string | 是  |  订单标题  |
 | outTradeNo | string | 是  |  交易创建时传入的商户订单号  |
 | totalAmount | string | 是  |  订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
-| productCode | string | 是  |  销售产品码，商家和支付宝签约的产品码  |
+| returnUrl | string | 否  |  支付成功后同步跳转的页面，是一个http/https开头的字符串  |
 
 * 出参说明
 
@@ -654,7 +654,7 @@ pay(subject: string, outTradeNo: string, totalAmount: string, productCode: strin
 ### 手机网站支付
 * API声明
 
-pay(subject: string, outTradeNo: string, totalAmount: string, quitUrl: string, productCode: string)
+pay(subject: string, outTradeNo: string, totalAmount: string, quitUrl: string, returnUrl: string)
 
 * 入参说明
 
@@ -664,7 +664,7 @@ pay(subject: string, outTradeNo: string, totalAmount: string, quitUrl: string, p
 | outTradeNo | string | 是  |  交易创建时传入的商户订单号  |
 | totalAmount | string | 是  |  订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]  |
 | quitUrl | string | 是  |  用户付款中途退出返回商户网站的地址  |
-| productCode | string | 是  |  销售产品码，商家和支付宝签约的产品码  |
+| returnUrl | string | 否 |  支付成功后同步跳转的页面，是一个http/https开头的字符串  |
 
 * 出参说明
 

@@ -28,7 +28,7 @@ class AlipayConstants
     const METHOD_FIELD         = "method";
     const RESPONSE_SUFFIX      = "_response";
     const ERROR_RESPONSE       = "error_response";
-    const SDK_VERSION          = "alipay-easysdk-php-1.0.0";
+    const SDK_VERSION          = "alipay-easysdk-php-1.2.1";
 
     /**
      * 默认字符集编码，EasySDK统一固定使用UTF-8编码，无需用户感知编码，用户面对的总是String而不是bytes

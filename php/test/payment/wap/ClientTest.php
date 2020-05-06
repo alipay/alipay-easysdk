@@ -15,8 +15,8 @@ class ClientTest extends TestCase
     public function testPay(){
         $create =Factory::payment()->common()->create("Iphone6 16G",
             microtime(), "88.88", "2088002656718920");
-        $result = Factory::payment()->wap()->pay("Iphone6 16G",$create->outTradeNo,"0.10","http://www.taobao.com/product/113714.html");
-        $this->assertEquals(true, strpos($result->body,'alipay_sdk=alipay-easysdk-php')>0);
+        $result = Factory::payment()->wap()->pay("Iphone6 16G",$create->outTradeNo,"0.10","https://www.taobao.com","https://www.taobao.com");
+        $this->assertEquals(true, strpos($result->body,'return_url')>0);
         $this->assertEquals(true, strpos($result->body,'sign')>0);
     }
 }

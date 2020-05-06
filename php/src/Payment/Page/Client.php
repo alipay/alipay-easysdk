@@ -35,7 +35,7 @@ class Client extends BaseClient{
      * @return AlipayTradePagePayResponse
      * @throws \Exception
      */
-    public function pay($subject, $outTradeNo, $totalAmount){
+    public function pay($subject, $outTradeNo, $totalAmount, $returnUrl){
         $systemParams = [
             "method" => "alipay.trade.page.pay",
             "app_id" => $this->_getConfig("appId"),
@@ -54,7 +54,9 @@ class Client extends BaseClient{
             "total_amount" => $totalAmount,
             "product_code" => "FAST_INSTANT_TRADE_PAY"
             ];
-        $textParams = [];
+        $textParams = [
+            "return_url" => $returnUrl
+        ];
         $sign = $this->_sign($systemParams, $bizParams, $textParams, $this->_getConfig("merchantPrivateKey"));
         $response = [
             "body" => $this->_generatePage("POST", $systemParams, $bizParams, $textParams, $sign)

@@ -11,7 +11,7 @@ public class Client extends BaseClient {
     }
 
 
-    public AlipayTradeWapPayResponse pay(String subject, String outTradeNo, String totalAmount, String quitUrl) throws Exception {
+    public AlipayTradeWapPayResponse pay(String subject, String outTradeNo, String totalAmount, String quitUrl, String returnUrl) throws Exception {
         java.util.Map<String, String> systemParams = TeaConverter.buildMap(
             new TeaPair("method", "alipay.trade.wap.pay"),
             new TeaPair("app_id", _getConfig("appId")),
@@ -31,7 +31,9 @@ public class Client extends BaseClient {
             new TeaPair("quit_url", quitUrl),
             new TeaPair("product_code", "QUICK_WAP_WAY")
         );
-        java.util.Map<String, String> textParams = new java.util.HashMap<>();
+        java.util.Map<String, String> textParams = TeaConverter.buildMap(
+            new TeaPair("return_url", returnUrl)
+        );
         String sign = _sign(systemParams, bizParams, textParams, _getConfig("merchantPrivateKey"));
         java.util.Map<String, String> response = TeaConverter.buildMap(
             new TeaPair("body", _generatePage("POST", systemParams, bizParams, textParams, sign))

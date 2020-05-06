@@ -20,7 +20,7 @@ namespace Alipay.EasySDK.Payment.Wap
         { }
 
 
-        public AlipayTradeWapPayResponse Pay(string subject, string outTradeNo, string totalAmount, string quitUrl)
+        public AlipayTradeWapPayResponse Pay(string subject, string outTradeNo, string totalAmount, string quitUrl, string returnUrl)
         {
             Dictionary<string, string> systemParams = new Dictionary<string, string>()
             {
@@ -43,7 +43,10 @@ namespace Alipay.EasySDK.Payment.Wap
                 {"quit_url", quitUrl},
                 {"product_code", "QUICK_WAP_WAY"},
             };
-            Dictionary<string, string> textParams = new Dictionary<string, string>(){};
+            Dictionary<string, string> textParams = new Dictionary<string, string>()
+            {
+                {"return_url", returnUrl},
+            };
             string sign = _sign(systemParams, bizParams, textParams, _getConfig("merchantPrivateKey"));
             Dictionary<string, string> response = new Dictionary<string, string>()
             {
