@@ -11,7 +11,7 @@ public class Client extends BaseClient {
     }
 
 
-    public AlipayTradePagePayResponse pay(String subject, String outTradeNo, String totalAmount) throws Exception {
+    public AlipayTradePagePayResponse pay(String subject, String outTradeNo, String totalAmount, String returnUrl) throws Exception {
         java.util.Map<String, String> systemParams = TeaConverter.buildMap(
             new TeaPair("method", "alipay.trade.page.pay"),
             new TeaPair("app_id", _getConfig("appId")),
@@ -30,7 +30,9 @@ public class Client extends BaseClient {
             new TeaPair("total_amount", totalAmount),
             new TeaPair("product_code", "FAST_INSTANT_TRADE_PAY")
         );
-        java.util.Map<String, String> textParams = new java.util.HashMap<>();
+        java.util.Map<String, String> textParams = TeaConverter.buildMap(
+            new TeaPair("return_url", returnUrl)
+        );
         String sign = _sign(systemParams, bizParams, textParams, _getConfig("merchantPrivateKey"));
         java.util.Map<String, String> response = TeaConverter.buildMap(
             new TeaPair("body", _generatePage("POST", systemParams, bizParams, textParams, sign))
@@ -38,5 +40,3 @@ public class Client extends BaseClient {
         return TeaModel.toModel(response, new AlipayTradePagePayResponse());
     }
 }
-
-

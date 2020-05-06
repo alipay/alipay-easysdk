@@ -1,9 +1,11 @@
 最新变更
-2020-04-15 Java、C#、PHP版本同时扩展支持更多支付类接口，支持支付的异步通知及其验签，增加AES加解密功能
+2020-05-06 手机网站支付、电脑网站支付接口支持设置return_url同步跳转地址。
 
 
 
 Java版本
+2020-05-06 Version: 1.2.1
+1. 手机网站支付、电脑网站支付接口支持设置return_url同步跳转地址。
 
 2020-04-15 Version: 1.2.0
 1. 扩展支持的支付类OpenAPI接口
@@ -39,6 +41,8 @@ Factory.Util.AES().encrypt AES加密
 
 
 C#版本
+2020-05-06 Version: 1.2.1
+1. 手机网站支付、电脑网站支付接口支持设置return_url同步跳转地址。
 
 2020-04-15 Version: 1.2.0
 1. 扩展支持的支付类OpenAPI接口
@@ -56,7 +60,6 @@ Factory.Payment.Common().verifyNotify
 Factory.Util.AES().Decrypt 支持会员手机号AES解密
 Factory.Util.AES().Encrypt AES加密
 
-
 2020-03-10 Version: 1.1.0
 1. 添加兜底通用接口，支持通过自行拼接请求参数完成几乎所有OpenAPI的调用。
 
@@ -66,6 +69,8 @@ Factory.Util.AES().Encrypt AES加密
 
 
 PHP版本
+2020-05-06 Version: 1.2.1
+1. 手机网站支付、电脑网站支付接口支持设置return_url同步跳转地址。
 
 2020-04-15 Version: 1.2.0
 1. 扩展支持的支付类OpenAPI接口
@@ -83,7 +88,6 @@ Factory::payment()->common()->verifyNotify
 Factory::util()->aes()->decrypt 支持会员手机号AES解密
 Factory::util()->aes()->encrypt AES加密
 4. 重构api的respone模型，返回格式与Java、Net保持一致
-
 
 2020-03-27 Version: 1.1.0
 1. 修复大小写路径敏感问题。

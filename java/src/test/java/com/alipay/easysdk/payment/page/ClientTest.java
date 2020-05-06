@@ -22,10 +22,12 @@ public class ClientTest {
     @Test
     public void testPay() throws Exception {
         AlipayTradePagePayResponse response = Factory.Payment.Page().pay("iPhone6 16G",
-                "e5b5bd79-8310-447d-b63b-0fe3a393324d", "0.10");
+                "e5b5bd79-8310-447d-b63b-0fe3a393324d", "0.10", "https://www.taobao.com");
 
         assertThat(response.body.contains("<form name=\"punchout_form\" method=\"post\" "
                 + "action=\"https://openapi.alipay.com/gateway.do?"), is(true));
+        assertThat(response.body.contains("notify_url"), is(true));
+        assertThat(response.body.contains("return_url"), is(true));
         assertThat(response.body.contains("<input type=\"hidden\" name=\"biz_content\" value=\"{&quot;out_trade_no&quot;:&quot;"
                 + "e5b5bd79-8310-447d-b63b-0fe3a393324d&quot;,&quot;total_amount&quot;:&quot;0.10&quot;,&quot;subject&quot;:&quot;iPhone6"
                 + " 16G&quot;,&quot;product_code&quot;:&quot;FAST_INSTANT_TRADE_PAY&quot;}\">"), is(true));

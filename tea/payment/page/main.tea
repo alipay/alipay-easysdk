@@ -21,7 +21,7 @@ module Main {
     body: string(name='body', description='订单信息，Form表单形式')
   }
 
-  function pay(subject: string, outTradeNo: string, totalAmount: string): AlipayTradePagePayResponse {
+  function pay(subject: string, outTradeNo: string, totalAmount: string, returnUrl: string): AlipayTradePagePayResponse {
     var systemParams: map[string]string = {
       method = 'alipay.trade.page.pay',
 
@@ -44,6 +44,7 @@ module Main {
     };
 
     var textParams: map[string]string = {
+      return_url = returnUrl
     };
 
     var sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey'));

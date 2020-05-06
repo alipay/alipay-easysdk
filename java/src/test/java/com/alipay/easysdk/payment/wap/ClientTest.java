@@ -22,10 +22,13 @@ public class ClientTest {
     @Test
     public void testPay() throws Exception {
         AlipayTradeWapPayResponse response = Factory.Payment.Wap().pay("iPhone6 16G",
-                "b7f4bc7d-ea4b-4efd-9072-d8ea913c8946", "0.10", "https://www.taobao.com");
+                "b7f4bc7d-ea4b-4efd-9072-d8ea913c8946", "0.10",
+                "https://www.taobao.com", "https://www.taobao.com");
 
         assertThat(response.body.contains("<form name=\"punchout_form\" method=\"post\" "
                 + "action=\"https://openapi.alipay.com/gateway.do?"), is(true));
+        assertThat(response.body.contains("notify_url"), is(true));
+        assertThat(response.body.contains("return_url"), is(true));
         assertThat(response.body.contains("<input type=\"hidden\" name=\"biz_content\" value=\"{&quot;out_trade_no&quot;:&quot;"
                 + "b7f4bc7d-ea4b-4efd-9072-d8ea913c8946&quot;,&quot;total_amount&quot;:&quot;0.10&quot;,&quot;quit_url&quot;:&quot;"
                 + "https://www.taobao.com&quot;,&quot;subject&quot;:&quot;iPhone6 16G&quot;,&quot;product_code&quot;:&quot;"
