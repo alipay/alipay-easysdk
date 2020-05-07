@@ -91,7 +91,7 @@ class BaseClient
     {
         $requestUrl = null;
         foreach ($sortedMap as $sysParamKey => $sysParamValue) {
-            $requestUrl .= "$sysParamKey=" . urldecode($this->characet($sysParamValue, AlipayConstants::DEFAULT_CHARSET)) . "&";
+            $requestUrl .= "$sysParamKey=" . urlencode($this->characet($sysParamValue, AlipayConstants::DEFAULT_CHARSET)) . "&";
         }
         $requestUrl = substr($requestUrl, 0, -1);
         return $requestUrl;
