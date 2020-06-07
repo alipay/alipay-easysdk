@@ -88,7 +88,7 @@ namespace Alipay.EasySDK.Kernel
         /// <returns>当前时间戳</returns>
         protected string _getTimestamp()
         {
-            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            return DateTime.UtcNow.AddHours(8).ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         /// <summary>
