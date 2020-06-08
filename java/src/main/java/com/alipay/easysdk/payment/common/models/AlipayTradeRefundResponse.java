@@ -54,7 +54,7 @@ public class AlipayTradeRefundResponse extends TeaModel {
 
     @NameInMap("refund_detail_item_list")
     @Validation(required = true)
-    public TradeFundBill[] refundDetailItemList;
+    public java.util.List<TradeFundBill> refundDetailItemList;
 
     @NameInMap("store_name")
     @Validation(required = true)
@@ -66,7 +66,7 @@ public class AlipayTradeRefundResponse extends TeaModel {
 
     @NameInMap("refund_preset_paytool_list")
     @Validation(required = true)
-    public PresetPayToolInfo[] refundPresetPaytoolList;
+    public java.util.List<PresetPayToolInfo> refundPresetPaytoolList;
 
     @NameInMap("refund_settlement_id")
     @Validation(required = true)

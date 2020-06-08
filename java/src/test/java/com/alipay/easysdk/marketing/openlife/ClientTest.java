@@ -3,6 +3,7 @@ package com.alipay.easysdk.marketing.openlife;
 import com.alipay.easysdk.TestAccount;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.factory.Factory.Marketing;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import com.alipay.easysdk.marketing.openlife.models.AlipayOpenPublicLifeMsgRecallResponse;
 import com.alipay.easysdk.marketing.openlife.models.AlipayOpenPublicMessageContentCreateResponse;
 import com.alipay.easysdk.marketing.openlife.models.AlipayOpenPublicMessageContentModifyResponse;
@@ -38,6 +39,7 @@ public class ClientTest {
                 "示例", "T", "activity", "满100减10",
                 "关键,热度", "13434343432,xxx@163.com");
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
@@ -55,6 +57,7 @@ public class ClientTest {
                 "新示例", "T", "activity", "满100减20",
                 "关键,热度", "13434343432,xxx@163.com");
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
@@ -69,6 +72,7 @@ public class ClientTest {
         AlipayOpenPublicMessageTotalSendResponse response = Marketing.OpenLife().sendText("测试");
 
         if (response.code.equals("10000")) {
+            assertThat(ResponseChecker.success(response), is(true));
             assertThat(response.code, is("10000"));
             assertThat(response.msg, is("Success"));
             assertThat(response.subCode, is(nullValue()));
@@ -76,6 +80,7 @@ public class ClientTest {
             assertThat(response.httpBody, not(nullValue()));
             assertThat(response.messageId, is(notNullValue()));
         } else {
+            assertThat(ResponseChecker.success(response), is(false));
             assertThat(response.code, is("40004"));
             assertThat(response.msg, is("Business Failed"));
             assertThat(response.subCode, is("PUB.MSG_BATCH_SD_OVER"));
@@ -96,6 +101,7 @@ public class ClientTest {
         AlipayOpenPublicMessageTotalSendResponse response = Marketing.OpenLife().sendImageText(Lists.newArrayList(article));
 
         if (response.code.equals("10000")) {
+            assertThat(ResponseChecker.success(response), is(true));
             assertThat(response.code, is("10000"));
             assertThat(response.msg, is("Success"));
             assertThat(response.subCode, is(nullValue()));
@@ -103,6 +109,7 @@ public class ClientTest {
             assertThat(response.httpBody, not(nullValue()));
             assertThat(response.messageId, is(notNullValue()));
         } else {
+            assertThat(ResponseChecker.success(response), is(false));
             assertThat(response.code, is("40004"));
             assertThat(response.msg, is("Business Failed"));
             assertThat(response.subCode, is("PUB.MSG_BATCH_SD_OVER"));
@@ -134,6 +141,7 @@ public class ClientTest {
         AlipayOpenPublicMessageSingleSendResponse response = Marketing.OpenLife().sendSingleMessage(
                 "2088002656718920", template);
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
@@ -146,6 +154,7 @@ public class ClientTest {
         AlipayOpenPublicLifeMsgRecallResponse response = Marketing.OpenLife().recallMessage(
                 "201905106452100327f456f6-8dd2-4a06-8b0e-ec8a3a85c46a");
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
@@ -160,12 +169,14 @@ public class ClientTest {
                 "10001/20102", "IT科技/IT软件与服务");
 
         if (response.code.equals("10000")) {
+            assertThat(ResponseChecker.success(response), is(true));
             assertThat(response.code, is("10000"));
             assertThat(response.msg, is("Success"));
             assertThat(response.subCode, is(nullValue()));
             assertThat(response.subMsg, is(nullValue()));
             assertThat(response.httpBody, not(nullValue()));
         } else {
+            assertThat(ResponseChecker.success(response), is(false));
             assertThat(response.code, is("40004"));
             assertThat(response.msg, is("Business Failed"));
             assertThat(response.subCode, is("3002"));
@@ -178,6 +189,7 @@ public class ClientTest {
     public void testGetIndustry() throws Exception {
         AlipayOpenPublicSettingCategoryQueryResponse response = Marketing.OpenLife().getIndustry();
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));

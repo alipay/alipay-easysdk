@@ -6,7 +6,7 @@ import com.aliyun.tea.*;
 public class TradeSettleInfo extends TeaModel {
     @NameInMap("trade_settle_detail_list")
     @Validation(required = true)
-    public TradeSettleDetail[] tradeSettleDetailList;
+    public java.util.List<TradeSettleDetail> tradeSettleDetailList;
 
     public static TradeSettleInfo build(java.util.Map<String, ?> map) throws Exception {
         TradeSettleInfo self = new TradeSettleInfo();

@@ -2,6 +2,7 @@ package com.alipay.easysdk.payment.facetoface;
 
 import com.alipay.easysdk.TestAccount;
 import com.alipay.easysdk.factory.Factory;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import com.alipay.easysdk.payment.facetoface.models.AlipayTradePayResponse;
 import com.alipay.easysdk.payment.facetoface.models.AlipayTradePrecreateResponse;
 import org.junit.Before;
@@ -26,6 +27,7 @@ public class ClientTest {
         AlipayTradePayResponse response = Factory.Payment.FaceToFace().pay("iPhone6 16G",
                 "64628156-f784-4572-9540-485b7c91b850", "0.01", "289821051157962364");
 
+        assertThat(ResponseChecker.success(response), is(false));
         assertThat(response.code, is("40004"));
         assertThat(response.msg, is("Business Failed"));
         assertThat(response.subCode, is("ACQ.PAYMENT_AUTH_CODE_INVALID"));
@@ -38,6 +40,7 @@ public class ClientTest {
         AlipayTradePrecreateResponse response = Factory.Payment.FaceToFace().preCreate("iPhone6 16G",
                 createNewAndReturnOutTradeNo(), "0.10");
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));

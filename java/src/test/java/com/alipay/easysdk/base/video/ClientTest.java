@@ -4,6 +4,7 @@ import com.alipay.easysdk.TestAccount.Mini;
 import com.alipay.easysdk.base.video.models.AlipayOfflineMaterialImageUploadResponse;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.factory.Factory.Base;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +26,7 @@ public class ClientTest {
         AlipayOfflineMaterialImageUploadResponse response = Base.Video().upload("测试视频",
                 "src/test/resources/fixture/sample.mp4");
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));

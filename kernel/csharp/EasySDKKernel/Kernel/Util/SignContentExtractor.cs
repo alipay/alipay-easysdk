@@ -30,7 +30,7 @@ namespace Alipay.EasySDK.Kernel.Util
         /// <param name="body">网关的整体响应字符串</param>
         /// <param name="method">本次调用的OpenAPI接口名称</param>
         /// <returns>待验签的原文</returns>
-        public string GetSignSourceData(string body, string method)
+        public static string GetSignSourceData(string body, string method)
         {
             string rootNode = method.Replace(".", "_") + AlipayConstants.RESPONSE_SUFFIX;
             string errorRootNode = AlipayConstants.ERROR_RESPONSE;
@@ -51,7 +51,7 @@ namespace Alipay.EasySDK.Kernel.Util
             return result;
         }
 
-        private string ParseSignSourceData(string body, string rootNode, int indexOfRootNode)
+        private static string ParseSignSourceData(string body, string rootNode, int indexOfRootNode)
         {
             int signDataStartIndex = indexOfRootNode + rootNode.Length + 2;
             int indexOfSign = body.IndexOf("\"" + AlipayConstants.SIGN_FIELD + "\"", StringComparison.Ordinal);
@@ -70,7 +70,7 @@ namespace Alipay.EasySDK.Kernel.Util
             return signSourceData.SourceData;
         }
 
-        private SignSourceData ExtractSignContent(string str, int begin)
+        private static SignSourceData ExtractSignContent(string str, int begin)
         {
             if (str == null)
             {
@@ -92,7 +92,7 @@ namespace Alipay.EasySDK.Kernel.Util
             };
         }
 
-        private int ExtractBeginPosition(string responseString, int begin)
+        private static int ExtractBeginPosition(string responseString, int begin)
         {
             int beginPosition = begin;
             //找到第一个左大括号（对应响应的是JSON对象的情况：普通调用OpenAPI响应明文）
@@ -106,7 +106,7 @@ namespace Alipay.EasySDK.Kernel.Util
             return beginPosition;
         }
 
-        private int ExtractEndPosition(string responseString, int beginPosition)
+        private static int ExtractEndPosition(string responseString, int beginPosition)
         {
             //提取明文验签内容终点
             if (responseString[beginPosition] == LEFT_BRACE)
@@ -120,7 +120,7 @@ namespace Alipay.EasySDK.Kernel.Util
             }
         }
 
-        private int ExtractJsonBase64ValueEndPosition(string responseString, int beginPosition)
+        private static int ExtractJsonBase64ValueEndPosition(string responseString, int beginPosition)
         {
             for (int index = beginPosition; index < responseString.Length; ++index)
             {
@@ -134,7 +134,7 @@ namespace Alipay.EasySDK.Kernel.Util
             return responseString.Length;
         }
 
-        private int ExtractJsonObjectEndPosition(string responseString, int beginPosition)
+        private static int ExtractJsonObjectEndPosition(string responseString, int beginPosition)
         {
             //记录当前尚未发现配对闭合的大括号
             LinkedList<char> braces = new LinkedList<char>();

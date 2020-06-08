@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 using Alipay.EasySDK.Kernel.Util;
@@ -12,81 +13,82 @@ using Tea;
 namespace Alipay.EasySDK.Kernel
 {
     /// <summary>
-    /// Tea DSL所需的BaseClient，实现了DSL中定义的虚拟函数
-    /// 注：以_开头的函数即实现的虚拟函数
+    /// Tea DSL编排所需实现的原子方法
     /// </summary>
-    public class BaseClient
+    public class Client
     {
+        /// <summary>
+        /// 构造成本较高的一些参数缓存在上下文中
+        /// </summary>
+        private readonly Context context;
 
         /// <summary>
-        /// SHA256WithRSA签名器
+        /// 注入的可选额外文本参数集合
         /// </summary>
-        private readonly Signer Signer = new Signer();
+        private readonly Dictionary<string, string> optionalTextParams = new Dictionary<string, string>();
 
         /// <summary>
-        /// 签名原文提取器
+        /// 注入的可选业务参数集合
         /// </summary>
-        private readonly SignContentExtractor SignContentExtractor = new SignContentExtractor();
+        private readonly Dictionary<string, object> optionalBizParams = new Dictionary<string, object>();
 
         /// <summary>
-        /// 客户端配置参数
+        /// 构造函数
         /// </summary>
-        private readonly Dictionary<string, object> Config;
-
-        /// <summary>
-        /// 证书模式运行时环境
-        /// </summary>
-        private readonly CertEnvironment CertEnvironment;
-
-        /// <summary>
-        /// 通过参数配置初始化客户端
-        /// 如果参数中配置了证书相关参数，需在此时初始化证书运行时环境对象，缓存证书相关上下文
-        /// </summary>
-        /// <param name="config">参数集合</param>
-        public BaseClient(Dictionary<string, object> config)
+        /// <param name="context">上下文对象</param>
+        public Client(Context context)
         {
-            this.Config = config;
-            ArgumentValidator.CheckArgument(AlipayConstants.RSA2.Equals(GetConfig(AlipayConstants.SIGN_TYPE_CONFIG_KEY)),
-               "Alipay Easy SDK只允许使用RSA2签名方式，RSA签名方式由于安全性相比RSA2弱已不再推荐。");
-
-            if (!string.IsNullOrEmpty(GetConfig(AlipayConstants.ALIPAY_CERT_PATH_CONFIG_KEY)))
-            {
-                CertEnvironment = new CertEnvironment(
-                        GetConfig(AlipayConstants.MERCHANT_CERT_PATH_CONFIG_KEY),
-                        GetConfig(AlipayConstants.ALIPAY_CERT_PATH_CONFIG_KEY),
-                        GetConfig(AlipayConstants.ALIPAY_ROOT_CERT_PATH_CONFIG_KEY));
-            }
+            this.context = context;
         }
 
         /// <summary>
-        /// 读取配置
+        /// 注入额外文本参数
         /// </summary>
-        /// <param name="key">配置的Key值</param>
-        /// <returns>配置的Value值</returns>
-        protected string _getConfig(string key)
+        /// <param name="key">参数名称</param>
+        /// <param name="value">参数的值</param>
+        /// <returns>本客户端本身，便于链路调用</returns>
+        public Client InjectTextParam(String key, String value)
         {
-            return GetConfig(key);
+            optionalTextParams.Add(key, value);
+            return this;
         }
 
-        private string GetConfig(string key)
+        /// <summary>
+        /// 注入额外业务参数
+        /// </summary>
+        /// <param name="key">参数名称</param>
+        /// <param name="value">参数的值</param>
+        /// <returns>本客户端本身，便于链式调用</returns>
+        public Client InjectBizParam(String key, Object value)
         {
-            return (string)Config[key];
+            optionalBizParams.Add(key, value);
+            return this;
+        }
+
+        /// <summary>
+        /// 获取Config中的配置项
+        /// </summary>
+        /// <param name="key">配置项的名称</param>
+        /// <returns>配置项的值</returns>
+        public string GetConfig(string key)
+        {
+            return context.GetConfig(key);
         }
 
         /// <summary>
         /// 是否是证书模式
         /// </summary>
         /// <returns>true：是；false：不是</returns>
-        protected bool _isCertMode()
+        public bool IsCertMode()
         {
-            return CertEnvironment != null;
+            return context.CertEnvironment != null;
         }
 
         /// <summary>
         /// 获取时间戳，格式yyyy-MM-dd HH:mm:ss
         /// </summary>
         /// <returns>当前时间戳</returns>
-        protected string _getTimestamp()
+        public string GetTimestamp()
         {
             return DateTime.UtcNow.AddHours(8).ToString("yyyy-MM-dd HH:mm:ss");
         }
@@ -99,7 +101,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="textParams">其他额外文本参数集合</param>
         /// <param name="privateKey">私钥</param>
         /// <returns>签名值的Base64串</returns>
-        protected string _sign(Dictionary<string, string> systemParams, Dictionary<string, object> bizParams,
+        public string Sign(Dictionary<string, string> systemParams, Dictionary<string, object> bizParams,
             Dictionary<string, string> textParams, string privateKey)
         {
             IDictionary<string, string> sortedMap = GetSortedMap(systemParams, bizParams, textParams);
@@ -124,6 +126,8 @@ namespace Alipay.EasySDK.Kernel
         private IDictionary<string, string> GetSortedMap(Dictionary<string, string> systemParams,
             Dictionary<string, object> bizParams, Dictionary<string, string> textParams)
         {
+            AddOtherParams(textParams, bizParams);
+
             IDictionary<string, string> sortedMap = new SortedDictionary<string, string>(systemParams, StringComparer.Ordinal);
             if (bizParams != null && bizParams.Count != 0)
             {
@@ -155,27 +159,27 @@ namespace Alipay.EasySDK.Kernel
         /// 获取商户应用公钥证书序列号，从证书模式运行时环境对象中直接读取
         /// </summary>
         /// <returns>商户应用公钥证书序列号</returns>
-        protected string _getMerchantCertSN()
+        public string GetMerchantCertSN()
         {
-            if (CertEnvironment == null)
+            if (context.CertEnvironment == null)
             {
                 return null;
             }
 
-            return CertEnvironment.MerchantCertSN;
+            return context.CertEnvironment.MerchantCertSN;
         }
 
         /// <summary>
         /// 获取支付宝根证书序列号，从证书模式运行时环境对象中直接读取
         /// </summary>
         /// <returns>支付宝根证书序列号</returns>
-        protected string _getAlipayRootCertSN()
+        public string GetAlipayRootCertSN()
         {
-            if (CertEnvironment == null)
+            if (context.CertEnvironment == null)
             {
                 return null;
             }
-            return CertEnvironment.RootCertSN;
+            return context.CertEnvironment.RootCertSN;
         }
 
         /// <summary>
@@ -183,7 +187,7 @@ namespace Alipay.EasySDK.Kernel
         /// </summary>
         /// <param name="bizParams">业务参数</param>
         /// <returns>HTTP Body中的字节数组</returns>
-        protected byte[] _toUrlEncodedRequestBody(Dictionary<string, object> bizParams)
+        public byte[] ToUrlEncodedRequestBody(Dictionary<string, object> bizParams)
         {
 
             IDictionary<string, string> sortedMap = GetSortedMap(new Dictionary<string, string>(), bizParams, null);
@@ -212,7 +216,7 @@ namespace Alipay.EasySDK.Kernel
         /// 生成随机分界符，用于multipart格式的HTTP请求Body的多个字段间的分隔
         /// </summary>
         /// <returns>随机分界符</returns>
-        protected string _getRandomBoundary()
+        public string GetRandomBoundary()
         {
             return DateTime.Now.Ticks.ToString("X");
         }
@@ -223,7 +227,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="a">字符串a</param>
         /// <param name="b">字符串b</param>
         /// <returns>字符串a和b拼接后的字符串</returns>
-        protected string _concatStr(string a, string b)
+        public string ConcatStr(string a, string b)
         {
             return a + b;
         }
@@ -234,13 +238,14 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="textParams">其他额外文本参数</param>
         /// <param name="fileParams">业务文件参数</param>
         /// <param name="boundary">HTTP Body中multipart格式的分隔符</param>
-        /// <returns></returns>
-        protected Stream _toMultipartRequestBody(Dictionary<string, string> textParams, Dictionary<string, string> fileParams, string boundary)
+        /// <returns>Multipart格式的字节流</returns>
+        public Stream ToMultipartRequestBody(Dictionary<string, string> textParams, Dictionary<string, string> fileParams, string boundary)
         {
             MemoryStream stream = new MemoryStream();
 
-            //组装其他额外文本参数
-            SetNotifyUrl(textParams);
+            //补充其他额外参数
+            AddOtherParams(textParams, null);
+
             foreach (var pair in textParams)
             {
                 if (!string.IsNullOrEmpty(pair.Key) && !string.IsNullOrEmpty(pair.Value))
@@ -274,7 +279,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="response">HTTP响应</param>
         /// <param name="method">调用的OpenAPI的接口名称</param>
         /// <returns>响应反序列化的Map</returns>
-        protected Dictionary<string, object> _readAsJson(TeaResponse response, string method)
+        public Dictionary<string, object> ReadAsJson(TeaResponse response, string method)
         {
             string responseBody = TeaCore.GetResponseBody(response);
             Dictionary<string, object> dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(responseBody);
@@ -284,11 +289,19 @@ namespace Alipay.EasySDK.Kernel
         }
 
         /// <summary>
+        /// 适配Tea DSL自动生成的代码
+        /// </summary>
+        public async Task<Dictionary<string, object>> ReadAsJsonAsync(TeaResponse response, string method)
+        {
+            return ReadAsJson(response, method);
+        }
+
+        /// <summary>
         /// 从响应Map中提取支付宝公钥证书序列号
         /// </summary>
         /// <param name="respMap">响应Map</param>
         /// <returns>支付宝公钥证书序列号</returns>
-        protected string _getAlipayCertSN(Dictionary<string, object> respMap)
+        public string GetAlipayCertSN(Dictionary<string, object> respMap)
         {
             return (string)respMap[AlipayConstants.ALIPAY_CERT_SN_FIELD];
         }
@@ -299,13 +312,13 @@ namespace Alipay.EasySDK.Kernel
         /// </summary>
         /// <param name="alipayCertSN">网关响应中携带的支付宝公钥证书序列号</param>
         /// <returns>支付宝公钥</returns>
-        protected string _extractAlipayPublicKey(string alipayCertSN)
+        public string ExtractAlipayPublicKey(string alipayCertSN)
         {
-            if (CertEnvironment == null)
+            if (context.CertEnvironment == null)
             {
                 return null;
             }
-            return CertEnvironment.GetAlipayPublicKey(alipayCertSN);
+            return context.CertEnvironment.GetAlipayPublicKey(alipayCertSN);
         }
 
         /// <summary>
@@ -314,7 +327,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="respMap">响应Map，可以从中提取出sign和body</param>
         /// <param name="alipayPublicKey">支付宝公钥</param>
         /// <returns>true：验签通过；false：验签不通过</returns>
-        protected bool _verify(Dictionary<string, object> respMap, string alipayPublicKey)
+        public bool Verify(Dictionary<string, object> respMap, string alipayPublicKey)
         {
             string sign = (string)respMap[AlipayConstants.SIGN_FIELD];
             string content = SignContentExtractor.GetSignSourceData((string)respMap[AlipayConstants.BODY_FIELD],
@@ -327,7 +340,7 @@ namespace Alipay.EasySDK.Kernel
         /// </summary>
         /// <param name="respMap">响应Map</param>
         /// <returns>返回值对象Map</returns>
-        protected Dictionary<string, object> _toRespModel(Dictionary<string, object> respMap)
+        public Dictionary<string, object> ToRespModel(Dictionary<string, object> respMap)
         {
             string methodName = (string)respMap[AlipayConstants.METHOD_FIELD];
             string responseNodeName = methodName.Replace('.', '_') + AlipayConstants.RESPONSE_SUFFIX;
@@ -367,7 +380,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="textParams">其他额外文本参数集合</param>
         /// <param name="sign">所有参数的签名值</param>
         /// <returns>生成的URL字符串或表单</returns>
-        protected string _generatePage(string method, Dictionary<string, string> systemParams, Dictionary<string, object> bizParams,
+        public string GeneratePage(string method, Dictionary<string, string> systemParams, Dictionary<string, object> bizParams,
             Dictionary<string, string> textParams, string sign)
         {
             if (AlipayConstants.GET.Equals(method))
@@ -387,6 +400,7 @@ namespace Alipay.EasySDK.Kernel
                 string actionUrl = GetGatewayServerUrl() + "?" + BuildQueryString(urlParams);
 
                 //将业务参数排序后置于form表单中
+                AddOtherParams(null, bizParams);
                 IDictionary<string, string> formParams = new SortedDictionary<string, string>()
                 {
                     { AlipayConstants.BIZ_CONTENT_FIELD, JsonUtil.ToJsonString(bizParams)}
@@ -407,7 +421,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="textParams">其他文本参数集合</param>
         /// <param name="sign">所有参数的签名值</param>
         /// <returns>订单串</returns>
-        protected string _generateOrderString(Dictionary<string, string> systemParams, Dictionary<string, object> bizParams,
+        public string GenerateOrderString(Dictionary<string, string> systemParams, Dictionary<string, object> bizParams,
             Dictionary<string, string> textParams, string sign)
         {
             //采集并排序所有参数
@@ -429,7 +443,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="plainText">明文</param>
         /// <param name="key">密钥</param>
         /// <returns>密文</returns>
-        protected string _aesEncrypt(string plainText, string key)
+        public string AesEncrypt(string plainText, string key)
         {
             return AES.Encrypt(plainText, key);
         }
@@ -440,7 +454,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="chiperText">密文</param>
         /// <param name="key">密钥</param>
         /// <returns>明文</returns>
-        protected string _aesDecrypt(string chiperText, string key)
+        public string AesDecrypt(string chiperText, string key)
         {
             return AES.Decrypt(chiperText, key);
         }
@@ -451,7 +465,7 @@ namespace Alipay.EasySDK.Kernel
         /// <param name="parameters">参数集合</param>
         /// <param name="alipayPublicKey">支付宝公钥</param>
         /// <returns>true：验证成功；false：验证失败</returns>
-        protected bool _verifyParams(Dictionary<string, string> parameters, string alipayPublicKey)
+        public bool VerifyParams(Dictionary<string, string> parameters, string alipayPublicKey)
         {
             return Signer.VerifyParams(parameters, alipayPublicKey);
         }
@@ -460,9 +474,48 @@ namespace Alipay.EasySDK.Kernel
         /// 获取SDK版本信息
         /// </summary>
         /// <returns>SDK版本信息</returns>
-        protected string _getSdkVersion()
+        public string GetSdkVersion()
         {
-            return AlipayConstants.SDK_VERSION;
+            return context.SdkVersion;
+        }
+
+        /// <summary>
+        /// 将随机顺序的Map转换为有序的Map
+        /// </summary>
+        /// <param name="input">随机顺序的Map</param>
+        /// <returns>有序的Map</returns>
+        public Dictionary<string, string> SortMap(Dictionary<string, string> input)
+        {
+            //GO语言的Map是随机顺序的，每次访问顺序都不同，才需排序
+            return input;
+        }
+
+        private void AddOtherParams(Dictionary<string, string> textParams, Dictionary<string, object> bizParams)
+        {
+            //为null表示此处不是扩展此类参数的时机
+            if (textParams != null)
+            {
+                foreach (var pair in optionalTextParams)
+                {
+                    if (!textParams.ContainsKey(pair.Key))
+                    {
+                        textParams.Add(pair.Key, pair.Value);
+                    }
+                }
+                SetNotifyUrl(textParams);
+            }
+
+            //为null表示此处不是扩展此类参数的时机
+            if (bizParams != null)
+            {
+                foreach (var pair in optionalBizParams)
+                {
+                    if (!bizParams.ContainsKey(pair.Key))
+                    {
+                        bizParams.Add(pair.Key, pair.Value);
+                    }
+                }
+            }
         }
     }
 }

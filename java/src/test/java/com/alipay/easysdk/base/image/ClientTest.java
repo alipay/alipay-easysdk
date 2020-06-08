@@ -4,6 +4,7 @@ import com.alipay.easysdk.TestAccount.Mini;
 import com.alipay.easysdk.base.image.models.AlipayOfflineMaterialImageUploadResponse;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.factory.Factory.Base;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +26,7 @@ public class ClientTest {
         AlipayOfflineMaterialImageUploadResponse response = Base.Image().upload("测试图片",
                 "src/test/resources/fixture/sample.png");
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));

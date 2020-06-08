@@ -3,6 +3,7 @@ package com.alipay.easysdk.member.identification;
 import com.alipay.easysdk.TestAccount;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.factory.Factory.Member;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import com.alipay.easysdk.member.identification.models.AlipayUserCertifyOpenCertifyResponse;
 import com.alipay.easysdk.member.identification.models.AlipayUserCertifyOpenInitializeResponse;
 import com.alipay.easysdk.member.identification.models.AlipayUserCertifyOpenQueryResponse;
@@ -38,6 +39,7 @@ public class ClientTest {
         AlipayUserCertifyOpenInitializeResponse response = Member.Identification().init(
                 UUID.randomUUID().toString(), "FACE", identityParam, merchantConfig);
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
@@ -50,6 +52,7 @@ public class ClientTest {
     public void testCertify() throws Exception {
         AlipayUserCertifyOpenCertifyResponse response = Member.Identification().certify("1226a454daf65c2abbbe0b7b8dc30d20");
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.body, containsString("https://openapi.alipay.com/gateway.do?alipay_sdk=alipay-easysdk-java-"));
         assertThat(response.body, containsString("sign"));
     }
@@ -58,6 +61,7 @@ public class ClientTest {
     public void testQuery() throws Exception {
         AlipayUserCertifyOpenQueryResponse response = Member.Identification().query("89ad1f1b8171d9741c3e5620fd77f9de");
 
+        assertThat(ResponseChecker.success(response), is(false));
         assertThat(response.code, is("40004"));
         assertThat(response.msg, is("Business Failed"));
         assertThat(response.subCode, is("CERTIFY_ID_EXPIRED"));

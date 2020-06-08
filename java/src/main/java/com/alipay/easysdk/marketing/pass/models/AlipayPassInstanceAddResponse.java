@@ -26,7 +26,7 @@ public class AlipayPassInstanceAddResponse extends TeaModel {
 
     @NameInMap("success")
     @Validation(required = true)
-    public boolean success;
+    public Boolean success;
 
     @NameInMap("result")
     @Validation(required = true)

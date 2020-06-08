@@ -15,12 +15,15 @@
     "baseClient": "@alipay/easysdk-baseclient"
   },
   "php": {
-     "package": "Alipay.EasySDK.Payment.Common",
-     "baseClient": "Alipay.EasySDK.Kernel.BaseClient",
-     "modelDirName": "Models",
-     "clientName":"Client"
+    "package": "Alipay.EasySDK.Payment.Common",
+    "baseClient": "Alipay.EasySDK.Kernel.BaseClient",
+    "modelDirName": "Models",
+    "clientName": "Client"
   },
   "go": {
-      "baseClient": "Alipay/EasySDK/Kernel/BaseClient"
-   }
+    "namespace": "payment/common"
+  },
+  "libraries": {
+    "EasySDKKernel": "alipay:easysdk-kernel:*"
+  }
 }

@@ -2,6 +2,7 @@
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Marketing.OpenLife.Models;
 using System.Collections.Generic;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Marketing.OpenLife
 {
@@ -21,6 +22,7 @@ namespace UnitTest.Marketing.OpenLife
                     "示例", "T", "activity", "满100减10",
                     "关键,热度", "13434343432,xxx@163.com");
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.Null(response.SubCode);
@@ -39,6 +41,7 @@ namespace UnitTest.Marketing.OpenLife
                     "新示例", "T", "activity", "满100减20",
                     "关键,热度", "13434343432,xxx@163.com");
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.Null(response.SubCode);
@@ -55,6 +58,7 @@ namespace UnitTest.Marketing.OpenLife
 
             if (response.Code.Equals("10000"))
             {
+                Assert.IsTrue(ResponseChecker.Success(response));
                 Assert.AreEqual(response.Code, "10000");
                 Assert.AreEqual(response.Msg, "Success");
                 Assert.Null(response.SubCode);
@@ -64,6 +68,7 @@ namespace UnitTest.Marketing.OpenLife
             }
             else
             {
+                Assert.IsFalse(ResponseChecker.Success(response));
                 Assert.AreEqual(response.Code, "40004");
                 Assert.AreEqual(response.Msg, "Business Failed");
                 Assert.AreEqual(response.SubCode, "PUB.MSG_BATCH_SD_OVER");
@@ -88,6 +93,7 @@ namespace UnitTest.Marketing.OpenLife
 
             if (response.Code.Equals("10000"))
             {
+                Assert.IsTrue(ResponseChecker.Success(response));
                 Assert.AreEqual(response.Code, "10000");
                 Assert.AreEqual(response.Msg, "Success");
                 Assert.Null(response.SubCode);
@@ -97,6 +103,7 @@ namespace UnitTest.Marketing.OpenLife
             }
             else
             {
+                Assert.IsFalse(ResponseChecker.Success(response));
                 Assert.AreEqual(response.Code, "40004");
                 Assert.AreEqual(response.Msg, "Business Failed");
                 Assert.AreEqual(response.SubCode, "PUB.MSG_BATCH_SD_OVER");
@@ -132,6 +139,7 @@ namespace UnitTest.Marketing.OpenLife
             AlipayOpenPublicMessageSingleSendResponse response = Factory.Marketing.OpenLife().SendSingleMessage(
                     "2088002656718920", template);
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.IsNull(response.SubCode);
@@ -144,6 +152,7 @@ namespace UnitTest.Marketing.OpenLife
         {
             AlipayOpenPublicLifeMsgRecallResponse response = Factory.Marketing.OpenLife().RecallMessage("201905106452100327f456f6-8dd2-4a06-8b0e-ec8a3a85c46a");
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.IsNull(response.SubCode);
@@ -160,6 +169,7 @@ namespace UnitTest.Marketing.OpenLife
 
             if (response.Code.Equals("10000"))
             {
+                Assert.IsTrue(ResponseChecker.Success(response));
                 Assert.AreEqual(response.Code, "10000");
                 Assert.AreEqual(response.Msg, "Success");
                 Assert.Null(response.SubCode);
@@ -168,6 +178,7 @@ namespace UnitTest.Marketing.OpenLife
             }
             else
             {
+                Assert.IsFalse(ResponseChecker.Success(response));
                 Assert.AreEqual(response.Code, "40004");
                 Assert.AreEqual(response.Msg, "Business Failed");
                 Assert.AreEqual(response.SubCode, "3002");
@@ -181,6 +192,7 @@ namespace UnitTest.Marketing.OpenLife
         {
             AlipayOpenPublicSettingCategoryQueryResponse response = Factory.Marketing.OpenLife().GetIndustry();
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.Null(response.SubCode);

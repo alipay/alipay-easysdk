@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Base.Video.Models;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Base.Video
 {
@@ -18,6 +19,7 @@ namespace UnitTest.Base.Video
             AlipayOfflineMaterialImageUploadResponse response = Factory.Base.Video().Upload(
                 "测试视频", TestAccount.GetSolutionBasePath() + "/UnitTest/Fixture/sample.mp4");
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.IsNull(response.SubCode);

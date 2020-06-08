@@ -38,7 +38,7 @@ public class SignContentExtractor {
      * @param method 本次调用的OpenAPI接口名称
      * @return 待验签的原文
      */
-    public String getSignSourceData(String body, String method) {
+    public static String getSignSourceData(String body, String method) {
         // 加签源串起点
         String rootNode = method.replace('.', '_') + AlipayConstants.RESPONSE_SUFFIX;
         String errorRootNode = AlipayConstants.ERROR_RESPONSE;
@@ -55,7 +55,7 @@ public class SignContentExtractor {
         }
     }
 
-    private String parseSignSourceData(String body, String rootNode, int indexOfRootNode) {
+    private static String parseSignSourceData(String body, String rootNode, int indexOfRootNode) {
         //第一个字母 + 长度 + 冒号 + 引号
         int signDataStartIndex = indexOfRootNode + rootNode.length() + 2;
 
@@ -74,7 +74,7 @@ public class SignContentExtractor {
         return signSourceData.getSourceData();
     }
 
-    private SignSourceData extractSignContent(String str, int begin) {
+    private static SignSourceData extractSignContent(String str, int begin) {
         if (str == null) {
             return null;
         }
@@ -88,7 +88,7 @@ public class SignContentExtractor {
         return new SignSourceData(str.substring(beginIndex, endIndex), beginIndex, endIndex);
     }
 
-    private int extractBeginPosition(String responseString, int begin) {
+    private static int extractBeginPosition(String responseString, int begin) {
         int beginPosition = begin;
         //找到第一个左大括号（对应响应的是JSON对象的情况：普通调用OpenAPI响应明文）
         //或者双引号（对应响应的是JSON字符串的情况：加密调用OpenAPI响应Base64串），作为待验签内容的起点
@@ -100,7 +100,7 @@ public class SignContentExtractor {
         return beginPosition;
     }
 
-    private int extractEndPosition(String responseString, int beginPosition) {
+    private static int extractEndPosition(String responseString, int beginPosition) {
         //提取明文验签内容终点
         if (responseString.charAt(beginPosition) == LEFT_BRACE) {
             return extractJsonObjectEndPosition(responseString, beginPosition);
@@ -111,7 +111,7 @@ public class SignContentExtractor {
         }
     }
 
-    private int extractJsonBase64ValueEndPosition(String responseString, int beginPosition) {
+    private static int extractJsonBase64ValueEndPosition(String responseString, int beginPosition) {
         for (int index = beginPosition; index < responseString.length(); ++index) {
             //找到第2个双引号作为终点，由于中间全部是Base64编码的密文，所以不会有干扰的特殊字符
             if (responseString.charAt(index) == DOUBLE_QUOTES && index != beginPosition) {
@@ -122,7 +122,7 @@ public class SignContentExtractor {
         return responseString.length();
     }
 
-    private int extractJsonObjectEndPosition(String responseString, int beginPosition) {
+    private static int extractJsonObjectEndPosition(String responseString, int beginPosition) {
         //记录当前尚未发现配对闭合的大括号
         LinkedList<Character> braces = new LinkedList<Character>();
         //记录当前字符是否在双引号中

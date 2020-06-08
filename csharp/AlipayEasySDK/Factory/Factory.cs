@@ -1,15 +1,21 @@
 ﻿using System;
 using Alipay.EasySDK.Kernel;
-using System.Collections.Generic;
 
 namespace Alipay.EasySDK.Factory
 {
     /// <summary>
     /// 客户端工厂，用于快速配置和访问各种场景下的API Client
+    ///
+    /// 注：该Factory获取的Client不可储存重复使用，请每次均通过Factory完成调用
     /// </summary>
     public static class Factory
     {
-        private static readonly Dictionary<String, BaseClient> Clients = new Dictionary<string, BaseClient>();
+        public const string SDK_VERSION = "alipay-easysdk-net-2.0.0";
+
+        /// <summary>
+        /// 将一些初始化耗时较多的信息缓存在上下文中
+        /// </summary>
+        private static Context context;
 
         /// <summary>
         /// 设置客户端参数，只需设置一次，即可反复使用各种场景下的API Client
@@ -17,28 +23,7 @@ namespace Alipay.EasySDK.Factory
         /// <param name="options">客户端参数对象</param>
         public static void SetOptions(Config options)
         {
-            RegisterClient(new EasySDK.Base.Image.Client(options));
-            RegisterClient(new EasySDK.Base.Video.Client(options));
-            RegisterClient(new EasySDK.Base.OAuth.Client(options));
-            RegisterClient(new EasySDK.Base.Qrcode.Client(options));
-            RegisterClient(new EasySDK.Marketing.OpenLife.Client(options));
-            RegisterClient(new EasySDK.Marketing.Pass.Client(options));
-            RegisterClient(new EasySDK.Marketing.TemplateMessage.Client(options));
-            RegisterClient(new EasySDK.Member.Identification.Client(options));
-            RegisterClient(new EasySDK.Payment.Common.Client(options));
-            RegisterClient(new EasySDK.Payment.FaceToFace.Client(options));
-            RegisterClient(new EasySDK.Payment.Huabei.Client(options));
-            RegisterClient(new EasySDK.Payment.App.Client(options));
-            RegisterClient(new EasySDK.Payment.Page.Client(options));
-            RegisterClient(new EasySDK.Payment.Wap.Client(options));
-            RegisterClient(new EasySDK.Security.TextRisk.Client(options));
-            RegisterClient(new EasySDK.Util.Generic.Client(options));
-            RegisterClient(new EasySDK.Util.AES.Client(options));
-        }
-
-        private static void RegisterClient(BaseClient client)
-        {
-            Clients[client.GetType().FullName] = client;
+            context = new Context(options, SDK_VERSION);
         }
 
         /// <summary>
@@ -52,7 +37,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>图片相关API Client</returns>
             public static EasySDK.Base.Image.Client Image()
             {
-                return GetClient<EasySDK.Base.Image.Client>(typeof(EasySDK.Base.Image.Client));
+                return new EasySDK.Base.Image.Client(new Client(context));
             }
 
             /// <summary>
@@ -61,7 +46,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>视频相关API Client</returns>
             public static EasySDK.Base.Video.Client Video()
             {
-                return GetClient<EasySDK.Base.Video.Client>(typeof(EasySDK.Base.Video.Client));
+                return new EasySDK.Base.Video.Client(new Client(context));
             }
 
             /// <summary>
@@ -70,7 +55,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>OAuth认证相关API Client</returns>
             public static EasySDK.Base.OAuth.Client OAuth()
             {
-                return GetClient<EasySDK.Base.OAuth.Client>(typeof(EasySDK.Base.OAuth.Client));
+                return new EasySDK.Base.OAuth.Client(new Client(context));
             }
 
             /// <summary>
@@ -79,19 +64,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>小程序二维码相关API Client</returns>
             public static EasySDK.Base.Qrcode.Client Qrcode()
             {
-                return GetClient<EasySDK.Base.Qrcode.Client>(typeof(EasySDK.Base.Qrcode.Client));
-            }
-        }
-
-        private static T GetClient<T>(Type type) where T : BaseClient
-        {
-            if (Clients.ContainsKey(type.FullName))
-            {
-                return (T)Clients[type.FullName];
-            }
-            else
-            {
-                throw new Exception("尚未注册" + type.FullName + "，请先调用Factory.setOptions方法。");
+                return new EasySDK.Base.Qrcode.Client(new Client(context));
             }
         }
 
@@ -106,7 +79,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>生活号相关API Client</returns>
             public static EasySDK.Marketing.OpenLife.Client OpenLife()
             {
-                return GetClient<EasySDK.Marketing.OpenLife.Client>(typeof(EasySDK.Marketing.OpenLife.Client));
+                return new EasySDK.Marketing.OpenLife.Client(new Client(context));
             }
 
             /// <summary>
@@ -115,7 +88,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>支付宝卡包相关API Client</returns>
             public static EasySDK.Marketing.Pass.Client Pass()
             {
-                return GetClient<EasySDK.Marketing.Pass.Client>(typeof(EasySDK.Marketing.Pass.Client));
+                return new EasySDK.Marketing.Pass.Client(new Client(context));
             }
 
             /// <summary>
@@ -124,7 +97,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>小程序模板消息相关API Client</returns>
             public static EasySDK.Marketing.TemplateMessage.Client TemplateMessage()
             {
-                return GetClient<EasySDK.Marketing.TemplateMessage.Client>(typeof(EasySDK.Marketing.TemplateMessage.Client));
+                return new EasySDK.Marketing.TemplateMessage.Client(new Client(context));
             }
         }
 
@@ -139,7 +112,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>支付宝身份认证相关API Client</returns>
             public static EasySDK.Member.Identification.Client Identification()
             {
-                return GetClient<EasySDK.Member.Identification.Client>(typeof(EasySDK.Member.Identification.Client));
+                return new EasySDK.Member.Identification.Client(new Client(context));
             }
         }
 
@@ -154,7 +127,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>支付通用API Client</returns>
             public static EasySDK.Payment.Common.Client Common()
             {
-                return GetClient<EasySDK.Payment.Common.Client>(typeof(EasySDK.Payment.Common.Client));
+                return new EasySDK.Payment.Common.Client(new Client(context));
             }
 
             /// <summary>
@@ -163,7 +136,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>当面付API Client</returns>
             public static EasySDK.Payment.FaceToFace.Client FaceToFace()
             {
-                return GetClient<EasySDK.Payment.FaceToFace.Client>(typeof(EasySDK.Payment.FaceToFace.Client));
+                return new EasySDK.Payment.FaceToFace.Client(new Client(context));
             }
 
             /// <summary>
@@ -172,7 +145,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>花呗API Client</returns>
             public static EasySDK.Payment.Huabei.Client Huabei()
             {
-                return GetClient<EasySDK.Payment.Huabei.Client>(typeof(EasySDK.Payment.Huabei.Client));
+                return new EasySDK.Payment.Huabei.Client(new Client(context));
             }
 
             /// <summary>
@@ -181,7 +154,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>手机APP支付API Client</returns>
             public static EasySDK.Payment.App.Client App()
             {
-                return GetClient<EasySDK.Payment.App.Client>(typeof(EasySDK.Payment.App.Client));
+                return new EasySDK.Payment.App.Client(new Client(context));
             }
 
             /// <summary>
@@ -190,7 +163,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>电脑网站支付API</returns>
             public static EasySDK.Payment.Page.Client Page()
             {
-                return GetClient<EasySDK.Payment.Page.Client>(typeof(EasySDK.Payment.Page.Client));
+                return new EasySDK.Payment.Page.Client(new Client(context));
             }
 
             /// <summary>
@@ -199,7 +172,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>手机网站支付API</returns>
             public static EasySDK.Payment.Wap.Client Wap()
             {
-                return GetClient<EasySDK.Payment.Wap.Client>(typeof(EasySDK.Payment.Wap.Client));
+                return new EasySDK.Payment.Wap.Client(new Client(context));
             }
         }
 
@@ -214,7 +187,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>文本风险识别相关API Client</returns>
             public static EasySDK.Security.TextRisk.Client TextRisk()
             {
-                return GetClient<EasySDK.Security.TextRisk.Client>(typeof(EasySDK.Security.TextRisk.Client));
+                return new EasySDK.Security.TextRisk.Client(new Client(context));
             }
         }
 
@@ -229,7 +202,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>OpenAPI通用接口</returns>
             public static EasySDK.Util.Generic.Client Generic()
             {
-                return GetClient<EasySDK.Util.Generic.Client>(typeof(EasySDK.Util.Generic.Client));
+                return new EasySDK.Util.Generic.Client(new Client(context));
             }
 
             /// <summary>
@@ -238,7 +211,7 @@ namespace Alipay.EasySDK.Factory
             /// <returns>AES128加解密相关API Client</returns>
             public static EasySDK.Util.AES.Client AES()
             {
-                return GetClient<EasySDK.Util.AES.Client>(typeof(EasySDK.Util.AES.Client));
+                return new EasySDK.Util.AES.Client(new Client(context));
             }
         }
     }

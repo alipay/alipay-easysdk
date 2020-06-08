@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Base.OAuth.Models;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Base.OAuth
 {
@@ -17,6 +18,7 @@ namespace UnitTest.Base.OAuth
         {
             AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().GetToken("1234567890");
 
+            Assert.IsFalse(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "40002");
             Assert.AreEqual(response.Msg, "Invalid Arguments");
             Assert.AreEqual(response.SubCode, "isv.code-invalid");
@@ -29,6 +31,7 @@ namespace UnitTest.Base.OAuth
         {
             AlipaySystemOauthTokenResponse response = Factory.Base.OAuth().RefreshToken("1234567890");
 
+            Assert.IsFalse(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "40002");
             Assert.AreEqual(response.Msg, "Invalid Arguments");
             Assert.AreEqual(response.SubCode, "isv.refresh-token-invalid");

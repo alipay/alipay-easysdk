@@ -30,7 +30,7 @@ public class AlipaySecurityRiskContentDetectResponse extends TeaModel {
 
     @NameInMap("keywords")
     @Validation(required = true)
-    public String[] keywords;
+    public java.util.List<String> keywords;
 
     @NameInMap("unique_id")
     @Validation(required = true)

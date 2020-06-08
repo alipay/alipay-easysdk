@@ -15,12 +15,14 @@
     "baseClient": "@alipay/easysdk-baseclient"
   },
   "php": {
-     "package": "Alipay.EasySDK.Security.TextRisk",
-     "baseClient": "Alipay.EasySDK.Kernel.BaseClient",
-     "modelDirName": "Models",
-     "clientName":"Client"
+    "package": "Alipay.EasySDK.Security.TextRisk",
+    "clientName": "Client",
+    "modelDirName": "Models"
   },
   "go": {
-      "baseClient": "Alipay/EasySDK/Kernel/BaseClient"
-   }
+    "namespace": "security/textRisk"
+  },
+  "libraries": {
+    "EasySDKKernel": "alipay:easysdk-kernel:*"
+  }
 }

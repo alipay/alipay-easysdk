@@ -2,6 +2,7 @@
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Payment.FaceToFace.Models;
 using System;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Payment.FaceToFace
 {
@@ -18,6 +19,7 @@ namespace UnitTest.Payment.FaceToFace
         {
             AlipayTradePayResponse response = Factory.Payment.FaceToFace().Pay("Iphone6 16G", CreateNewAndReturnOutTradeNo(), "0.01", "1234567890");
 
+            Assert.IsFalse(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "40004");
             Assert.AreEqual(response.Msg, "Business Failed");
             Assert.AreEqual(response.SubCode, "ACQ.PAYMENT_AUTH_CODE_INVALID");
@@ -31,6 +33,7 @@ namespace UnitTest.Payment.FaceToFace
             AlipayTradePrecreateResponse response = Factory.Payment.FaceToFace().PreCreate("iPhone6 16G",
                     CreateNewAndReturnOutTradeNo(), "0.10");
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.IsNull(response.SubCode);

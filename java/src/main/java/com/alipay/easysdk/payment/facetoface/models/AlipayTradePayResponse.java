@@ -90,7 +90,7 @@ public class AlipayTradePayResponse extends TeaModel {
 
     @NameInMap("fund_bill_list")
     @Validation(required = true)
-    public TradeFundBill[] fundBillList;
+    public java.util.List<TradeFundBill> fundBillList;
 
     @NameInMap("card_balance")
     @Validation(required = true)
@@ -110,7 +110,7 @@ public class AlipayTradePayResponse extends TeaModel {
 
     @NameInMap("voucher_detail_list")
     @Validation(required = true)
-    public VoucherDetail[] voucherDetailList;
+    public java.util.List<VoucherDetail> voucherDetailList;
 
     @NameInMap("advance_amount")
     @Validation(required = true)

@@ -17,7 +17,7 @@ namespace Alipay.EasySDK.Kernel.Util
         /// <param name="content">待签名的内容</param>
         /// <param name="privateKeyPem">私钥</param>
         /// <returns>签名值的Base64串</returns>
-        public string Sign(string content, string privateKeyPem)
+        public static string Sign(string content, string privateKeyPem)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Alipay.EasySDK.Kernel.Util
         /// <param name="sign">签名值的Base64串</param>
         /// <param name="publicKeyPem">支付宝公钥</param>
         /// <returns>true：验证成功；false：验证失败</returns>
-        public bool Verify(string content, string sign, string publicKeyPem)
+        public static bool Verify(string content, string sign, string publicKeyPem)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Alipay.EasySDK.Kernel.Util
         /// <param name="parameters">参数集合</param>
         /// <param name="publicKeyPem">支付宝公钥</param>
         /// <returns>true：验证成功；false：验证失败</returns>
-        public bool VerifyParams(Dictionary<string, string> parameters, string publicKeyPem)
+        public static bool VerifyParams(Dictionary<string, string> parameters, string publicKeyPem)
         {
             string sign = parameters[AlipayConstants.SIGN_FIELD];
             parameters.Remove(AlipayConstants.SIGN_FIELD);
@@ -101,7 +101,7 @@ namespace Alipay.EasySDK.Kernel.Util
             return content;
         }
 
-        private RSAParameters ConvertFromPemPublicKey(string pemPublickKey)
+        private static RSAParameters ConvertFromPemPublicKey(string pemPublickKey)
         {
             if (string.IsNullOrEmpty(pemPublickKey))
             {
@@ -131,7 +131,7 @@ namespace Alipay.EasySDK.Kernel.Util
             return para;
         }
 
-        private RSACryptoServiceProvider BuildRSAServiceProvider(byte[] privateKey)
+        private static RSACryptoServiceProvider BuildRSAServiceProvider(byte[] privateKey)
         {
             byte[] MODULUS, E, D, P, Q, DP, DQ, IQ;
             byte bt = 0;
@@ -214,7 +214,7 @@ namespace Alipay.EasySDK.Kernel.Util
             }
         }
 
-        private int GetIntegerSize(BinaryReader binaryReader)
+        private static int GetIntegerSize(BinaryReader binaryReader)
         {
             byte bt = 0;
             byte lowbyte = 0x00;

@@ -3,6 +3,7 @@ package com.alipay.easysdk.marketing.templatemessage;
 import com.alipay.easysdk.TestAccount;
 import com.alipay.easysdk.factory.Factory;
 import com.alipay.easysdk.factory.Factory.Marketing;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import com.alipay.easysdk.marketing.templatemessage.models.AlipayOpenAppMiniTemplatemessageSendResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,6 +29,7 @@ public class ClientTest {
                 "page/component/index",
                 "{\"keyword1\": {\"value\" : \"12:00\"},\"keyword2\": {\"value\" : \"20180808\"},\"keyword3\": {\"value\" : \"支付宝\"}}");
 
+        assertThat(ResponseChecker.success(response), is(false));
         assertThat(response.code, is("40004"));
         assertThat(response.msg, is("Business Failed"));
         assertThat(response.subCode, is("USER_TEMPLATE_ILLEGAL"));

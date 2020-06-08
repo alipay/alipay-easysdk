@@ -6,7 +6,7 @@ package com.alipay.easysdk.util.aes;
 
 import com.alipay.easysdk.TestAccount.Mini;
 import com.alipay.easysdk.factory.Factory;
-import com.alipay.easysdk.kernel.BaseClient.Config;
+import com.alipay.easysdk.kernel.Config;
 import org.junit.Before;
 import org.junit.Test;
 

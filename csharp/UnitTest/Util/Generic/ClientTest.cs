@@ -3,6 +3,7 @@ using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Util.Generic.Models;
 using System;
 using System.Collections.Generic;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Util.Generic
 {
@@ -14,7 +15,6 @@ namespace UnitTest.Util.Generic
             Factory.SetOptions(TestAccount.Mini.CONFIG);
         }
 
-
         [Test]
         public void TestExecuteWithoutAppAuthToken()
         {
@@ -22,6 +22,7 @@ namespace UnitTest.Util.Generic
             AlipayOpenApiGenericResponse response = Factory.Util.Generic().Execute(
                     "alipay.trade.create", null, GetBizParams(outTradeNo));
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.IsNull(response.SubCode);
@@ -36,6 +37,7 @@ namespace UnitTest.Util.Generic
             AlipayOpenApiGenericResponse response = Factory.Util.Generic().Execute(
                     "alipay.trade.create", GetTextParams(), GetBizParams(outTradeNo));
 
+            Assert.IsFalse(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "20001");
             Assert.AreEqual(response.Msg, "Insufficient Token Permissions");
             Assert.AreEqual(response.SubCode, "aop.invalid-app-auth-token");

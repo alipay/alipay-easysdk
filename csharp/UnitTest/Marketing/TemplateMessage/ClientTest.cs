@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Marketing.TemplateMessage.Models;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Marketing.TemplateMessage
 {
@@ -22,6 +23,7 @@ namespace UnitTest.Marketing.TemplateMessage
                     "page/component/index",
                     "{\"keyword1\": {\"value\" : \"12:00\"},\"keyword2\": {\"value\" : \"20180808\"},\"keyword3\": {\"value\" : \"支付宝\"}}");
 
+            Assert.IsFalse(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "40004");
             Assert.AreEqual(response.Msg, "Business Failed");
             Assert.AreEqual(response.SubCode, "USER_TEMPLATE_ILLEGAL");

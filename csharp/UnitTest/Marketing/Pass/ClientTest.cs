@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Marketing.Pass.Models;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Marketing.Pass
 {
@@ -17,6 +18,7 @@ namespace UnitTest.Marketing.Pass
         {
             AlipayPassTemplateAddResponse response = Factory.Marketing.Pass().CreateTemplate("123456789", GetTplContent());
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.Null(response.SubCode);
@@ -31,6 +33,7 @@ namespace UnitTest.Marketing.Pass
         {
             AlipayPassTemplateUpdateResponse response = Factory.Marketing.Pass().UpdateTemplate("2020012014534017917956080", GetTplContent());
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.Null(response.SubCode);
@@ -46,6 +49,7 @@ namespace UnitTest.Marketing.Pass
             AlipayPassInstanceAddResponse response = Factory.Marketing.Pass().AddInstance("2020012014534017917956080", "{}",
                     "1", "{\"partner_id\":\"2088102114633762\",\"out_trade_no\":\"1234567\"}");
 
+            Assert.IsFalse(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "40004");
             Assert.AreEqual(response.Msg, "Business Failed");
             Assert.AreEqual(response.SubCode, "KP.AE_ALIPASS_APPID_NOSUPPORT");
@@ -61,6 +65,7 @@ namespace UnitTest.Marketing.Pass
             AlipayPassInstanceUpdateResponse response = Factory.Marketing.Pass().UpdateInstance("209919213",
                     "2088918273", "{}", "USED", "8612231273", "wave");
 
+            Assert.IsFalse(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "40004");
             Assert.AreEqual(response.Msg, "Business Failed");
             Assert.AreEqual(response.SubCode, "KP.AE_ALIPASS_NOTEXIST");

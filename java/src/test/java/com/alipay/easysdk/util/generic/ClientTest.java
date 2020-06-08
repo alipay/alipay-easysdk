@@ -2,6 +2,7 @@ package com.alipay.easysdk.util.generic;
 
 import com.alipay.easysdk.TestAccount.Mini;
 import com.alipay.easysdk.factory.Factory;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import com.alipay.easysdk.util.generic.models.AlipayOpenApiGenericResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +28,8 @@ public class ClientTest {
         String outTradeNo = UUID.randomUUID().toString();
         AlipayOpenApiGenericResponse response = Factory.Util.Generic().execute(
                 "alipay.trade.create", null, getBizParams(outTradeNo));
+
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
@@ -40,6 +43,7 @@ public class ClientTest {
         AlipayOpenApiGenericResponse response = Factory.Util.Generic().execute(
                 "alipay.trade.create", getTextParams(), getBizParams(outTradeNo));
 
+        assertThat(ResponseChecker.success(response), is(false));
         assertThat(response.code, is("20001"));
         assertThat(response.msg, is("Insufficient Token Permissions"));
         assertThat(response.subCode, is("aop.invalid-app-auth-token"));

@@ -2,7 +2,7 @@ package com.alipay.easysdk.payment.common;
 
 import com.alipay.easysdk.TestAccount.Mini;
 import com.alipay.easysdk.factory.Factory;
-import com.alipay.easysdk.kernel.BaseClient.Config;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import com.alipay.easysdk.payment.common.models.AlipayDataDataserviceBillDownloadurlQueryResponse;
 import com.alipay.easysdk.payment.common.models.AlipayTradeCancelResponse;
 import com.alipay.easysdk.payment.common.models.AlipayTradeCloseResponse;
@@ -13,7 +13,9 @@ import com.alipay.easysdk.payment.common.models.AlipayTradeRefundResponse;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -32,8 +34,24 @@ public class ClientTest {
     @Test
     public void testCreate() throws Exception {
         String outTradeNo = UUID.randomUUID().toString();
-        AlipayTradeCreateResponse response = Factory.Payment.Common().create("iPhone6 16G",
-                outTradeNo, "0.01", "2088002656718920");
+        AlipayTradeCreateResponse response = Factory.Payment.Common().create(
+                "iPhone6 16G", outTradeNo, "0.01", "2088002656718920");
+
+        assertThat(ResponseChecker.success(response), is(true));
+        assertThat(response.code, is("10000"));
+        assertThat(response.msg, is("Success"));
+        assertThat(response.subCode, is(nullValue()));
+        assertThat(response.subMsg, is(nullValue()));
+        assertThat(response.httpBody, not(nullValue()));
+        assertThat(response.outTradeNo, is(outTradeNo));
+        assertThat(response.tradeNo, startsWith("202"));
+    }
+
+    @Test
+    public void testCreateWithOptional() throws Exception {
+        String outTradeNo = UUID.randomUUID().toString();
+        AlipayTradeCreateResponse response = Factory.Payment.Common().optional("goods_detail", getGoodsDetail())
+                .create("iPhone6 16G", outTradeNo, "0.01", "2088002656718920");
 
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
@@ -42,6 +60,17 @@ public class ClientTest {
         assertThat(response.httpBody, not(nullValue()));
         assertThat(response.outTradeNo, is(outTradeNo));
         assertThat(response.tradeNo, startsWith("202"));
+    }
+
+    private List<Object> getGoodsDetail() {
+        List<Object> goodsDetail = new ArrayList<>();
+        Map<String, Object> goodDetail = new HashMap<>();
+        goodDetail.put("goods_id", "apple-01");
+        goodDetail.put("goods_name", "iPhone6 16G");
+        goodDetail.put("quantity", 1);
+        goodDetail.put("price", "0.01");
+        goodsDetail.add(goodDetail);
+        return goodsDetail;
     }
 
     @Test

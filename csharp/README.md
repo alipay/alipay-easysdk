@@ -10,6 +10,8 @@ Alipay Esay SDK for .NET让您不用复杂编程即可访支付宝开放平台�
 ## 设计理念
 不同于原有的[Alipay SDK](https://github.com/alipay/alipay-sdk-net-all)通用而全面的设计理念，Alipay Easy SDK对开放能力的API进行了更加贴近高频场景的精心设计与裁剪，简化了服务端调用方式，让调用API像使用语言内置的函数一样简便。
 
+同时，您也不必担心面向高频场景提炼的API可能无法完全契合自己的个性化场景，Alipay Easy SDK支持灵活的动态扩展方式，同样可以满足低频参数、低频API的使用需求。
+
 Alipay Easy SDK提供了与[能力地图](https://opendocs.alipay.com/mini/00am3f)相对应的代码组织结构，让开发者可以快速找到不同能力对应的API。
 
 Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开放平台开放的各类核心能力的效率。
@@ -41,7 +43,8 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 2. 在`AlipayEasySDK/bin/Debug`或`AlipayEasySDK/bin/Release`目录下，找到`AlipayEasySDK.[version].nupkg`文件，该文件即为本SDK的NuGet离线包。
 3. 参照[NuGet离线安装程序包使用指南](https://yq.aliyun.com/articles/689227)，在您的.NET应用项目工程中引入本SDK的NuGet离线包，即可完成SDK的依赖安装。
 
-## 快速使用
+## 快速开始
+### 普通调用
 以下这段代码示例向您展示了使用Alipay Easy SDK for .NET调用一个API的3个主要步骤：
 
 1. 设置参数（全局只需设置一次）。
@@ -52,7 +55,8 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 using System;
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Kernel;
-using Alipay.EasySDK.Payment.Common.Models;
+using Alipay.EasySDK.Kernel.Util;
+using Alipay.EasySDK.Payment.FaceToFace.Models;
 
 namespace SDKDemo
 {
@@ -65,10 +69,10 @@ namespace SDKDemo
             try
             {
                 // 2. 发起API调用（以支付能力下的统一收单交易创建接口为例）
-                AlipayTradeCreateResponse response = Factory.Payment.Common().Create("Apple iPhone11 128G",
-                       "2234567890", "5799.00", "2088002656718920");
+                AlipayTradePrecreateResponse response = Factory.Payment.FaceToFace()
+                    .PreCreate("Apple iPhone11 128G", "2234567234890", "5799.00");
                 // 3. 处理响应或异常
-                if ("10000".Equals(response.Code))
+                if (ResponseChecker.Success(response))
                 {
                     Console.WriteLine("调用成功");
                 }
@@ -113,6 +117,70 @@ namespace SDKDemo
         }
     }
 }
+```
+
+### 扩展调用
+#### ISV代调用
+
+```csharp
+Factory.Payment.FaceToFace()
+    //调用Agent扩展方法，设置app_auth_token，完成ISV代调用
+    .Agent("ca34ea491e7146cc87d25fca24c4cD11")
+    .PreCreate("Apple iPhone11 128G", "2234567890", "5799.00");
+```
+
+#### 设置独立的异步通知地址
+
+```csharp
+Factory.Payment.FaceToFace()
+    // 调用AsyncNotify扩展方法，可以为每此API调用，设置独立的异步通知地址
+    // 此处设置的异步通知地址的优先级高于全局Config中配置的异步通知地址
+    .AsyncNotify("https://www.test.com/callback")
+    .PreCreate("Apple iPhone11 128G", "2234567890", "5799.00");
+```
+
+#### 设置可选业务参数
+
+```csharp
+List<object> goodsDetailList = new List<object>();
+Dictionary<string, object> goodsDetail = new Dictionary<string, object>
+{
+    { "goods_id", "apple-01" },
+    { "goods_name", "Apple iPhone11 128G" },
+    { "quantity", 1 },
+    { "price", "5799.00" }
+};
+goodsDetailList.Add(goodsDetail);
+
+Factory.Payment.FaceToFace()
+    // 调用Optional扩展方法，完成可选业务参数（biz_content下的可选字段）的设置
+    .Optional("seller_id", "2088102146225135")
+    .Optional("discountable_amount", "8.88")
+    .Optional("goods_detail", goodsDetailList)
+    .PreCreate("Apple iPhone11 128G", "2234567890", "5799.00");
+
+Dictionary<string, object> optionalArgs = new Dictionary<string, object>
+{
+    { "seller_id", "2088102146225135" },
+    { "discountable_amount", "8.88" },
+    { "goods_detail", goodsDetailList }
+};
+
+Factory.Payment.FaceToFace()
+    // 也可以调用BatchOptional扩展方法，批量设置可选业务参数（biz_content下的可选字段）
+    .BatchOptional(optionalArgs)
+    .PreCreate("Apple iPhone11 128G", "2234567890", "5799.00");
+```
+
+#### 多种扩展灵活组合
+
+```csharp
+// 多种扩展方式可灵活组装（对扩展方法的调用顺序没有要求）
+Factory.Payment.FaceToFace()
+    .Agent("ca34ea491e7146cc87d25fca24c4cD11")
+    .AsyncNotify("https://www.test.com/callback")
+    .Optional("seller_id", "2088102146225135")
+    .PreCreate("Apple iPhone11 128G", "2234567890", "5799.00");
 ```
 
 ## API组织规范

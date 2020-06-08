@@ -5,7 +5,7 @@
 package com.alipay.easysdk.kernel.util;
 
 import com.alipay.easysdk.kernel.AlipayConstants;
-import org.apache.commons.codec.binary.Base64;
+import org.bouncycastle.util.encoders.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -32,10 +32,10 @@ public class AES {
 
             IvParameterSpec iv = new IvParameterSpec(AES_IV);
             cipher.init(Cipher.ENCRYPT_MODE,
-                    new SecretKeySpec(Base64.decodeBase64(key.getBytes()), AES_ALG), iv);
+                    new SecretKeySpec(Base64.decode(key.getBytes()), AES_ALG), iv);
 
             byte[] encryptBytes = cipher.doFinal(plainText.getBytes(AlipayConstants.DEFAULT_CHARSET));
-            return new String(Base64.encodeBase64(encryptBytes));
+            return new String(Base64.encode(encryptBytes));
         } catch (Exception e) {
             throw new RuntimeException("AES加密失败，plainText=" + plainText +
                     "，keySize=" + key.length() + "。" + e.getMessage(), e);
@@ -53,9 +53,9 @@ public class AES {
         try {
             Cipher cipher = Cipher.getInstance(AES_CBC_PCK_ALG);
             IvParameterSpec iv = new IvParameterSpec(AES_IV);
-            cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(Base64.decodeBase64(key.getBytes()), AES_ALG), iv);
+            cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(Base64.decode(key.getBytes()), AES_ALG), iv);
 
-            byte[] cleanBytes = cipher.doFinal(Base64.decodeBase64(cipherText.getBytes()));
+            byte[] cleanBytes = cipher.doFinal(Base64.decode(cipherText.getBytes()));
             return new String(cleanBytes, AlipayConstants.DEFAULT_CHARSET);
         } catch (Exception e) {
             throw new RuntimeException("AES解密失败，cipherText=" + cipherText +

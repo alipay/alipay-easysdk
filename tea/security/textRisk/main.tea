@@ -1,92 +1,80 @@
-module Main {
-  type @getConfig = (string): string
-  type @isCertMode = (): boolean
-  type @getTimestamp = (): string
-  type @sign = (map[string]string, map[string]any, map[string]string, string): string
-  type @getMerchantCertSN = (): string
-  type @getAlipayRootCertSN = (): string
-  type @toUrlEncodedRequestBody = (map[string]any): bytes
-  type @readAsJson = ($Response, string): object
-  type @getAlipayCertSN = (object): string
-  type @extractAlipayPublicKey = (string): string
-  type @verify = (object, string): boolean
-  type @toRespModel = (object): object
-  type @getSdkVersion = (): string
+import EasySDKKernel;
 
-  init(); 
+type @kernel = EasySDKKernel
 
-  model AlipaySecurityRiskContentDetectResponse {
-    httpBody: string(name='http_body', description='响应原始字符串'),
-    code: string(name='code'),
-    msg: string(name='msg'),
-    subCode: string(name='sub_code'),
-    subMsg: string(name='sub_msg'),
+init(kernel: EasySDKKernel) {
+  @kernel = kernel;
+}
 
-    action: string(name='action'),
-    keywords: [ string ](name='keywords'),
-    uniqueId: string(name='unique_id')
+model AlipaySecurityRiskContentDetectResponse {
+  httpBody: string(name='http_body', description='响应原始字符串'),
+  code: string(name='code'),
+  msg: string(name='msg'),
+  subCode: string(name='sub_code'),
+  subMsg: string(name='sub_msg'),
+  action: string(name='action'),
+  keywords: [ string ](name='keywords'),
+  uniqueId: string(name='unique_id')
+}
+
+api detect(content: string): AlipaySecurityRiskContentDetectResponse {
+  var systemParams: map[string]string = {
+    method = 'alipay.security.risk.content.detect',
+    app_id = @kernel.getConfig("appId"),
+    timestamp = @kernel.getTimestamp(),
+    format = 'json',
+    version = '1.0',
+    alipay_sdk = @kernel.getSdkVersion(),
+    charset = 'UTF-8',
+    sign_type = @kernel.getConfig("signType"),
+    app_cert_sn = @kernel.getMerchantCertSN(),
+    alipay_root_cert_sn = @kernel.getAlipayRootCertSN()
+  };
+
+  var bizParams: map[string]any = {
+    content = content
+  };
+
+  var textParams: map[string]string = {
+  };
+
+  __request.protocol = @kernel.getConfig("protocol");
+  __request.method = 'POST';
+  __request.pathname = '/gateway.do';
+
+  __request.headers = {
+    host = @kernel.getConfig("gatewayHost"),
+    content-type = 'application/x-www-form-urlencoded;charset=utf-8'
+  };
+
+  __request.query = @kernel.sortMap({
+    sign = @kernel.sign(systemParams, bizParams, textParams, @kernel.getConfig("merchantPrivateKey")),
+    ... systemParams,
+    ... textParams
+  });
+
+  __request.body = @kernel.toUrlEncodedRequestBody(bizParams);
+} returns {
+  var respMap: map[string]any = @kernel.readAsJson(__response, "alipay.security.risk.content.detect");
+
+  if (@kernel.isCertMode()) {
+    if (@kernel.verify(respMap, @kernel.extractAlipayPublicKey(@kernel.getAlipayCertSN(respMap)))) {
+      return @kernel.toRespModel(respMap);
+    }
+  } else {
+    if (@kernel.verify(respMap, @kernel.getConfig("alipayPublicKey"))) {
+      return @kernel.toRespModel(respMap);
+    }
   }
 
-  api detect(content: string): AlipaySecurityRiskContentDetectResponse {
-    var systemParams: map[string]string = {
-      method = 'alipay.security.risk.content.detect',
+  throw {
+    message = '验签失败，请检查支付宝公钥设置是否正确。'
+  }
 
-      app_id = @getConfig('appId'),
-      timestamp = @getTimestamp(),
-      format = 'json',
-      version = '1.0',
-      alipay_sdk = @getSdkVersion(),
-      charset = 'UTF-8',
-      sign_type = @getConfig('signType'),
-      app_cert_sn = @getMerchantCertSN(),
-      alipay_root_cert_sn = @getAlipayRootCertSN()
-    };
-
-    var bizParams: map[string]any = {
-      content = content
-    };
-
-    var textParams: map[string]string = {
-    };
-    
-    protocol = @getConfig('protocol');
-    method = 'POST';
-    pathname = '/gateway.do';
-
-    headers = {
-      host = @getConfig('gatewayHost'),
-      content-type = 'application/x-www-form-urlencoded;charset=utf-8'
-    };
-
-    query = {
-      sign = @sign(systemParams, bizParams, textParams, @getConfig('merchantPrivateKey')),
-      ... systemParams,
-      ... textParams
-    };
-
-    body = @toUrlEncodedRequestBody(bizParams);
-  } returns {
-    var respMap: object = @readAsJson(__response, "alipay.security.risk.content.detect");
-
-    if (@isCertMode()) {
-      if (@verify(respMap, @extractAlipayPublicKey(@getAlipayCertSN(respMap)))) {
-        return @toRespModel(respMap);
-      } 
-    } else {
-      if (@verify(respMap, @getConfig('alipayPublicKey'))) {
-        return @toRespModel(respMap);
-      } 
-    }
-    
-    throw {
-      message = '验签失败，请检查支付宝公钥设置是否正确。'
-    }
-    
-  } runtime {
-    connectTimeout = 15000,
-    readTimeout = 15000,
-    retry = {
-      maxAttempts = 0
-    }
+} runtime {
+  connectTimeout = 15000,
+  readTimeout = 15000,
+  retry = {
+    maxAttempts = 0
   }
 }

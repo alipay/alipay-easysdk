@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Security.TextRisk.Models;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Security.TextRisk
 {
@@ -17,6 +18,7 @@ namespace UnitTest.Security.TextRisk
         {
             AlipaySecurityRiskContentDetectResponse response = Factory.Security.TextRisk().Detect("test");
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.Null(response.SubCode);

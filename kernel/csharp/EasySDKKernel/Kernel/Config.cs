@@ -12,7 +12,7 @@ namespace Alipay.EasySDK.Kernel
         /// </summary>
         [NameInMap("protocol")]
         [Validation(Required = true)]
-        public string Protocol { get; set; }
+        public string Protocol { get; set; } = "https";
 
         /// <summary>
         /// 网关域名
@@ -21,7 +21,7 @@ namespace Alipay.EasySDK.Kernel
         /// </summary>
         [NameInMap("gatewayHost")]
         [Validation(Required = true)]
-        public string GatewayHost { get; set; }
+        public string GatewayHost { get; set; } = "openapi.alipay.com";
 
         /// <summary>
         /// AppId
@@ -35,7 +35,7 @@ namespace Alipay.EasySDK.Kernel
         /// </summary>
         [NameInMap("signType")]
         [Validation(Required = true)]
-        public string SignType { get; set; }
+        public string SignType { get; set; } = "RSA2";
 
         /// <summary>
         /// 支付宝公钥

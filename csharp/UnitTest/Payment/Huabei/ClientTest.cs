@@ -2,6 +2,7 @@
 using Alipay.EasySDK.Factory;
 using Alipay.EasySDK.Payment.Huabei.Models;
 using System;
+using Alipay.EasySDK.Kernel.Util;
 
 namespace UnitTest.Payment.HuaBei
 {
@@ -25,6 +26,7 @@ namespace UnitTest.Payment.HuaBei
             AlipayTradeCreateResponse response = Factory.Payment.Huabei().Create("Iphone6 16G",
                     outTradeNo, "88.88", "2088002656718920", config);
 
+            Assert.IsTrue(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "10000");
             Assert.AreEqual(response.Msg, "Success");
             Assert.Null(response.SubCode);

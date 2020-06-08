@@ -1,15 +1,15 @@
-module Main {
-  type @aesDecrypt = (string, string): string
-  type @aesEncrypt = (string, string): string
-  type @getConfig = (string): string
+import EasySDKKernel;
 
-  init();
+type @kernel = EasySDKKernel
 
-  function decrypt(cipherText: string): string {
-  	return @aesDecrypt(cipherText, @getConfig('encryptKey'));
-  }
+init(kernel: EasySDKKernel) {
+  @kernel = kernel;
+}
 
-  function encrypt(plainText: string): string {
-    return @aesEncrypt(plainText, @getConfig('encryptKey'));
-  }
+function decrypt(cipherText: string): string {
+  return @kernel.aesDecrypt(cipherText, @kernel.getConfig('encryptKey'));
+}
+
+function encrypt(plainText: string): string {
+  return @kernel.aesEncrypt(plainText, @kernel.getConfig('encryptKey'));
 }

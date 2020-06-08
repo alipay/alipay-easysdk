@@ -24,9 +24,9 @@ public class JsonUtil {
      * @param input 输入的Map
      * @return Json字符串
      */
-    public static String toJsonString(Map<String, Object> input) {
+    public static String toJsonString(Map<String, ?> input) {
         Map<String, Object> result = new HashMap<>();
-        for (Entry<String, Object> pair : input.entrySet()) {
+        for (Entry<String, ?> pair : input.entrySet()) {
             if (pair.getValue() instanceof TeaModel) {
                 result.put(pair.getKey(), getTeaModelMap((TeaModel) pair.getValue()));
             } else {

@@ -6,7 +6,7 @@ import com.aliyun.tea.*;
 public class PresetPayToolInfo extends TeaModel {
     @NameInMap("amount")
     @Validation(required = true)
-    public String[] amount;
+    public java.util.List<String> amount;
 
     @NameInMap("assert_type_code")
     @Validation(required = true)

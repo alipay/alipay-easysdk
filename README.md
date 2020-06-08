@@ -10,6 +10,8 @@
 ## 设计理念
 不同于原有的Alipay SDK通用而全面的设计理念，Alipay Easy SDK对开放能力的API进行了更加贴近高频场景的精心设计与裁剪，简化了服务端调用方式，让调用API像使用语言内置的函数一样简便。
 
+同时，您也不必担心面向高频场景提炼的API可能无法完全契合自己的个性化场景，Alipay Easy SDK支持灵活的[动态扩展](#extension)方式，同样可以满足低频参数、低频API的使用需求。
+
 Alipay Easy SDK提供了与[能力地图](https://opendocs.alipay.com/mini/00am3f)相对应的代码组织结构，让开发者可以快速找到不同能力对应的API。
 
 Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开放平台开放的各类核心能力的效率。
@@ -20,7 +22,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 |------------------|----------------------------------------------------------------|
 | 极简代码风格，更贴近自然语言阅读习惯  | 传统代码风格，需要多行代码完成一个接口的调用 |
 | Factory单例全局任何地方都可直接引用 | AlipayClient实例需自行创建并在上下文中传递 |
-| 只保留高频场景下的必备参数    | 可选参数最多可达数十个，对普通开发者的干扰项较多 |
+| API中只保留高频场景下的必备参数，同时提供低频可选参数的装配能力    | 没有区分高低频参数，单API最多可达数十个入参，对普通开发者的干扰较大 |
 
 
 * Alipay Easy SDK :smiley:
@@ -48,12 +50,11 @@ alipayClient.execute(request);
 ```
 
 ### 如何切换
-* 无论是Alipay Easy SDK还是Alipay SDK，本质都是发送HTTP请求访问Open API网关，所以只需将原来通过Alipay SDK调用Open API的代码，替换为Alipay Easy SDK中对应API的调用即可。
+* 无论是Alipay Easy SDK还是Alipay SDK，本质都是发送HTTP请求访问Open API网关，所以只需将原来通过Alipay SDK调用Open API的代码，替换为Alipay Easy SDK中对应API的调用即可。Alipay Easy SDK和Alipay SDK并无冲突，可以共存。
 
-* Alipay Easy SDK和Alipay SDK并无冲突，可以共存。
-	* 如果您所对接的能力和场景，Alipay Easy SDK已完全支持（[已支持的API列表](#apiList)），或者可以通过[通用接口](./APIDoc.md#generic)覆盖，您也可以去除对Alipay SDK的依赖。
+* 如果您所需对接的开放平台能力，Alipay Easy SDK尚未提炼出API支持（[已支持的API列表](#apiList)），您可以通过[通用接口](./APIDoc.md#generic)完成调用。
 
-* 我们会持续挖掘高频场景，不断丰富Alipay Easy SDK支持的API，让您在绝大多数常见场景下，都能享受Alipay Easy SDK带来的便捷。对于非高频场景的对接，依然建议使用Alipay SDK，Alipay SDK对支付宝开放平台开放的所有能力提供了**最全面**的支持。
+* 我们会持续挖掘高频场景，不断丰富Alipay Easy SDK支持的API，让您在绝大多数常见场景下，都能享受Alipay Easy SDK带来的便捷。
 
 ## 技术特点
 ### 纯语言开发
@@ -65,6 +66,27 @@ alipayClient.execute(request);
 
 ### 参数精简
 Alipay Easy SDK对每个API都精心打磨，剔除了`Open API`中不常用的可选参数，减少普通用户的无效选择，提升开发效率。
+
+<a name="extension"/>
+
+### 灵活扩展
+开发者可以通过Fluent风格的API链式调用，在为高频场景打造的API基础上，不断扩展自己的个性化场景需求。
+
+```java
+// 通过调用agent方法，扩展支持ISV代调用场景
+Factory.Payment.FaceToFace().agent("ca34ea491e7146cc87d25fca24c4cD11").preCreate(...)
+
+// 通过调用optional方法，扩展支持个性化可选参数
+Factory.Payment.FaceToFace().optional("extend_params", extendParams).preCreate(...)
+
+// 多种扩展可灵活搭配，不同扩展方法功能请参见方法注释
+Factory.Payment.FaceToFace()
+	.agent(...)
+	.optionalArgs(...)
+	.auth(...)
+	.asyncNotify(...)
+	.preCreate(...)
+```
 
 ### 测试/示例完备
 每个API都有对应的单元测试进行覆盖，良好的单元测试天生就是最好的示例。
@@ -100,7 +122,7 @@ Alipay Easy SDK首发暂只支持`Java`、`C#`、`PHP`编程语言，更多编�
 
 在Alipay Easy SDK中，API的引用路径与能力地图的组织层次一致，遵循如下规范
 
-> Factory.能力名称.场景名称.接口方法名称( ... )
+> Factory.能力类别.场景类别.接口方法名称( ... )
 
 比如，如果您想要使用[能力地图](https://opendocs.alipay.com/mini/00am3f)中`营销能力`下的`模板消息`场景中的`小程序发送模板消息`，只需按如下形式编写调用代码即可（不同编程语言的连接符号可能不同）。
 

@@ -2,6 +2,7 @@ package com.alipay.easysdk.marketing.pass;
 
 import com.alipay.easysdk.TestAccount;
 import com.alipay.easysdk.factory.Factory;
+import com.alipay.easysdk.kernel.util.ResponseChecker;
 import com.alipay.easysdk.marketing.pass.models.AlipayPassInstanceAddResponse;
 import com.alipay.easysdk.marketing.pass.models.AlipayPassInstanceUpdateResponse;
 import com.alipay.easysdk.marketing.pass.models.AlipayPassTemplateAddResponse;
@@ -25,6 +26,7 @@ public class ClientTest {
     public void testCreateTemplate() throws Exception {
         AlipayPassTemplateAddResponse response = Factory.Marketing.Pass().createTemplate("123456789", getTplContent());
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
@@ -38,6 +40,7 @@ public class ClientTest {
     public void testUpdateTemplate() throws Exception {
         AlipayPassTemplateUpdateResponse response = Factory.Marketing.Pass().updateTemplate("2020012014534017917956080", getTplContent());
 
+        assertThat(ResponseChecker.success(response), is(true));
         assertThat(response.code, is("10000"));
         assertThat(response.msg, is("Success"));
         assertThat(response.subCode, is(nullValue()));
@@ -52,6 +55,7 @@ public class ClientTest {
         AlipayPassInstanceAddResponse response = Factory.Marketing.Pass().addInstance("2020012014534017917956080", "{}",
                 "1", "{\"partner_id\":\"2088102114633762\",\"out_trade_no\":\"1234567\"}");
 
+        assertThat(ResponseChecker.success(response), is(false));
         assertThat(response.code, is("40004"));
         assertThat(response.msg, is("Business Failed"));
         assertThat(response.subCode, is("KP.AE_ALIPASS_APPID_NOSUPPORT"));
@@ -66,6 +70,7 @@ public class ClientTest {
         AlipayPassInstanceUpdateResponse response = Factory.Marketing.Pass().updateInstance("209919213",
                 "2088918273", "{}", "USED", "8612231273", "wave");
 
+        assertThat(ResponseChecker.success(response), is(false));
         assertThat(response.code, is("40004"));
         assertThat(response.msg, is("Business Failed"));
         assertThat(response.subCode, is("KP.AE_ALIPASS_NOTEXIST"));
