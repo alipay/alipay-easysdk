@@ -89,6 +89,7 @@ public class Main {
 
     private static Config getOptions() {
         Config config = new Config();
+        config.protocol = "https";
         config.gatewayHost = "openapi.alipay.com";
         config.signType = "RSA2";
 
