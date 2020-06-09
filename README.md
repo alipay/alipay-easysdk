@@ -79,7 +79,7 @@ Factory.Payment.FaceToFace().agent("ca34ea491e7146cc87d25fca24c4cD11").preCreate
 // 通过调用optional方法，扩展支持个性化可选参数
 Factory.Payment.FaceToFace().optional("extend_params", extendParams).preCreate(...)
 
-// 多种扩展可灵活搭配，不同扩展方法功能请参见方法注释
+// 多种扩展可灵活搭配，不同扩展方法功能详细说明请前往各语言主页中的“快速开始-扩展调用”栏目中查看
 Factory.Payment.FaceToFace()
 	.agent(...)
 	.optionalArgs(...)
