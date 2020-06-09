@@ -68,7 +68,7 @@ namespace SDKDemo
             Factory.SetOptions(GetConfig());
             try
             {
-                // 2. 发起API调用（以支付能力下的统一收单交易创建接口为例）
+                // 2. 发起API调用（以创建当面付收款二维码为例）
                 AlipayTradePrecreateResponse response = Factory.Payment.FaceToFace()
                     .PreCreate("Apple iPhone11 128G", "2234567234890", "5799.00");
                 // 3. 处理响应或异常

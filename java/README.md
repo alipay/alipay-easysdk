@@ -72,7 +72,7 @@ public class Main {
         // 1. 设置参数（全局只需设置一次）
         Factory.setOptions(getOptions());
         try {
-            // 2. 发起API调用（以支付能力下的统一收单交易创建接口为例）
+            // 2. 发起API调用（以创建当面付收款二维码为例）
             AlipayTradePrecreateResponse response = Payment.FaceToFace()
                     .preCreate("Apple iPhone11 128G", "2234567890", "5799.00");
             // 3. 处理响应或异常
