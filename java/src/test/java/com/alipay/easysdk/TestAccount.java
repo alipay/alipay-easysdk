@@ -3,7 +3,7 @@
  */
 package com.alipay.easysdk;
 
-import com.alipay.easysdk.kernel.BaseClient;
+import com.alipay.easysdk.kernel.Config;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,10 +37,10 @@ public class TestAccount {
      * 线上小程序测试账号
      */
     public static class Mini {
-        public static final BaseClient.Config CONFIG = getConfig();
+        public static final Config CONFIG = getConfig();
 
-        public static BaseClient.Config getConfig() {
-            BaseClient.Config config = new BaseClient.Config();
+        public static Config getConfig() {
+            Config config = new Config();
             config.protocol = "https";
             config.gatewayHost = "openapi.alipay.com";
             config.appId = "<-- 请填写您的AppId，例如：2019022663440152 -->";
@@ -61,10 +61,10 @@ public class TestAccount {
      * 线上生活号测试账号
      */
     public static class OpenLife {
-        public static final BaseClient.Config CONFIG = getConfig();
+        public static final Config CONFIG = getConfig();
 
-        private static BaseClient.Config getConfig() {
-            BaseClient.Config config = new BaseClient.Config();
+        private static Config getConfig() {
+            Config config = new Config();
             config.protocol = "https";
             config.gatewayHost = "openapi.alipay.com";
             config.appId = "<-- 请填写您的AppId，例如：2019051064521003 -->";
