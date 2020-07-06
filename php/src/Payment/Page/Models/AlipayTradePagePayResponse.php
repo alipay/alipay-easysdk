@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Payment\Page\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class AlipayTradePagePayResponse extends Model{
+class AlipayTradePagePayResponse extends Model {
     protected $_name = [
         'body' => 'body',
     ];
@@ -14,7 +14,9 @@ class AlipayTradePagePayResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['body'] = $this->body;
+        if (null !== $this->body) {
+            $res['body'] = $this->body;
+        }
         return $res;
     }
     /**
@@ -33,4 +35,5 @@ class AlipayTradePagePayResponse extends Model{
      * @var string
      */
     public $body;
+
 }

@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Marketing\OpenLife\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class Context extends Model{
+class Context extends Model {
     protected $_name = [
         'headColor' => 'head_color',
         'url' => 'url',
@@ -22,13 +22,27 @@ class Context extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['head_color'] = $this->headColor;
-        $res['url'] = $this->url;
-        $res['action_name'] = $this->actionName;
-        $res['keyword1'] = null !== $this->keyword1 ? $this->keyword1->toMap() : null;
-        $res['keyword2'] = null !== $this->keyword2 ? $this->keyword2->toMap() : null;
-        $res['first'] = null !== $this->first ? $this->first->toMap() : null;
-        $res['remark'] = null !== $this->remark ? $this->remark->toMap() : null;
+        if (null !== $this->headColor) {
+            $res['head_color'] = $this->headColor;
+        }
+        if (null !== $this->url) {
+            $res['url'] = $this->url;
+        }
+        if (null !== $this->actionName) {
+            $res['action_name'] = $this->actionName;
+        }
+        if (null !== $this->keyword1) {
+            $res['keyword1'] = null !== $this->keyword1 ? $this->keyword1->toMap() : null;
+        }
+        if (null !== $this->keyword2) {
+            $res['keyword2'] = null !== $this->keyword2 ? $this->keyword2->toMap() : null;
+        }
+        if (null !== $this->first) {
+            $res['first'] = null !== $this->first ? $this->first->toMap() : null;
+        }
+        if (null !== $this->remark) {
+            $res['remark'] = null !== $this->remark ? $this->remark->toMap() : null;
+        }
         return $res;
     }
     /**
@@ -64,28 +78,35 @@ class Context extends Model{
      * @var string
      */
     public $headColor;
+
     /**
      * @var string
      */
     public $url;
+
     /**
      * @var string
      */
     public $actionName;
+
     /**
      * @var Keyword
      */
     public $keyword1;
+
     /**
      * @var Keyword
      */
     public $keyword2;
+
     /**
      * @var Keyword
      */
     public $first;
+
     /**
      * @var Keyword
      */
     public $remark;
+
 }

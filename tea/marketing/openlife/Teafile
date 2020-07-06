@@ -15,10 +15,7 @@
     "baseClient": "@alipay/easysdk-baseclient"
   },
   "php": {
-    "package": "Alipay.EasySDK.Marketing.OpenLife",
-    "baseClient": "Alipay.EasySDK.Kernel.BaseClient",
-    "modelDirName": "Models",
-    "clientName": "Client"
+    "package": "Alipay.EasySDK.Marketing.OpenLife"
   },
   "go": {
     "namespace": "marketing/openlife"

@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Base\OAuth\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class AlipaySystemOauthTokenResponse extends Model{
+class AlipaySystemOauthTokenResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -32,16 +32,36 @@ class AlipaySystemOauthTokenResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['user_id'] = $this->userId;
-        $res['access_token'] = $this->accessToken;
-        $res['expires_in'] = $this->expiresIn;
-        $res['refresh_token'] = $this->refreshToken;
-        $res['re_expires_in'] = $this->reExpiresIn;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
+        }
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->userId) {
+            $res['user_id'] = $this->userId;
+        }
+        if (null !== $this->accessToken) {
+            $res['access_token'] = $this->accessToken;
+        }
+        if (null !== $this->expiresIn) {
+            $res['expires_in'] = $this->expiresIn;
+        }
+        if (null !== $this->refreshToken) {
+            $res['refresh_token'] = $this->refreshToken;
+        }
+        if (null !== $this->reExpiresIn) {
+            $res['re_expires_in'] = $this->reExpiresIn;
+        }
         return $res;
     }
     /**
@@ -87,40 +107,50 @@ class AlipaySystemOauthTokenResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var string
      */
     public $userId;
+
     /**
      * @var string
      */
     public $accessToken;
+
     /**
      * @var integer
      */
     public $expiresIn;
+
     /**
      * @var string
      */
     public $refreshToken;
+
     /**
      * @var integer
      */
     public $reExpiresIn;
+
 }

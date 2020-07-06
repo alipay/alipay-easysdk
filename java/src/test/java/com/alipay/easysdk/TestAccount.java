@@ -4,6 +4,7 @@
 package com.alipay.easysdk;
 
 import com.alipay.easysdk.kernel.Config;
+import com.alipay.easysdk.kms.aliyun.AliyunKMSConfig;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -34,6 +35,18 @@ public class TestAccount {
     }
 
     /**
+     * 从文件中读取阿里云AccessKey配置信息
+     * 此处为了单元测试执行的环境普适性，AccessKey信息配置在resources资源下，实际过程中请不要这样做。
+     * @param key AccessKey配置对应的key
+     * @return AccessKey配置字符串
+     */
+    private static String getAliyunAccessKey(String key){
+            InputStream stream = TestAccount.class.getResourceAsStream("/fixture/aliyunAccessKey.json");
+            Map<String, String> result = new Gson().fromJson(new InputStreamReader(stream), new TypeToken<Map<String, String>>() {}.getType());
+            return result.get(key);
+    }
+
+    /**
      * 线上小程序测试账号
      */
     public static class Mini {
@@ -43,16 +56,16 @@ public class TestAccount {
             Config config = new Config();
             config.protocol = "https";
             config.gatewayHost = "openapi.alipay.com";
-            config.appId = "<-- 请填写您的AppId，例如：2019022663440152 -->";
+            config.appId = "2019022663440152";
             config.signType = "RSA2";
 
-            config.alipayPublicKey = "<-- 请填写您的支付宝公钥，例如：MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAumX1EaLM4ddn1Pia4SxTRb62aVYxU8I2mHMqrc"
+            config.alipayPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAumX1EaLM4ddn1Pia4SxTRb62aVYxU8I2mHMqrc"
                     + "pQU6F01mIO/DjY7R4xUWcLi0I2oH/BK/WhckEDCFsGrT7mO+JX8K4sfaWZx1aDGs0m25wOCNjp+DCVBXotXSCurqgGI/9UrY+"
                     + "QydYDnsl4jB65M3p8VilF93MfS01omEDjUW+1MM4o3FP0khmcKsoHnYGs21btEeh0LK1gnnTDlou6Jwv3Ew36CbCNY2cYkuyP"
                     + "AW0j47XqzhWJ7awAx60fwgNBq6ZOEPJnODqH20TAdTLNxPSl4qGxamjBO+RuInBy+Bc2hFHq3pNv6hTAfktggRKkKzDlDEUwg"
-                    + "SLE7d2eL7P6rwIDAQAB --->";
+                    + "SLE7d2eL7P6rwIDAQAB";
             config.merchantPrivateKey = getPrivateKey(config.appId);
-            config.notifyUrl = "<-- 请填写您的异步通知接收服务器地址，例如：https://www.test.com/callback -->";
+            config.notifyUrl = "https://www.test.com/callback";
             return config;
         }
     }
@@ -67,13 +80,54 @@ public class TestAccount {
             Config config = new Config();
             config.protocol = "https";
             config.gatewayHost = "openapi.alipay.com";
-            config.appId = "<-- 请填写您的AppId，例如：2019051064521003 -->";
+            config.appId = "2019051064521003";
             config.signType = "RSA2";
 
-            config.alipayCertPath = "<-- 请填写您的支付宝公钥证书文件路径，例如：/src/test/resources/fixture/alipayCertPublicKey_RSA2.crt -->";
-            config.alipayRootCertPath = "<-- 请填写您的支付宝根证书文件路径，例如：/src/test/resources/fixture/alipayRootCert.crt -->";
-            config.merchantCertPath = "<-- 请填写您的应用公钥证书文件路径，例如：/src/test/resources/fixture/appCertPublicKey_2019051064521003.crt -->";
+            config.alipayCertPath = "src/test/resources/fixture/alipayCertPublicKey_RSA2.crt";
+            config.alipayRootCertPath = "src/test/resources/fixture/alipayRootCert.crt";
+            config.merchantCertPath = "src/test/resources/fixture/appCertPublicKey_2019051064521003.crt";
             config.merchantPrivateKey = getPrivateKey(config.appId);
+            return config;
+        }
+    }
+
+    /**
+     * Aliyun KMS签名测试账号
+     */
+    public static class AliyunKMS {
+        public static final AliyunKMSConfig CONFIG = getConfig();
+
+        private static AliyunKMSConfig getConfig() {
+            AliyunKMSConfig config = new AliyunKMSConfig();
+            config.protocol = "https";
+            config.gatewayHost = "openapi.alipay.com";
+            config.appId = "2021001163614348";
+            config.signType = "RSA2";
+            config.notifyUrl = "https://www.test.com/callback";
+
+            config.alipayPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiOgupSXhUE3GkMDeCpeDwoEM2z+krBpaKPFbfS" +
+                    "JgFVoN/M1s62VC6LhFI9aL4F76bqMGilQPpe2ukW5UmLR+C3OmliuqE/v5/UEpasnndcZMEKadQbWOpQ4eBHGkKTASQhtbgYb3U" +
+                    "WS+viD5MfHS0+3h+sko8cW06jONmjG2tvFpnmooIjMawXByK8/f4vBMBk4ZQQodo4TT18mhyyyIoilhLH2EatQp/lov54ZhwHi9" +
+                    "8LXeLw7Yt4QK8q7u+lB34V8lsu9zVMEMZExhoblsdjgzFAY6KzCn/QGnQE5e54i59+wONAyf2npUkz4cpPDJPLQ7KBu1febsZjk" +
+                    "g9vZrXwIDAQAB";
+
+            //如果使用阿里云KMS签名，则不需要配置私钥
+            //config.merchantPrivateKey = getPrivateKey(config.appId);
+
+            //如果使用第三方签名服务，则需要指定签名提供方名称，阿里云KMS的名称为"AliyunKMS"
+            config.signProvider = "AliyunKMS";
+
+            //如果使用阿里云KMS签名，需要更换为您的阿里云账号信息
+            config.aliyunAccessKeyId = getAliyunAccessKey("AccessKeyId");
+            config.aliyunAccessKeySecret = getAliyunAccessKey("AccessKeySecret");
+            config.kmsKeyId = "4358f298-8e30-4849-9791-52e68dbd9d1e";
+            config.kmsKeyVersionId = "e71daa69-c321-4014-b0c4-ba070c7839ee";
+
+            //如果使用阿里云KMS签名，需要更换为您的KMS服务地址
+            // KMS服务地址列表详情，请参考：
+            // https://help.aliyun.com/document_detail/69006.html?spm=a2c4g.11186623.2.9.783f77cfAoNhY6#concept-69006-zh
+            config.kmsEndpoint = "kms.cn-hangzhou.aliyuncs.com";
+
             return config;
         }
     }

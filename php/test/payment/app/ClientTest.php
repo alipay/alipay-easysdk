@@ -12,14 +12,28 @@ class ClientTest extends TestCase
         $account = new TestAccount();
         Factory::setOptions($account->getTestAccount());
     }
+
     public function testPay()
     {
-        $create =Factory::payment()->common()->create("Iphone6 16G",
-            microtime(), "88.88", "2088002656718920");
-        $result = Factory::payment()->app()->pay("Iphone6 16G",$create->outTradeNo,"0.10");
-        var_dump($result);
-        $this->assertEquals(true, strpos($result->body,'alipay_sdk=alipay-easysdk-php')>0);
-        $this->assertEquals(true, strpos($result->body,'sign')>0);
+        $result = Factory::payment()->app()->pay("Iphone6 16G", "f4833085-0c46-4bb0-8e5f-622a02a4cffc", "0.10");
+        $this->assertEquals(true, strpos($result->body, 'alipay_sdk=alipay-easysdk-php') > 0);
+        $this->assertEquals(true, strpos($result->body, 'sign') > 0);
+    }
+
+    public function testPayWithOptional()
+    {
+        $result = Factory::payment()->app()
+            ->agent("ca34ea491e7146cc87d25fca24c4cD11")
+            ->optional("extend_params",$this->getHuabeiParams())
+            ->pay("Iphone6 16G", "f4833085-0c46-4bb0-8e5f-622a02a4cffc", "0.10");
+        $this->assertEquals(true, strpos($result->body, 'alipay_sdk=alipay-easysdk-php') > 0);
+        $this->assertEquals(true, strpos($result->body, 'sign') > 0);
+    }
+
+    private function getHuabeiParams()
+    {
+        $extendParams = array("hb_fq_num" => "3", "hb_fq_seller_percent" => "3");
+        return $extendParams;
     }
 
 }

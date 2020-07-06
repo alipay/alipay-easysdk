@@ -4,6 +4,7 @@
  */
 package com.alipay.easysdk.kernel;
 
+import com.alipay.easysdk.kernel.util.Signer;
 import com.aliyun.tea.TeaModel;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -30,6 +31,11 @@ public class Context {
      */
     private CertEnvironment certEnvironment;
 
+    /**
+     * SHA256WithRSA签名器
+     */
+    private Signer signer;
+
     public Context(Config options, String sdkVersion) throws Exception {
         config = TeaModel.buildMap(options);
         this.sdkVersion = sdkVersion;
@@ -42,6 +48,7 @@ public class Context {
                     getConfig(AlipayConstants.ALIPAY_CERT_PATH_CONFIG_KEY),
                     getConfig(AlipayConstants.ALIPAY_ROOT_CERT_PATH_CONFIG_KEY));
         }
+        signer = new Signer();
     }
 
     public String getConfig(String key) {
@@ -54,5 +61,13 @@ public class Context {
 
     public CertEnvironment getCertEnvironment() {
         return certEnvironment;
+    }
+
+    public Signer getSigner(){
+        return signer;
+    }
+
+    public void setSigner(Signer signer){
+        this.signer = signer;
     }
 }

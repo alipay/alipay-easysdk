@@ -32,7 +32,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 ## 安装依赖
 ### 通过[Composer](https://packagist.org/packages/alipaysdk/easysdk/)在线安装依赖（推荐）
 
-`composer require alipaysdk/easysdk:^1.2`
+`composer require alipaysdk/easysdk:^2.0`
 
 ### 本地手动集成依赖（适用于自己修改源码后的本地重新打包安装）
 1. 本机安装配置[Composer](https://getcomposer.org/)工具。
@@ -51,6 +51,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 
 require 'vendor/autoload.php';
 use Alipay\EasySDK\Kernel\Factory;
+use Alipay\EasySDK\Kernel\Util\ResponseChecker;
 use Alipay\EasySDK\Kernel\Config;
 
 //1. 设置参数（全局只需设置一次）
@@ -59,12 +60,12 @@ Factory::setOptions(getOptions());
 try {
     //2. 发起API调用（以支付能力下的统一收单交易创建接口为例）
     $result = Factory::payment()->common()->create("iPhone6 16G", "20200326235526001", "88.88", "2088002656718920");
-	
+    $responseChecker = new ResponseChecker();
     //3. 处理响应或异常
-    if (!empty($result['code']) && $result['code'] == 10000) {
+    if ($responseChecker->success($result)) {
         echo "调用成功". PHP_EOL;
     } else {
-        echo "调用失败，原因：". $result['msg']."，".$result['sub_msg'].PHP_EOL;
+        echo "调用失败，原因：". $result->msg."，".$result->subMsg.PHP_EOL;
     }
 } catch (Exception $e) {
     echo "调用失败，". $e->getMessage(). PHP_EOL;;
@@ -100,6 +101,66 @@ function getOptions()
     return $options;
 }
 
+```
+
+### 扩展调用
+#### ISV代调用
+
+```php
+Factory::payment()->faceToFace()
+    // 调用agent扩展方法，设置app_auth_token，完成ISV代调用
+    ->agent("ca34ea491e7146cc87d25fca24c4cD11")
+    ->preCreate("Apple iPhone11 128G", "2234567890", "5799.00");
+```
+
+#### 设置独立的异步通知地址
+
+```php
+Factory::payment()->faceToFace()
+    // 调用asyncNotify扩展方法，可以为每此API调用，设置独立的异步通知地址
+    // 此处设置的异步通知地址的优先级高于全局Config中配置的异步通知地址
+    ->asyncNotify("https://www.test.com/callback")
+    ->preCreate("Apple iPhone11 128G", "2234567890", "5799.00");
+```
+
+#### 设置可选业务参数
+
+```php
+$goodDetail = array(
+            "goods_id" => "apple-01",
+            "goods_name" => "iPhone6 16G",
+            "quantity" => 1,
+            "price" => "5799"
+        );
+        $goodsDetail[0] = $goodDetail;
+
+Factory::payment()->faceToFace()
+    // 调用optional扩展方法，完成可选业务参数（biz_content下的可选字段）的设置
+    ->optional("seller_id", "2088102146225135")
+    ->optional("discountable_amount", "8.88")
+    ->optional("goods_detail", $goodsDetail)
+    ->preCreate("Apple iPhone11 128G", "2234567890", "5799.00");
+
+
+$optionalArgs = array(
+            "timeout_express" => "10m",
+            "body" => "Iphone6 16G"
+        );
+
+Factory::payment()->faceToFace()
+    // 也可以调用batchOptional扩展方法，批量设置可选业务参数（biz_content下的可选字段）
+    ->batchOptional($optionalArgs)
+    ->preCreate("Apple iPhone11 128G", "2234567890", "5799.00");
+```
+#### 多种扩展灵活组合
+
+```php
+// 多种扩展方式可灵活组装（对扩展方法的调用顺序没有要求）
+Factory::payment()->faceToFace()
+    ->agent("ca34ea491e7146cc87d25fca24c4cD11")
+    ->asyncNotify("https://www.test.com/callback")
+    ->optional("seller_id", "2088102146225135")
+    ->preCreate("Apple iPhone11 128G", "2234567890", "5799.00");
 ```
 
 ## API组织规范

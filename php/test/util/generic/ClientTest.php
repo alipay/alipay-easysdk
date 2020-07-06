@@ -24,14 +24,16 @@ class ClientTest extends TestCase
         $this->assertEquals('Success', $result->msg);
     }
 
-    public function testExecuteWithAppAuthToken(){
+    public function testExecuteWithAppAuthToken()
+    {
         $result = Factory::util()->generic()->execute("alipay.trade.create", $this->getTextParams(), $this->getBizParams(microtime()));
         $this->assertEquals('20001', $result->code);
-        $this->assertEquals('Insufficient Token Permissions',$result->msg);
+        $this->assertEquals('Insufficient Token Permissions', $result->msg);
         $this->assertEquals('aop.invalid-app-auth-token', $result->subCode);
         $this->assertEquals('无效的应用授权令牌', $result->subMsg);
     }
 
+    //设置系统参数（OpenAPI中非biz_content里的参数）
     private function getTextParams()
     {
         return array("app_auth_token" => "201712BB_D0804adb2e743078d1822d536956X34");

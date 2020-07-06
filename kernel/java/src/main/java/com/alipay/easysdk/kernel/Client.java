@@ -358,7 +358,7 @@ public class Client {
                 index++;
             }
         }
-        return Signer.sign(content.toString(), merchantPrivateKey);
+        return context.getSigner().sign(content.toString(), merchantPrivateKey);
     }
 
     /**

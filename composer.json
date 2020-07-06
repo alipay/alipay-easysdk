@@ -2,7 +2,7 @@
 	"name":"alipaysdk/easysdk",
 	"description":"支付宝官方 Alipay Easy SDK",
 	"type":"library",
-	"version":"1.2.1",
+	"version":"2.0.0",
 	"authors":[
 		{
 			"name":"junying.wjy",
@@ -34,7 +34,7 @@
 		"ext-openssl":"*",
 		"pimple/pimple": "^3.0",
 		"xin/container":"^2.0.1",
-		"guzzlehttp/guzzle":"^6.3.0",
+		"guzzlehttp/guzzle":">=6.3",
 		"psr/log": "^1.1",
 		"ext-xmlwriter": "*",
 		"songshenzong/support": "^2.0",
@@ -42,9 +42,11 @@
 		"mtdowling/jmespath.php": "^2.4",
 		"adbario/php-dot-notation": "^2.2",
 		"alibabacloud/tea": "^3.1",
-		"alibabacloud/tea-fileform": "^0.3.2",
-		"phpunit/phpunit": "^7.5"
+		"alibabacloud/tea-fileform": "^0.3.2"
     },
+	"require-dev": {
+		"phpunit/phpunit": "^7.5"
+	},
 	"repositories":{
 		"packagist":{
 			"type":"composer",

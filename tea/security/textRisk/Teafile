@@ -15,9 +15,7 @@
     "baseClient": "@alipay/easysdk-baseclient"
   },
   "php": {
-    "package": "Alipay.EasySDK.Security.TextRisk",
-    "clientName": "Client",
-    "modelDirName": "Models"
+    "package": "Alipay.EasySDK.Security.TextRisk"
   },
   "go": {
     "namespace": "security/textRisk"

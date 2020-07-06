@@ -15,10 +15,7 @@
     "baseClient": "@alipay/easysdk-baseclient"
   },
   "php": {
-    "package": "Alipay.EasySDK.Member.Identification",
-    "baseClient": "Alipay.EasySDK.Kernel.BaseClient",
-    "modelDirName": "Models",
-    "clientName": "Client"
+    "package": "Alipay.EasySDK.Member.Identification"
   },
   "go": {
     "namespace": "member/identification"

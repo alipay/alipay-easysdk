@@ -15,10 +15,7 @@
     "baseClient": "@alipay/easysdk-baseclient"
   },
   "php": {
-    "package": "Alipay.EasySDK.Base.Qrcode",
-    "baseClient": "Alipay.EasySDK.Kernel.BaseClient",
-    "modelDirName": "Models",
-    "clientName": "Client"
+    "package": "Alipay.EasySDK.Base.Qrcode"
   },
   "go": {
     "namespace": "base/qrcode"

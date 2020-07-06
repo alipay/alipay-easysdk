@@ -78,7 +78,7 @@ public class Signer {
      * @param privateKeyPem 私钥
      * @return 签名值的Base64串
      */
-    public static String sign(String content, String privateKeyPem) {
+    public String sign(String content, String privateKeyPem) {
         try {
             byte[] encodedKey = privateKeyPem.getBytes();
             encodedKey = Base64.decode(encodedKey);

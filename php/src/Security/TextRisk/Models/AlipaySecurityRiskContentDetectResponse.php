@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Security\TextRisk\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class AlipaySecurityRiskContentDetectResponse extends Model{
+class AlipaySecurityRiskContentDetectResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -28,17 +28,33 @@ class AlipaySecurityRiskContentDetectResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['action'] = $this->action;
-        $res['keywords'] = [];
-        if(null !== $this->keywords){
-            $res['keywords'] = $this->keywords;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
         }
-        $res['unique_id'] = $this->uniqueId;
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->action) {
+            $res['action'] = $this->action;
+        }
+        if (null !== $this->keywords) {
+            $res['keywords'] = [];
+            if(null !== $this->keywords){
+                $res['keywords'] = $this->keywords;
+            }
+        }
+        if (null !== $this->uniqueId) {
+            $res['unique_id'] = $this->uniqueId;
+        }
         return $res;
     }
     /**
@@ -81,32 +97,40 @@ class AlipaySecurityRiskContentDetectResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var string
      */
     public $action;
+
     /**
      * @var array
      */
     public $keywords;
+
     /**
      * @var string
      */
     public $uniqueId;
+
 }

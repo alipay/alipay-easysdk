@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Base\Video\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class AlipayOfflineMaterialImageUploadResponse extends Model{
+class AlipayOfflineMaterialImageUploadResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -26,13 +26,27 @@ class AlipayOfflineMaterialImageUploadResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['image_id'] = $this->imageId;
-        $res['image_url'] = $this->imageUrl;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
+        }
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->imageId) {
+            $res['image_id'] = $this->imageId;
+        }
+        if (null !== $this->imageUrl) {
+            $res['image_url'] = $this->imageUrl;
+        }
         return $res;
     }
     /**
@@ -69,28 +83,35 @@ class AlipayOfflineMaterialImageUploadResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var string
      */
     public $imageId;
+
     /**
      * @var string
      */
     public $imageUrl;
+
 }

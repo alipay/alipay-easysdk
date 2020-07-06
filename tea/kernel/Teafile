@@ -12,5 +12,11 @@
 	},
 	"csharp": {
 		"namespace": "Alipay.EasySDK.Kernel"
+	},
+	"php": {
+		"namespace": "Alipay.EasySDK.Kernel",
+	},
+	"go": {
+		"namespace": "alipay/easysdk/kernel"
 	}
 }
