@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Payment\Common\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class RefundRoyaltyResult extends Model{
+class RefundRoyaltyResult extends Model {
     protected $_name = [
         'refundAmount' => 'refund_amount',
         'royaltyType' => 'royalty_type',
@@ -26,13 +26,27 @@ class RefundRoyaltyResult extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['refund_amount'] = $this->refundAmount;
-        $res['royalty_type'] = $this->royaltyType;
-        $res['result_code'] = $this->resultCode;
-        $res['trans_out'] = $this->transOut;
-        $res['trans_out_email'] = $this->transOutEmail;
-        $res['trans_in'] = $this->transIn;
-        $res['trans_in_email'] = $this->transInEmail;
+        if (null !== $this->refundAmount) {
+            $res['refund_amount'] = $this->refundAmount;
+        }
+        if (null !== $this->royaltyType) {
+            $res['royalty_type'] = $this->royaltyType;
+        }
+        if (null !== $this->resultCode) {
+            $res['result_code'] = $this->resultCode;
+        }
+        if (null !== $this->transOut) {
+            $res['trans_out'] = $this->transOut;
+        }
+        if (null !== $this->transOutEmail) {
+            $res['trans_out_email'] = $this->transOutEmail;
+        }
+        if (null !== $this->transIn) {
+            $res['trans_in'] = $this->transIn;
+        }
+        if (null !== $this->transInEmail) {
+            $res['trans_in_email'] = $this->transInEmail;
+        }
         return $res;
     }
     /**
@@ -68,28 +82,35 @@ class RefundRoyaltyResult extends Model{
      * @var string
      */
     public $refundAmount;
+
     /**
      * @var string
      */
     public $royaltyType;
+
     /**
      * @var string
      */
     public $resultCode;
+
     /**
      * @var string
      */
     public $transOut;
+
     /**
      * @var string
      */
     public $transOutEmail;
+
     /**
      * @var string
      */
     public $transIn;
+
     /**
      * @var string
      */
     public $transInEmail;
+
 }

@@ -3,9 +3,14 @@
  */
 package com.alipay.easysdk.factory;
 
+import com.alipay.easysdk.kernel.AlipayConstants;
 import com.alipay.easysdk.kernel.Client;
 import com.alipay.easysdk.kernel.Config;
 import com.alipay.easysdk.kernel.Context;
+
+import com.alipay.easysdk.kms.aliyun.AliyunKMSClient;
+import com.alipay.easysdk.kms.aliyun.AliyunKMSSigner;
+import com.aliyun.tea.*;
 
 /**
  * 客户端工厂，用于快速配置和访问各种场景下的API Client
@@ -32,6 +37,11 @@ public class Factory {
     public static void setOptions(Config options) {
         try {
             context = new Context(options, SDK_VERSION);
+
+            if (AlipayConstants.AliyunKMS.equals(context.getConfig(AlipayConstants.SIGN_PROVIDER_CONFIG_KEY))) {
+                context.setSigner(new AliyunKMSSigner(new AliyunKMSClient(TeaModel.buildMap(options))));
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }

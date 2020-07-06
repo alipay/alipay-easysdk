@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Marketing\OpenLife\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class Keyword extends Model{
+class Keyword extends Model {
     protected $_name = [
         'color' => 'color',
         'value' => 'value',
@@ -16,8 +16,12 @@ class Keyword extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['color'] = $this->color;
-        $res['value'] = $this->value;
+        if (null !== $this->color) {
+            $res['color'] = $this->color;
+        }
+        if (null !== $this->value) {
+            $res['value'] = $this->value;
+        }
         return $res;
     }
     /**
@@ -38,8 +42,10 @@ class Keyword extends Model{
      * @var string
      */
     public $color;
+
     /**
      * @var string
      */
     public $value;
+
 }

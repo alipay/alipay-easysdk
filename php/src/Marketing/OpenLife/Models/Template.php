@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Marketing\OpenLife\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class Template extends Model{
+class Template extends Model {
     protected $_name = [
         'templateId' => 'template_id',
         'context' => 'context',
@@ -16,8 +16,12 @@ class Template extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['template_id'] = $this->templateId;
-        $res['context'] = null !== $this->context ? $this->context->toMap() : null;
+        if (null !== $this->templateId) {
+            $res['template_id'] = $this->templateId;
+        }
+        if (null !== $this->context) {
+            $res['context'] = null !== $this->context ? $this->context->toMap() : null;
+        }
         return $res;
     }
     /**
@@ -38,8 +42,10 @@ class Template extends Model{
      * @var string
      */
     public $templateId;
+
     /**
      * @var Context
      */
     public $context;
+
 }

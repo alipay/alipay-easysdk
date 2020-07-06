@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Payment\FaceToFace\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class TradeFundBill extends Model{
+class TradeFundBill extends Model {
     protected $_name = [
         'fundChannel' => 'fund_channel',
         'bankCode' => 'bank_code',
@@ -20,10 +20,18 @@ class TradeFundBill extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['fund_channel'] = $this->fundChannel;
-        $res['bank_code'] = $this->bankCode;
-        $res['amount'] = $this->amount;
-        $res['real_amount'] = $this->realAmount;
+        if (null !== $this->fundChannel) {
+            $res['fund_channel'] = $this->fundChannel;
+        }
+        if (null !== $this->bankCode) {
+            $res['bank_code'] = $this->bankCode;
+        }
+        if (null !== $this->amount) {
+            $res['amount'] = $this->amount;
+        }
+        if (null !== $this->realAmount) {
+            $res['real_amount'] = $this->realAmount;
+        }
         return $res;
     }
     /**
@@ -50,16 +58,20 @@ class TradeFundBill extends Model{
      * @var string
      */
     public $fundChannel;
+
     /**
      * @var string
      */
     public $bankCode;
+
     /**
      * @var string
      */
     public $amount;
+
     /**
      * @var string
      */
     public $realAmount;
+
 }

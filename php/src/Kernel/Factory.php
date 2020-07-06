@@ -23,6 +23,7 @@ use Alipay\EasySDK\Util\AES\Client as aesClient;
 class Factory
 {
     public $config = null;
+    public $kernel = null;
     private static $instance;
     protected static $base;
     protected static $marketing;
@@ -45,12 +46,13 @@ class Factory
             $config->alipayPublicKey = $certEnvironment->getCachedAlipayPublicKey();
         }
 
-        self::$base = new Base($config);
-        self::$marketing = new Marketing($config);
-        self::$member = new Member($config);
-        self::$payment = new Payment($config);
-        self::$security = new Security($config);
-        self::$util = new Util($config);
+        $kernel = new EasySDKKernel($config);
+        self::$base = new Base($kernel);
+        self::$marketing = new Marketing($kernel);
+        self::$member = new Member($kernel);
+        self::$payment = new Payment($kernel);
+        self::$security = new Security($kernel);
+        self::$util = new Util($kernel);
     }
 
     public static function setOptions($config)
@@ -99,145 +101,145 @@ class Factory
 
 class Base
 {
-    private $config;
+    private $kernel;
 
-    public function __construct($config)
+    public function __construct($kernel)
     {
-        $this->config = $config;
+        $this->kernel = $kernel;
     }
 
     public function image()
     {
-        return new imageClient($this->config);
+        return new imageClient($this->kernel);
     }
 
     public function oauth()
     {
-        return new oauthClient($this->config);
+        return new oauthClient($this->kernel);
     }
 
     public function qrcode()
     {
-        return new qrcodeClient($this->config);
+        return new qrcodeClient($this->kernel);
     }
 
     public function video()
     {
-        return new videoClient($this->config);
+        return new videoClient($this->kernel);
     }
 }
 
 class Marketing
 {
-    private $config;
+    private $kernel;
 
-    public function __construct($config)
+    public function __construct($kernel)
     {
-        $this->config = $config;
+        $this->kernel = $kernel;
     }
 
     public function openLife()
     {
-        return new openLifeClient($this->config);
+        return new openLifeClient($this->kernel);
     }
 
     public function pass()
     {
-        return new passClient($this->config);
+        return new passClient($this->kernel);
     }
 
     public function templateMessage()
     {
-        return new templateMessageClient($this->config);
+        return new templateMessageClient($this->kernel);
     }
 }
 
 class Member
 {
-    private $config;
+    private $kernel;
 
-    public function __construct($config)
+    public function __construct($kernel)
     {
-        $this->config = $config;
+        $this->kernel = $kernel;
     }
 
     public function identification()
     {
-        return new identificationClient($this->config);
+        return new identificationClient($this->kernel);
     }
 }
 
 class Payment
 {
-    private $config;
+    private $kernel;
 
-    public function __construct($config)
+    public function __construct($kernel)
     {
-        $this->config = $config;
+        $this->kernel = $kernel;
     }
 
     public function app()
     {
-        return new appClient($this->config);
+        return new appClient($this->kernel);
     }
 
     public function common()
     {
-        return new commonClient($this->config);
+        return new commonClient($this->kernel);
     }
 
     public function faceToFace()
     {
-        return new faceToFaceClient($this->config);
+        return new faceToFaceClient($this->kernel);
     }
 
     public function huabei()
     {
-        return new huabeiClient($this->config);
+        return new huabeiClient($this->kernel);
     }
 
     public function page()
     {
-        return new pageClient($this->config);
+        return new pageClient($this->kernel);
     }
 
     public function wap()
     {
-        return new wapClient($this->config);
+        return new wapClient($this->kernel);
     }
 }
 
 class Security
 {
-    private $config;
+    private $kernel;
 
-    public function __construct($config)
+    public function __construct($kernel)
     {
-        $this->config = $config;
+        $this->kernel = $kernel;
     }
 
     public function textRisk()
     {
-        return new textRiskClient($this->config);
+        return new textRiskClient($this->kernel);
     }
 }
 
 class Util
 {
-    private $config;
+    private $kernel;
 
-    public function __construct($config)
+    public function __construct($kernel)
     {
-        $this->config = $config;
+        $this->kernel = $kernel;
     }
 
     public function generic()
     {
-        return new genericClient($this->config);
+        return new genericClient($this->kernel);
     }
 
     public function aes(){
-        return new aesClient($this->config);
+        return new aesClient($this->kernel);
     }
 }
 

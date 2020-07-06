@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Payment\Common\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class TradeSettleDetail extends Model{
+class TradeSettleDetail extends Model {
     protected $_name = [
         'operationType' => 'operation_type',
         'operationSerial_no' => 'operation_serial_no',
@@ -24,12 +24,24 @@ class TradeSettleDetail extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['operation_type'] = $this->operationType;
-        $res['operation_serial_no'] = $this->operationSerial_no;
-        $res['operation_dt'] = $this->operationDt;
-        $res['trans_out'] = $this->transOut;
-        $res['trans_in'] = $this->transIn;
-        $res['amount'] = $this->amount;
+        if (null !== $this->operationType) {
+            $res['operation_type'] = $this->operationType;
+        }
+        if (null !== $this->operationSerial_no) {
+            $res['operation_serial_no'] = $this->operationSerial_no;
+        }
+        if (null !== $this->operationDt) {
+            $res['operation_dt'] = $this->operationDt;
+        }
+        if (null !== $this->transOut) {
+            $res['trans_out'] = $this->transOut;
+        }
+        if (null !== $this->transIn) {
+            $res['trans_in'] = $this->transIn;
+        }
+        if (null !== $this->amount) {
+            $res['amount'] = $this->amount;
+        }
         return $res;
     }
     /**
@@ -62,24 +74,30 @@ class TradeSettleDetail extends Model{
      * @var string
      */
     public $operationType;
+
     /**
      * @var string
      */
     public $operationSerial_no;
+
     /**
      * @var string
      */
     public $operationDt;
+
     /**
      * @var string
      */
     public $transOut;
+
     /**
      * @var string
      */
     public $transIn;
+
     /**
      * @var string
      */
     public $amount;
+
 }

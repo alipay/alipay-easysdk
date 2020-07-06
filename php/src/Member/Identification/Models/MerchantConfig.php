@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Member\Identification\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class MerchantConfig extends Model{
+class MerchantConfig extends Model {
     protected $_name = [
         'returnUrl' => 'return_url',
     ];
@@ -14,7 +14,9 @@ class MerchantConfig extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['return_url'] = $this->returnUrl;
+        if (null !== $this->returnUrl) {
+            $res['return_url'] = $this->returnUrl;
+        }
         return $res;
     }
     /**
@@ -32,4 +34,5 @@ class MerchantConfig extends Model{
      * @var string
      */
     public $returnUrl;
+
 }

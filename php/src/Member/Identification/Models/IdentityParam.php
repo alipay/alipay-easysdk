@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Member\Identification\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class IdentityParam extends Model{
+class IdentityParam extends Model {
     protected $_name = [
         'identityType' => 'identity_type',
         'certType' => 'cert_type',
@@ -20,10 +20,18 @@ class IdentityParam extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['identity_type'] = $this->identityType;
-        $res['cert_type'] = $this->certType;
-        $res['cert_name'] = $this->certName;
-        $res['cert_no'] = $this->certNo;
+        if (null !== $this->identityType) {
+            $res['identity_type'] = $this->identityType;
+        }
+        if (null !== $this->certType) {
+            $res['cert_type'] = $this->certType;
+        }
+        if (null !== $this->certName) {
+            $res['cert_name'] = $this->certName;
+        }
+        if (null !== $this->certNo) {
+            $res['cert_no'] = $this->certNo;
+        }
         return $res;
     }
     /**
@@ -50,16 +58,20 @@ class IdentityParam extends Model{
      * @var string
      */
     public $identityType;
+
     /**
      * @var string
      */
     public $certType;
+
     /**
      * @var string
      */
     public $certName;
+
     /**
      * @var string
      */
     public $certNo;
+
 }

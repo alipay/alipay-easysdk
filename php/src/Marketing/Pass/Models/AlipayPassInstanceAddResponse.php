@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Marketing\Pass\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class AlipayPassInstanceAddResponse extends Model{
+class AlipayPassInstanceAddResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -26,13 +26,27 @@ class AlipayPassInstanceAddResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['success'] = $this->success;
-        $res['result'] = $this->result;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
+        }
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->success) {
+            $res['success'] = $this->success;
+        }
+        if (null !== $this->result) {
+            $res['result'] = $this->result;
+        }
         return $res;
     }
     /**
@@ -69,28 +83,35 @@ class AlipayPassInstanceAddResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var bool
      */
     public $success;
+
     /**
      * @var string
      */
     public $result;
+
 }

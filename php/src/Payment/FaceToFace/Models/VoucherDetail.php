@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Payment\FaceToFace\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class VoucherDetail extends Model{
+class VoucherDetail extends Model {
     protected $_name = [
         'id' => 'id',
         'name' => 'name',
@@ -34,17 +34,39 @@ class VoucherDetail extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['id'] = $this->id;
-        $res['name'] = $this->name;
-        $res['type'] = $this->type;
-        $res['amount'] = $this->amount;
-        $res['merchant_contribute'] = $this->merchantContribute;
-        $res['other_contribute'] = $this->otherContribute;
-        $res['memo'] = $this->memo;
-        $res['template_id'] = $this->templateId;
-        $res['purchase_buyer_contribute'] = $this->purchaseBuyerContribute;
-        $res['purchase_merchant_contribute'] = $this->purchaseMerchantContribute;
-        $res['purchase_ant_contribute'] = $this->purchaseAntContribute;
+        if (null !== $this->id) {
+            $res['id'] = $this->id;
+        }
+        if (null !== $this->name) {
+            $res['name'] = $this->name;
+        }
+        if (null !== $this->type) {
+            $res['type'] = $this->type;
+        }
+        if (null !== $this->amount) {
+            $res['amount'] = $this->amount;
+        }
+        if (null !== $this->merchantContribute) {
+            $res['merchant_contribute'] = $this->merchantContribute;
+        }
+        if (null !== $this->otherContribute) {
+            $res['other_contribute'] = $this->otherContribute;
+        }
+        if (null !== $this->memo) {
+            $res['memo'] = $this->memo;
+        }
+        if (null !== $this->templateId) {
+            $res['template_id'] = $this->templateId;
+        }
+        if (null !== $this->purchaseBuyerContribute) {
+            $res['purchase_buyer_contribute'] = $this->purchaseBuyerContribute;
+        }
+        if (null !== $this->purchaseMerchantContribute) {
+            $res['purchase_merchant_contribute'] = $this->purchaseMerchantContribute;
+        }
+        if (null !== $this->purchaseAntContribute) {
+            $res['purchase_ant_contribute'] = $this->purchaseAntContribute;
+        }
         return $res;
     }
     /**
@@ -92,44 +114,55 @@ class VoucherDetail extends Model{
      * @var string
      */
     public $id;
+
     /**
      * @var string
      */
     public $name;
+
     /**
      * @var string
      */
     public $type;
+
     /**
      * @var string
      */
     public $amount;
+
     /**
      * @var string
      */
     public $merchantContribute;
+
     /**
      * @var string
      */
     public $otherContribute;
+
     /**
      * @var string
      */
     public $memo;
+
     /**
      * @var string
      */
     public $templateId;
+
     /**
      * @var string
      */
     public $purchaseBuyerContribute;
+
     /**
      * @var string
      */
     public $purchaseMerchantContribute;
+
     /**
      * @var string
      */
     public $purchaseAntContribute;
+
 }

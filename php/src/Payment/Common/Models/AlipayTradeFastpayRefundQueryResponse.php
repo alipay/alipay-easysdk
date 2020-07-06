@@ -8,7 +8,7 @@ use AlibabaCloud\Tea\Model;
 use Alipay\EasySDK\Payment\Common\Models\TradeFundBill;
 use Alipay\EasySDK\Payment\Common\Models\RefundRoyaltyResult;
 
-class AlipayTradeFastpayRefundQueryResponse extends Model{
+class AlipayTradeFastpayRefundQueryResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -61,41 +61,87 @@ class AlipayTradeFastpayRefundQueryResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['error_code'] = $this->errorCode;
-        $res['gmt_refund_pay'] = $this->gmtRefundPay;
-        $res['industry_sepc_detail'] = $this->industrySepcDetail;
-        $res['out_request_no'] = $this->outRequestNo;
-        $res['out_trade_no'] = $this->outTradeNo;
-        $res['present_refund_buyer_amount'] = $this->presentRefundBuyerAmount;
-        $res['present_refund_discount_amount'] = $this->presentRefundDiscountAmount;
-        $res['present_refund_mdiscount_amount'] = $this->presentRefundMdiscountAmount;
-        $res['refund_amount'] = $this->refundAmount;
-        $res['refund_charge_amount'] = $this->refundChargeAmount;
-        $res['refund_detail_item_list'] = [];
-        if(null !== $this->refundDetailItemList && is_array($this->refundDetailItemList)){
-            $n = 0;
-            foreach($this->refundDetailItemList as $item){
-                $res['refund_detail_item_list'][$n++] = null !== $item ? $item->toMap() : $item;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
+        }
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->errorCode) {
+            $res['error_code'] = $this->errorCode;
+        }
+        if (null !== $this->gmtRefundPay) {
+            $res['gmt_refund_pay'] = $this->gmtRefundPay;
+        }
+        if (null !== $this->industrySepcDetail) {
+            $res['industry_sepc_detail'] = $this->industrySepcDetail;
+        }
+        if (null !== $this->outRequestNo) {
+            $res['out_request_no'] = $this->outRequestNo;
+        }
+        if (null !== $this->outTradeNo) {
+            $res['out_trade_no'] = $this->outTradeNo;
+        }
+        if (null !== $this->presentRefundBuyerAmount) {
+            $res['present_refund_buyer_amount'] = $this->presentRefundBuyerAmount;
+        }
+        if (null !== $this->presentRefundDiscountAmount) {
+            $res['present_refund_discount_amount'] = $this->presentRefundDiscountAmount;
+        }
+        if (null !== $this->presentRefundMdiscountAmount) {
+            $res['present_refund_mdiscount_amount'] = $this->presentRefundMdiscountAmount;
+        }
+        if (null !== $this->refundAmount) {
+            $res['refund_amount'] = $this->refundAmount;
+        }
+        if (null !== $this->refundChargeAmount) {
+            $res['refund_charge_amount'] = $this->refundChargeAmount;
+        }
+        if (null !== $this->refundDetailItemList) {
+            $res['refund_detail_item_list'] = [];
+            if(null !== $this->refundDetailItemList && is_array($this->refundDetailItemList)){
+                $n = 0;
+                foreach($this->refundDetailItemList as $item){
+                    $res['refund_detail_item_list'][$n++] = null !== $item ? $item->toMap() : $item;
+                }
             }
         }
-        $res['refund_reason'] = $this->refundReason;
-        $res['refund_royaltys'] = [];
-        if(null !== $this->refundRoyaltys && is_array($this->refundRoyaltys)){
-            $n = 0;
-            foreach($this->refundRoyaltys as $item){
-                $res['refund_royaltys'][$n++] = null !== $item ? $item->toMap() : $item;
+        if (null !== $this->refundReason) {
+            $res['refund_reason'] = $this->refundReason;
+        }
+        if (null !== $this->refundRoyaltys) {
+            $res['refund_royaltys'] = [];
+            if(null !== $this->refundRoyaltys && is_array($this->refundRoyaltys)){
+                $n = 0;
+                foreach($this->refundRoyaltys as $item){
+                    $res['refund_royaltys'][$n++] = null !== $item ? $item->toMap() : $item;
+                }
             }
         }
-        $res['refund_settlement_id'] = $this->refundSettlementId;
-        $res['refund_status'] = $this->refundStatus;
-        $res['send_back_fee'] = $this->sendBackFee;
-        $res['total_amount'] = $this->totalAmount;
-        $res['trade_no'] = $this->tradeNo;
+        if (null !== $this->refundSettlementId) {
+            $res['refund_settlement_id'] = $this->refundSettlementId;
+        }
+        if (null !== $this->refundStatus) {
+            $res['refund_status'] = $this->refundStatus;
+        }
+        if (null !== $this->sendBackFee) {
+            $res['send_back_fee'] = $this->sendBackFee;
+        }
+        if (null !== $this->totalAmount) {
+            $res['total_amount'] = $this->totalAmount;
+        }
+        if (null !== $this->tradeNo) {
+            $res['trade_no'] = $this->tradeNo;
+        }
         return $res;
     }
     /**
@@ -192,92 +238,115 @@ class AlipayTradeFastpayRefundQueryResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var string
      */
     public $errorCode;
+
     /**
      * @var string
      */
     public $gmtRefundPay;
+
     /**
      * @var string
      */
     public $industrySepcDetail;
+
     /**
      * @var string
      */
     public $outRequestNo;
+
     /**
      * @var string
      */
     public $outTradeNo;
+
     /**
      * @var string
      */
     public $presentRefundBuyerAmount;
+
     /**
      * @var string
      */
     public $presentRefundDiscountAmount;
+
     /**
      * @var string
      */
     public $presentRefundMdiscountAmount;
+
     /**
      * @var string
      */
     public $refundAmount;
+
     /**
      * @var string
      */
     public $refundChargeAmount;
+
     /**
      * @var array
      */
     public $refundDetailItemList;
+
     /**
      * @var string
      */
     public $refundReason;
+
     /**
      * @var array
      */
     public $refundRoyaltys;
+
     /**
      * @var string
      */
     public $refundSettlementId;
+
     /**
      * @var string
      */
     public $refundStatus;
+
     /**
      * @var string
      */
     public $sendBackFee;
+
     /**
      * @var string
      */
     public $totalAmount;
+
     /**
      * @var string
      */
     public $tradeNo;
+
 }

@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Member\Identification\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class AlipayUserCertifyOpenCertifyResponse extends Model{
+class AlipayUserCertifyOpenCertifyResponse extends Model {
     protected $_name = [
         'body' => 'body',
     ];
@@ -14,7 +14,9 @@ class AlipayUserCertifyOpenCertifyResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['body'] = $this->body;
+        if (null !== $this->body) {
+            $res['body'] = $this->body;
+        }
         return $res;
     }
     /**
@@ -33,4 +35,5 @@ class AlipayUserCertifyOpenCertifyResponse extends Model{
      * @var string
      */
     public $body;
+
 }

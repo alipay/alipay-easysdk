@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Payment\Huabei\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class HuabeiConfig extends Model{
+class HuabeiConfig extends Model {
     protected $_name = [
         'hbFqNum' => 'hb_fq_num',
         'hbFqSellerPercent' => 'hb_fq_seller_percent',
@@ -16,8 +16,12 @@ class HuabeiConfig extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['hb_fq_num'] = $this->hbFqNum;
-        $res['hb_fq_seller_percent'] = $this->hbFqSellerPercent;
+        if (null !== $this->hbFqNum) {
+            $res['hb_fq_num'] = $this->hbFqNum;
+        }
+        if (null !== $this->hbFqSellerPercent) {
+            $res['hb_fq_seller_percent'] = $this->hbFqSellerPercent;
+        }
         return $res;
     }
     /**
@@ -38,8 +42,10 @@ class HuabeiConfig extends Model{
      * @var string
      */
     public $hbFqNum;
+
     /**
      * @var string
      */
     public $hbFqSellerPercent;
+
 }

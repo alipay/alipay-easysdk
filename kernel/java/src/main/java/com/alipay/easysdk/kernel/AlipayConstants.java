@@ -23,6 +23,7 @@ public final class AlipayConstants {
     public static final String ALIPAY_ROOT_CERT_PATH_CONFIG_KEY = "alipayRootCertPath";
     public static final String SIGN_TYPE_CONFIG_KEY             = "signType";
     public static final String NOTIFY_URL_CONFIG_KEY            = "notifyUrl";
+    public static final String SIGN_PROVIDER_CONFIG_KEY         = "signProvider";
 
     /**
      * 与网关HTTP交互中涉及到的字段值
@@ -66,4 +67,9 @@ public final class AlipayConstants {
      * 申请生成的重定向网页的请求类型，POST表示生成form表单
      */
     public static final String POST = "POST";
+
+    /**
+     * 使用Aliyun KMS签名服务时签名提供方的名称
+     */
+    public static final String AliyunKMS = "AliyunKMS";
 }

@@ -86,4 +86,10 @@ public class Config extends TeaModel {
      */
     @NameInMap("encryptKey")
     public String encryptKey;
+
+    /**
+     * 签名提供方的名称(可选)，例：Aliyun KMS签名，signProvider = "AliyunKMS"
+     */
+    @NameInMap("signProvider")
+    public String signProvider;
 }

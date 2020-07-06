@@ -7,7 +7,7 @@ use AlibabaCloud\Tea\Model;
 
 use Alipay\EasySDK\Payment\Common\Models\TradeSettleDetail;
 
-class TradeSettleInfo extends Model{
+class TradeSettleInfo extends Model {
     protected $_name = [
         'tradeSettleDetailList' => 'trade_settle_detail_list',
     ];
@@ -16,11 +16,13 @@ class TradeSettleInfo extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['trade_settle_detail_list'] = [];
-        if(null !== $this->tradeSettleDetailList && is_array($this->tradeSettleDetailList)){
-            $n = 0;
-            foreach($this->tradeSettleDetailList as $item){
-                $res['trade_settle_detail_list'][$n++] = null !== $item ? $item->toMap() : $item;
+        if (null !== $this->tradeSettleDetailList) {
+            $res['trade_settle_detail_list'] = [];
+            if(null !== $this->tradeSettleDetailList && is_array($this->tradeSettleDetailList)){
+                $n = 0;
+                foreach($this->tradeSettleDetailList as $item){
+                    $res['trade_settle_detail_list'][$n++] = null !== $item ? $item->toMap() : $item;
+                }
             }
         }
         return $res;
@@ -46,4 +48,5 @@ class TradeSettleInfo extends Model{
      * @var array
      */
     public $tradeSettleDetailList;
+
 }

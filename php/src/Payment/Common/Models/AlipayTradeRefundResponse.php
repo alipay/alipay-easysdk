@@ -8,7 +8,7 @@ use AlibabaCloud\Tea\Model;
 use Alipay\EasySDK\Payment\Common\Models\TradeFundBill;
 use Alipay\EasySDK\Payment\Common\Models\PresetPayToolInfo;
 
-class AlipayTradeRefundResponse extends Model{
+class AlipayTradeRefundResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -55,38 +55,78 @@ class AlipayTradeRefundResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['trade_no'] = $this->tradeNo;
-        $res['out_trade_no'] = $this->outTradeNo;
-        $res['buyer_logon_id'] = $this->buyerLogonId;
-        $res['fund_change'] = $this->fundChange;
-        $res['refund_fee'] = $this->refundFee;
-        $res['refund_currency'] = $this->refundCurrency;
-        $res['gmt_refund_pay'] = $this->gmtRefundPay;
-        $res['refund_detail_item_list'] = [];
-        if(null !== $this->refundDetailItemList && is_array($this->refundDetailItemList)){
-            $n = 0;
-            foreach($this->refundDetailItemList as $item){
-                $res['refund_detail_item_list'][$n++] = null !== $item ? $item->toMap() : $item;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
+        }
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->tradeNo) {
+            $res['trade_no'] = $this->tradeNo;
+        }
+        if (null !== $this->outTradeNo) {
+            $res['out_trade_no'] = $this->outTradeNo;
+        }
+        if (null !== $this->buyerLogonId) {
+            $res['buyer_logon_id'] = $this->buyerLogonId;
+        }
+        if (null !== $this->fundChange) {
+            $res['fund_change'] = $this->fundChange;
+        }
+        if (null !== $this->refundFee) {
+            $res['refund_fee'] = $this->refundFee;
+        }
+        if (null !== $this->refundCurrency) {
+            $res['refund_currency'] = $this->refundCurrency;
+        }
+        if (null !== $this->gmtRefundPay) {
+            $res['gmt_refund_pay'] = $this->gmtRefundPay;
+        }
+        if (null !== $this->refundDetailItemList) {
+            $res['refund_detail_item_list'] = [];
+            if(null !== $this->refundDetailItemList && is_array($this->refundDetailItemList)){
+                $n = 0;
+                foreach($this->refundDetailItemList as $item){
+                    $res['refund_detail_item_list'][$n++] = null !== $item ? $item->toMap() : $item;
+                }
             }
         }
-        $res['store_name'] = $this->storeName;
-        $res['buyer_user_id'] = $this->buyerUserId;
-        $res['refund_preset_paytool_list'] = [];
-        if(null !== $this->refundPresetPaytoolList && is_array($this->refundPresetPaytoolList)){
-            $n = 0;
-            foreach($this->refundPresetPaytoolList as $item){
-                $res['refund_preset_paytool_list'][$n++] = null !== $item ? $item->toMap() : $item;
+        if (null !== $this->storeName) {
+            $res['store_name'] = $this->storeName;
+        }
+        if (null !== $this->buyerUserId) {
+            $res['buyer_user_id'] = $this->buyerUserId;
+        }
+        if (null !== $this->refundPresetPaytoolList) {
+            $res['refund_preset_paytool_list'] = [];
+            if(null !== $this->refundPresetPaytoolList && is_array($this->refundPresetPaytoolList)){
+                $n = 0;
+                foreach($this->refundPresetPaytoolList as $item){
+                    $res['refund_preset_paytool_list'][$n++] = null !== $item ? $item->toMap() : $item;
+                }
             }
         }
-        $res['refund_settlement_id'] = $this->refundSettlementId;
-        $res['present_refund_buyer_amount'] = $this->presentRefundBuyerAmount;
-        $res['present_refund_discount_amount'] = $this->presentRefundDiscountAmount;
-        $res['present_refund_mdiscount_amount'] = $this->presentRefundMdiscountAmount;
+        if (null !== $this->refundSettlementId) {
+            $res['refund_settlement_id'] = $this->refundSettlementId;
+        }
+        if (null !== $this->presentRefundBuyerAmount) {
+            $res['present_refund_buyer_amount'] = $this->presentRefundBuyerAmount;
+        }
+        if (null !== $this->presentRefundDiscountAmount) {
+            $res['present_refund_discount_amount'] = $this->presentRefundDiscountAmount;
+        }
+        if (null !== $this->presentRefundMdiscountAmount) {
+            $res['present_refund_mdiscount_amount'] = $this->presentRefundMdiscountAmount;
+        }
         return $res;
     }
     /**
@@ -174,80 +214,100 @@ class AlipayTradeRefundResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var string
      */
     public $tradeNo;
+
     /**
      * @var string
      */
     public $outTradeNo;
+
     /**
      * @var string
      */
     public $buyerLogonId;
+
     /**
      * @var string
      */
     public $fundChange;
+
     /**
      * @var string
      */
     public $refundFee;
+
     /**
      * @var string
      */
     public $refundCurrency;
+
     /**
      * @var string
      */
     public $gmtRefundPay;
+
     /**
      * @var array
      */
     public $refundDetailItemList;
+
     /**
      * @var string
      */
     public $storeName;
+
     /**
      * @var string
      */
     public $buyerUserId;
+
     /**
      * @var array
      */
     public $refundPresetPaytoolList;
+
     /**
      * @var string
      */
     public $refundSettlementId;
+
     /**
      * @var string
      */
     public $presentRefundBuyerAmount;
+
     /**
      * @var string
      */
     public $presentRefundDiscountAmount;
+
     /**
      * @var string
      */
     public $presentRefundMdiscountAmount;
+
 }

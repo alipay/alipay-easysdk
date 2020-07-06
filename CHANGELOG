@@ -79,6 +79,11 @@ Factory.Util.AES().Encrypt AES加密
 
 
 PHP版本
+2020-07-06 Version: 2.0.0
+1. 支持可选业务参数的装配。
+2. 支持ISV代调用。
+3. 提供ResponseChecker辅助工具类，帮助校验响应是否成功。
+
 2020-05-06 Version: 1.2.1
 1. 手机网站支付、电脑网站支付接口支持设置return_url同步跳转地址。
 

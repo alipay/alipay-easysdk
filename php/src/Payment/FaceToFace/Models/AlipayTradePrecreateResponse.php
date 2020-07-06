@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Payment\FaceToFace\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class AlipayTradePrecreateResponse extends Model{
+class AlipayTradePrecreateResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -26,13 +26,27 @@ class AlipayTradePrecreateResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['out_trade_no'] = $this->outTradeNo;
-        $res['qr_code'] = $this->qrCode;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
+        }
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->outTradeNo) {
+            $res['out_trade_no'] = $this->outTradeNo;
+        }
+        if (null !== $this->qrCode) {
+            $res['qr_code'] = $this->qrCode;
+        }
         return $res;
     }
     /**
@@ -69,28 +83,35 @@ class AlipayTradePrecreateResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var string
      */
     public $outTradeNo;
+
     /**
      * @var string
      */
     public $qrCode;
+
 }

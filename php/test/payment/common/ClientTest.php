@@ -26,6 +26,25 @@ class ClientTest extends TestCase
         return $result->outTradeNo;
     }
 
+    public function testCreateWithOptional(){
+        $result = Factory::payment()->common()
+            ->optional("goods_detail", $this->getGoodsDetail())
+            ->create("Iphone6 16G",microtime(), "0.01", "2088002656718920");
+        $this->assertEquals('10000', $result->code);
+        $this->assertEquals('Success', $result->msg);
+    }
+
+    private function getGoodsDetail(){
+        $goodDetail = array(
+            "goods_id" => "apple-01",
+            "goods_name" => "iPhone6 16G",
+            "quantity" => 1,
+            "price" => "0.01"
+        );
+        $goodsDetail[0] = $goodDetail;
+        return $goodsDetail;
+    }
+
     public function testQuery()
     {
         $result = Factory::payment()->common()->query('6f149ddb-ab8c-4546-81fb-5880b4aaa318');
@@ -69,4 +88,6 @@ class ClientTest extends TestCase
         $this->assertEquals('10000', $result->code);
         $this->assertEquals('Success', $result->msg);
     }
+
+
 }

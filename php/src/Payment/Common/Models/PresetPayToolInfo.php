@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Payment\Common\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class PresetPayToolInfo extends Model{
+class PresetPayToolInfo extends Model {
     protected $_name = [
         'amount' => 'amount',
         'assertTypeCode' => 'assert_type_code',
@@ -16,11 +16,15 @@ class PresetPayToolInfo extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['amount'] = [];
-        if(null !== $this->amount){
-            $res['amount'] = $this->amount;
+        if (null !== $this->amount) {
+            $res['amount'] = [];
+            if(null !== $this->amount){
+                $res['amount'] = $this->amount;
+            }
         }
-        $res['assert_type_code'] = $this->assertTypeCode;
+        if (null !== $this->assertTypeCode) {
+            $res['assert_type_code'] = $this->assertTypeCode;
+        }
         return $res;
     }
     /**
@@ -44,8 +48,10 @@ class PresetPayToolInfo extends Model{
      * @var array
      */
     public $amount;
+
     /**
      * @var string
      */
     public $assertTypeCode;
+
 }

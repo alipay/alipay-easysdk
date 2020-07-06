@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Marketing\OpenLife\Models;
 
 use AlibabaCloud\Tea\Model;
 
-class AlipayOpenPublicMessageContentModifyResponse extends Model{
+class AlipayOpenPublicMessageContentModifyResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -26,13 +26,27 @@ class AlipayOpenPublicMessageContentModifyResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['content_id'] = $this->contentId;
-        $res['content_url'] = $this->contentUrl;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
+        }
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->contentId) {
+            $res['content_id'] = $this->contentId;
+        }
+        if (null !== $this->contentUrl) {
+            $res['content_url'] = $this->contentUrl;
+        }
         return $res;
     }
     /**
@@ -69,28 +83,35 @@ class AlipayOpenPublicMessageContentModifyResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var string
      */
     public $contentId;
+
     /**
      * @var string
      */
     public $contentUrl;
+
 }

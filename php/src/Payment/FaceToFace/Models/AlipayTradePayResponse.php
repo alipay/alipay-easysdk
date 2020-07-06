@@ -8,7 +8,7 @@ use AlibabaCloud\Tea\Model;
 use Alipay\EasySDK\Payment\FaceToFace\Models\TradeFundBill;
 use Alipay\EasySDK\Payment\FaceToFace\Models\VoucherDetail;
 
-class AlipayTradePayResponse extends Model{
+class AlipayTradePayResponse extends Model {
     protected $_name = [
         'httpBody' => 'http_body',
         'code' => 'code',
@@ -89,55 +89,129 @@ class AlipayTradePayResponse extends Model{
     }
     public function toMap() {
         $res = [];
-        $res['http_body'] = $this->httpBody;
-        $res['code'] = $this->code;
-        $res['msg'] = $this->msg;
-        $res['sub_code'] = $this->subCode;
-        $res['sub_msg'] = $this->subMsg;
-        $res['trade_no'] = $this->tradeNo;
-        $res['out_trade_no'] = $this->outTradeNo;
-        $res['buyer_logon_id'] = $this->buyerLogonId;
-        $res['settle_amount'] = $this->settleAmount;
-        $res['pay_currency'] = $this->payCurrency;
-        $res['pay_amount'] = $this->payAmount;
-        $res['settle_trans_rate'] = $this->settleTransRate;
-        $res['trans_pay_rate'] = $this->transPayRate;
-        $res['total_amount'] = $this->totalAmount;
-        $res['trans_currency'] = $this->transCurrency;
-        $res['settle_currency'] = $this->settleCurrency;
-        $res['receipt_amount'] = $this->receiptAmount;
-        $res['buyer_pay_amount'] = $this->buyerPayAmount;
-        $res['point_amount'] = $this->pointAmount;
-        $res['invoice_amount'] = $this->invoiceAmount;
-        $res['gmt_payment'] = $this->gmtPayment;
-        $res['fund_bill_list'] = [];
-        if(null !== $this->fundBillList && is_array($this->fundBillList)){
-            $n = 0;
-            foreach($this->fundBillList as $item){
-                $res['fund_bill_list'][$n++] = null !== $item ? $item->toMap() : $item;
+        if (null !== $this->httpBody) {
+            $res['http_body'] = $this->httpBody;
+        }
+        if (null !== $this->code) {
+            $res['code'] = $this->code;
+        }
+        if (null !== $this->msg) {
+            $res['msg'] = $this->msg;
+        }
+        if (null !== $this->subCode) {
+            $res['sub_code'] = $this->subCode;
+        }
+        if (null !== $this->subMsg) {
+            $res['sub_msg'] = $this->subMsg;
+        }
+        if (null !== $this->tradeNo) {
+            $res['trade_no'] = $this->tradeNo;
+        }
+        if (null !== $this->outTradeNo) {
+            $res['out_trade_no'] = $this->outTradeNo;
+        }
+        if (null !== $this->buyerLogonId) {
+            $res['buyer_logon_id'] = $this->buyerLogonId;
+        }
+        if (null !== $this->settleAmount) {
+            $res['settle_amount'] = $this->settleAmount;
+        }
+        if (null !== $this->payCurrency) {
+            $res['pay_currency'] = $this->payCurrency;
+        }
+        if (null !== $this->payAmount) {
+            $res['pay_amount'] = $this->payAmount;
+        }
+        if (null !== $this->settleTransRate) {
+            $res['settle_trans_rate'] = $this->settleTransRate;
+        }
+        if (null !== $this->transPayRate) {
+            $res['trans_pay_rate'] = $this->transPayRate;
+        }
+        if (null !== $this->totalAmount) {
+            $res['total_amount'] = $this->totalAmount;
+        }
+        if (null !== $this->transCurrency) {
+            $res['trans_currency'] = $this->transCurrency;
+        }
+        if (null !== $this->settleCurrency) {
+            $res['settle_currency'] = $this->settleCurrency;
+        }
+        if (null !== $this->receiptAmount) {
+            $res['receipt_amount'] = $this->receiptAmount;
+        }
+        if (null !== $this->buyerPayAmount) {
+            $res['buyer_pay_amount'] = $this->buyerPayAmount;
+        }
+        if (null !== $this->pointAmount) {
+            $res['point_amount'] = $this->pointAmount;
+        }
+        if (null !== $this->invoiceAmount) {
+            $res['invoice_amount'] = $this->invoiceAmount;
+        }
+        if (null !== $this->gmtPayment) {
+            $res['gmt_payment'] = $this->gmtPayment;
+        }
+        if (null !== $this->fundBillList) {
+            $res['fund_bill_list'] = [];
+            if(null !== $this->fundBillList && is_array($this->fundBillList)){
+                $n = 0;
+                foreach($this->fundBillList as $item){
+                    $res['fund_bill_list'][$n++] = null !== $item ? $item->toMap() : $item;
+                }
             }
         }
-        $res['card_balance'] = $this->cardBalance;
-        $res['store_name'] = $this->storeName;
-        $res['buyer_user_id'] = $this->buyerUserId;
-        $res['discount_goods_detail'] = $this->discountGoodsDetail;
-        $res['voucher_detail_list'] = [];
-        if(null !== $this->voucherDetailList && is_array($this->voucherDetailList)){
-            $n = 0;
-            foreach($this->voucherDetailList as $item){
-                $res['voucher_detail_list'][$n++] = null !== $item ? $item->toMap() : $item;
+        if (null !== $this->cardBalance) {
+            $res['card_balance'] = $this->cardBalance;
+        }
+        if (null !== $this->storeName) {
+            $res['store_name'] = $this->storeName;
+        }
+        if (null !== $this->buyerUserId) {
+            $res['buyer_user_id'] = $this->buyerUserId;
+        }
+        if (null !== $this->discountGoodsDetail) {
+            $res['discount_goods_detail'] = $this->discountGoodsDetail;
+        }
+        if (null !== $this->voucherDetailList) {
+            $res['voucher_detail_list'] = [];
+            if(null !== $this->voucherDetailList && is_array($this->voucherDetailList)){
+                $n = 0;
+                foreach($this->voucherDetailList as $item){
+                    $res['voucher_detail_list'][$n++] = null !== $item ? $item->toMap() : $item;
+                }
             }
         }
-        $res['advance_amount'] = $this->advanceAmount;
-        $res['auth_trade_pay_mode'] = $this->authTradePayMode;
-        $res['charge_amount'] = $this->chargeAmount;
-        $res['charge_flags'] = $this->chargeFlags;
-        $res['settlement_id'] = $this->settlementId;
-        $res['business_params'] = $this->businessParams;
-        $res['buyer_user_type'] = $this->buyerUserType;
-        $res['mdiscount_amount'] = $this->mdiscountAmount;
-        $res['discount_amount'] = $this->discountAmount;
-        $res['buyer_user_name'] = $this->buyerUserName;
+        if (null !== $this->advanceAmount) {
+            $res['advance_amount'] = $this->advanceAmount;
+        }
+        if (null !== $this->authTradePayMode) {
+            $res['auth_trade_pay_mode'] = $this->authTradePayMode;
+        }
+        if (null !== $this->chargeAmount) {
+            $res['charge_amount'] = $this->chargeAmount;
+        }
+        if (null !== $this->chargeFlags) {
+            $res['charge_flags'] = $this->chargeFlags;
+        }
+        if (null !== $this->settlementId) {
+            $res['settlement_id'] = $this->settlementId;
+        }
+        if (null !== $this->businessParams) {
+            $res['business_params'] = $this->businessParams;
+        }
+        if (null !== $this->buyerUserType) {
+            $res['buyer_user_type'] = $this->buyerUserType;
+        }
+        if (null !== $this->mdiscountAmount) {
+            $res['mdiscount_amount'] = $this->mdiscountAmount;
+        }
+        if (null !== $this->discountAmount) {
+            $res['discount_amount'] = $this->discountAmount;
+        }
+        if (null !== $this->buyerUserName) {
+            $res['buyer_user_name'] = $this->buyerUserName;
+        }
         return $res;
     }
     /**
@@ -276,148 +350,185 @@ class AlipayTradePayResponse extends Model{
      * @var string
      */
     public $httpBody;
+
     /**
      * @var string
      */
     public $code;
+
     /**
      * @var string
      */
     public $msg;
+
     /**
      * @var string
      */
     public $subCode;
+
     /**
      * @var string
      */
     public $subMsg;
+
     /**
      * @var string
      */
     public $tradeNo;
+
     /**
      * @var string
      */
     public $outTradeNo;
+
     /**
      * @var string
      */
     public $buyerLogonId;
+
     /**
      * @var string
      */
     public $settleAmount;
+
     /**
      * @var string
      */
     public $payCurrency;
+
     /**
      * @var string
      */
     public $payAmount;
+
     /**
      * @var string
      */
     public $settleTransRate;
+
     /**
      * @var string
      */
     public $transPayRate;
+
     /**
      * @var string
      */
     public $totalAmount;
+
     /**
      * @var string
      */
     public $transCurrency;
+
     /**
      * @var string
      */
     public $settleCurrency;
+
     /**
      * @var string
      */
     public $receiptAmount;
+
     /**
      * @var string
      */
     public $buyerPayAmount;
+
     /**
      * @var string
      */
     public $pointAmount;
+
     /**
      * @var string
      */
     public $invoiceAmount;
+
     /**
      * @var string
      */
     public $gmtPayment;
+
     /**
      * @var array
      */
     public $fundBillList;
+
     /**
      * @var string
      */
     public $cardBalance;
+
     /**
      * @var string
      */
     public $storeName;
+
     /**
      * @var string
      */
     public $buyerUserId;
+
     /**
      * @var string
      */
     public $discountGoodsDetail;
+
     /**
      * @var array
      */
     public $voucherDetailList;
+
     /**
      * @var string
      */
     public $advanceAmount;
+
     /**
      * @var string
      */
     public $authTradePayMode;
+
     /**
      * @var string
      */
     public $chargeAmount;
+
     /**
      * @var string
      */
     public $chargeFlags;
+
     /**
      * @var string
      */
     public $settlementId;
+
     /**
      * @var string
      */
     public $businessParams;
+
     /**
      * @var string
      */
     public $buyerUserType;
+
     /**
      * @var string
      */
     public $mdiscountAmount;
+
     /**
      * @var string
      */
     public $discountAmount;
+
     /**
      * @var string
      */
     public $buyerUserName;
+
 }
