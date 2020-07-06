@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.alipay.sdk</groupId>
   <artifactId>easysdk-kernel</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <name>Alipay Easy SDK Kernel</name>
   <url>https://open.alipay.com</url>
   <description>Alipay Easy SDK for Java
