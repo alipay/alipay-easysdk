@@ -4,9 +4,10 @@ import com.alipay.easysdk.TestAccount;
 import com.alipay.easysdk.base.qrcode.models.AlipayOpenAppQrcodeCreateResponse;
 import com.alipay.easysdk.factory.Factory;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.Ignore;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
@@ -16,7 +17,7 @@ public class ClientTest {
         Factory.setOptions(TestAccount.AliyunKMS.CONFIG);
     }
 
-    @Test
+    @Ignore
     public void testCreate() throws Exception {
         AlipayOpenAppQrcodeCreateResponse response = Factory.Base.Qrcode().create(
                 "https://opendocs.alipay.com", "ageIndex=1", "文档站点");
