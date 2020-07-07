@@ -319,6 +319,12 @@ class EasySDKKernel
         return $result;
     }
 
+    public function verifyParams($parameters, $publicKey)
+    {
+        $sign = new Signer();
+        return $sign->verifyParams($parameters, $publicKey);
+    }
+
     /**
      * 字符串拼接
      *
