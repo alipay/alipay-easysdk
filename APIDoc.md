@@ -591,6 +591,8 @@ HuabeiConfig对象说明
 
 --- 
 
+<a name="faceToFace"/>
+
 ## 当面付 FaceToFace
 ### 当面付交易付款
 * API声明
@@ -610,6 +612,22 @@ pay(subject: string, outTradeNo: string, totalAmount: string, authCode: string)
 
 可前往[alipay.trade.pay](https://docs.open.alipay.com/api_1/alipay.trade.pay)查看更加详细的参数说明。
 
+* 返佣说明
+
+ISV对接当面付产品需涉及返佣时，请先阅读[政策详情](https://opendocs.alipay.com/p/00fc2g)与[合作攻略](https://opendocs.alipay.com/open/300/taphxd)。
+
+
+**对接时必须在支付接口的extend_params参数中设置sys_service_provider_id返佣参数 ，参数值为签约返佣协议的PID**，示例代码如下（Java为例）：
+
+```java
+Map<String, String> extendParams = new HashMap<>();
+extendParams.put("sys_service_provider_id", "<--请填写ISV签约协议的PID，比如：2088511833207846-->");
+AlipayTradePayResponse response = Factory.Payment.FaceToFace()
+	.agent("<--请填写商户应用授权后获取到的app_auth_token，比如：ca34ea491e7146cc87d25fca24c4cD11-->")
+	.optional("extend_params", extendParams)
+	.pay("iPhone6 16G", "64628156-f784-4572-9540-485b7c91b850", "0.01", "289821051157962364");
+```
+
 --- 
 ### 交易预创建，生成正扫二维码
 * API声明
@@ -627,6 +645,22 @@ precreate(subject: string, outTradeNo: string, totalAmount: string)
 * 出参说明
 
 可前往[alipay.trade.precreate](https://docs.open.alipay.com/api_1/alipay.trade.precreate)查看更加详细的参数说明。
+
+* 返佣说明
+
+ISV对接当面付产品需涉及返佣时，请先阅读[政策详情](https://opendocs.alipay.com/p/00fc2g)与[合作攻略](https://opendocs.alipay.com/open/300/taphxd)。
+
+
+**对接时必须在支付接口的extend_params参数中设置sys_service_provider_id返佣参数 ，参数值为签约返佣协议的PID**，示例代码如下（Java为例）：
+
+```java
+Map<String, String> extendParams = new HashMap<>();
+extendParams.put("sys_service_provider_id", "<--请填写ISV签约协议的PID，比如：2088511833207846-->");
+AlipayTradePrecreateResponse response = Payment.FaceToFace()
+	.agent("<--请填写商户应用授权后获取到的app_auth_token，比如：ca34ea491e7146cc87d25fca24c4cD11-->")
+	.optional("extend_params", extendParams)
+	.preCreate("iPhone6 16G", "64628156-f784-4572-9540-485b7c91b850", "0.01");
+```
 
 --- 
 ## 电脑网站 Page

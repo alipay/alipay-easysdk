@@ -96,11 +96,9 @@ Factory.Payment.FaceToFace()
 > 注：单元测试中使用到的私钥均进行了脱敏处理，会导致单元测试无法直接执行。您可以自行更改单元测试项目中的`TestAccout类`和`privateKey.json`文件中的相关账号与私钥配置后再执行单元测试。
 
 ### 多语言
-Alipay Easy SDK基于阿里集团研发的`Tea DSL`工具链进行架构，通过DSL中间语言定义API模型，再基于DSL语言自动生成不同编程语言（Java、C#、PHP、TS等）实现的SDK，极大地提升了SDK能力的扩展效率和适用范围，同时也保证了相同的`Easy API`在不同语言生态中体验的一致性。
+Alipay Easy SDK基于阿里集团研发的[`Darabonba`](https://github.com/aliyun/darabonba)进行架构，通过DSL中间语言定义API模型，再基于DSL语言自动生成不同编程语言（Java、C#、PHP、TS等）实现的SDK，极大地提升了SDK能力的扩展效率和适用范围，同时也保证了相同的`Easy API`在不同语言生态中体验的一致性。
 
-API模型的Tea DSL描述可以进入[tea](./tea)目录查看。
-
-> Tea DSL相关介绍和编写规范正在筹划开放中，后续您也可以参与Tea DSL的编写贡献更多优秀的`Easy API`模型，而无需关心多语言问题。
+API模型的DSL描述可以进入[tea](./tea)目录查看。
 
 ### 快速集成
 各语言SDK均会在各自的中央仓库（Maven、NuGet、Composer、NPM etc.）中同步发布，让您使用各语言主流依赖管理工具即可一键安装集成SDK。
@@ -165,7 +163,8 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 | Marketing（营销能力） | Pass（支付宝卡包）            | updateTemplate（卡券模板更新）         | alipay\.pass\.template\.update                            |
 | Marketing（营销能力） | Pass（支付宝卡包）            | addInstance（卡券实例发放）            | alipay\.pass\.instance\.add                               |
 | Marketing（营销能力） | Pass（支付宝卡包）            | updateInstance（卡券实例更新）         | alipay\.pass\.instance\.update                            |
-| Marketing（营销能力） | TemplateMessage（小程序模板消息） | send （发送模板消息）| alipay\.open\.app\.mini\.templatemessage\.send            |
+| Marketing（营销能力） | TemplateMessage（小程序模板消息） | send （发送模板消息）
+                   | alipay\.open\.app\.mini\.templatemessage\.send            |
 | Marketing（营销能力） | OpenLife（生活号）        | createImageTextContent（创建图文消息内容） | alipay\.open\.public\.message\.content\.create            |
 | Marketing（营销能力） | OpenLife（生活号）        | modifyImageTextContent（更新图文消息内容） | alipay\.open\.public\.message\.content\.modify            |
 | Marketing（营销能力） | OpenLife（生活号）        | sendText（群发本文消息）               | alipay\.open\.public\.message\.total\.send                |
@@ -204,5 +203,5 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 
 您也可以使用钉钉扫描下方二维码，与更多开发者和支付宝工程师共同交流。
 
-![支付宝官方Alipay Easy SDK开源交流群](https://gw.alipayobjects.com/mdn/rms_0e15fa/afts/img/A*f4urToyhLUIAAAAAAAAAAABkARQnAQ)
+![支付宝官方Alipay Easy SDK开源交流群](https://gw.alipayobjects.com/mdn/rms_0e15fa/afts/img/A*Z0DCQIznKNkAAAAAAAAAAABkARQnAQ)
 
