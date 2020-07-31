@@ -163,8 +163,7 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 | Marketing（营销能力） | Pass（支付宝卡包）            | updateTemplate（卡券模板更新）         | alipay\.pass\.template\.update                            |
 | Marketing（营销能力） | Pass（支付宝卡包）            | addInstance（卡券实例发放）            | alipay\.pass\.instance\.add                               |
 | Marketing（营销能力） | Pass（支付宝卡包）            | updateInstance（卡券实例更新）         | alipay\.pass\.instance\.update                            |
-| Marketing（营销能力） | TemplateMessage（小程序模板消息） | send （发送模板消息）
-                   | alipay\.open\.app\.mini\.templatemessage\.send            |
+| Marketing（营销能力） | TemplateMessage（小程序模板消息） | send （发送模板消息）| alipay\.open\.app\.mini\.templatemessage\.send            |
 | Marketing（营销能力） | OpenLife（生活号）        | createImageTextContent（创建图文消息内容） | alipay\.open\.public\.message\.content\.create            |
 | Marketing（营销能力） | OpenLife（生活号）        | modifyImageTextContent（更新图文消息内容） | alipay\.open\.public\.message\.content\.modify            |
 | Marketing（营销能力） | OpenLife（生活号）        | sendText（群发本文消息）               | alipay\.open\.public\.message\.total\.send                |
