@@ -96,11 +96,9 @@ Factory.Payment.FaceToFace()
 > 注：单元测试中使用到的私钥均进行了脱敏处理，会导致单元测试无法直接执行。您可以自行更改单元测试项目中的`TestAccout类`和`privateKey.json`文件中的相关账号与私钥配置后再执行单元测试。
 
 ### 多语言
-Alipay Easy SDK基于阿里集团研发的`Tea DSL`工具链进行架构，通过DSL中间语言定义API模型，再基于DSL语言自动生成不同编程语言（Java、C#、PHP、TS等）实现的SDK，极大地提升了SDK能力的扩展效率和适用范围，同时也保证了相同的`Easy API`在不同语言生态中体验的一致性。
+Alipay Easy SDK基于阿里集团研发的[`Darabonba`](https://github.com/aliyun/darabonba)进行架构，通过DSL中间语言定义API模型，再基于DSL语言自动生成不同编程语言（Java、C#、PHP、TS等）实现的SDK，极大地提升了SDK能力的扩展效率和适用范围，同时也保证了相同的`Easy API`在不同语言生态中体验的一致性。
 
-API模型的Tea DSL描述可以进入[tea](./tea)目录查看。
-
-> Tea DSL相关介绍和编写规范正在筹划开放中，后续您也可以参与Tea DSL的编写贡献更多优秀的`Easy API`模型，而无需关心多语言问题。
+API模型的DSL描述可以进入[tea](./tea)目录查看。
 
 ### 快速集成
 各语言SDK均会在各自的中央仓库（Maven、NuGet、Composer、NPM etc.）中同步发布，让您使用各语言主流依赖管理工具即可一键安装集成SDK。
@@ -138,45 +136,45 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 
 | 能力类别      | 场景类别            | 接口方法名称                 | 调用的OpenAPI名称                                              |
 |-----------|-----------------|------------------------|-----------------------------------------------------------|
-| Base（基础能力）      | OAuth（用户授权）           | getToken（获取授权访问令牌和用户user_id）               | alipay\.system\.oauth\.token                              |
-| Base（基础能力）     | OAuth（用户授权）           | refreshToken（刷新授权访问令牌）           | alipay\.system\.oauth\.token                              |
-| Base（基础能力）      | Qrcode（小程序二维码）          | create（创建小程序二维码）                 | alipay\.open\.app\.qrcode\.create                         |
-| Base（基础能力）      | Image（图片）           | upload（上传门店照片）                 | alipay\.offline\.material\.image\.upload                  |
-| Base（基础能力）      | Video（视频）           | upload（上传门店视频）                 | alipay\.offline\.material\.image\.upload                  |
-| Member（会员能力）    | Identification（支付宝身份认证）  | init（身份认证初始化）                   | alipay\.user\.certify\.open\.initialize                   |
-| Member（会员能力）    | Identification（支付宝身份认证）  | certify（生成认证链接）                | alipay\.user\.certify\.open\.certify                      |
-| Member（会员能力）    | Identification（支付宝身份认证）  | query（身份认证记录查询）                  | alipay\.user\.certify\.open\.query                        |
-| Payment（支付能力）   | Common（通用）          | create（创建交易）                 | alipay\.trade\.create                                     |
-| Payment（支付能力）   | Common（通用）          | query（查询交易）                  | alipay\.trade\.query                                      |
-| Payment（支付能力）   | Common（通用）          | refund（交易退款）                 | alipay\.trade\.refund                                     |
-| Payment（支付能力）   | Common（通用）          | close（关闭交易）                  | alipay\.trade\.close                                      |
-| Payment（支付能力）   | Common（通用）          | cancel（撤销交易）                 | alipay\.trade\.cancel                                     |
-| Payment（支付能力）   | Common（通用）          | queryRefund（交易退款查询）            | alipay\.trade\.fastpay\.refund\.query                     |
-| Payment（支付能力）   | Common（通用）          | downloadBill（查询对账单下载地址）           | alipay\.data\.dataservice\.bill\.downloadurl\.query       |
-| Payment（支付能力）   | Common（通用）          | verifyNotify（异步通知验签）           | -                                                         |
-| Payment（支付能力）   | Huabei（花呗分期）          | create（创建花呗分期交易）                 | alipay\.trade\.create                                     |
-| Payment（支付能力）   | FaceToFace（当面付）      | pay（扫用户出示的付款码，完成付款）                    | alipay\.trade\.pay                                        |
-| Payment（支付能力）   | FaceToFace（当面付）      | precreate（生成交易付款码，待用户扫码付款）              | alipay\.trade\.precreate                                  |
-| Payment（支付能力）   | App（手机APP）             | pay（生成订单串，再使用客户端 SDK 凭此串唤起支付宝收银台）                    | alipay\.trade\.app\.pay                                   |
-| Payment（支付能力）   | Page（电脑网站）            | pay（生成交易表单，渲染后自动跳转支付宝网站引导用户完成支付）                    | alipay\.trade\.page\.pay                                  |
-| Payment（支付能力）   | Wap（手机网站）             | pay（生成交易表单，渲染后自动跳转支付宝网站引导用户完成支付）                    | alipay\.trade\.wap\.pay                                   |
-| Security（安全能力）  | TextRisk（文本内容安全）        | detect（检测内容风险）                 | alipay\.security\.risk\.content\.detect                   |
-| Marketing（营销能力） | Pass（支付宝卡包）            | createTemplate（卡券模板创建）         | alipay\.pass\.template\.add                               |
-| Marketing（营销能力） | Pass（支付宝卡包）            | updateTemplate（卡券模板更新）         | alipay\.pass\.template\.update                            |
-| Marketing（营销能力） | Pass（支付宝卡包）            | addInstance（卡券实例发放）            | alipay\.pass\.instance\.add                               |
-| Marketing（营销能力） | Pass（支付宝卡包）            | updateInstance（卡券实例更新）         | alipay\.pass\.instance\.update                            |
-| Marketing（营销能力） | TemplateMessage（小程序模板消息） | send （发送模板消息）| alipay\.open\.app\.mini\.templatemessage\.send            |
-| Marketing（营销能力） | OpenLife（生活号）        | createImageTextContent（创建图文消息内容） | alipay\.open\.public\.message\.content\.create            |
-| Marketing（营销能力） | OpenLife（生活号）        | modifyImageTextContent（更新图文消息内容） | alipay\.open\.public\.message\.content\.modify            |
-| Marketing（营销能力） | OpenLife（生活号）        | sendText（群发本文消息）               | alipay\.open\.public\.message\.total\.send                |
-| Marketing（营销能力） | OpenLife（生活号）        | sendImageText（群发图文消息）          | alipay\.open\.public\.message\.total\.send                |
-| Marketing（营销能力） | OpenLife（生活号）        | sendSingleMessage（单发模板消息）      | alipay\.open\.public\.message\.single\.send               |
-| Marketing（营销能力） | OpenLife（生活号）        | recallMessage（生活号消息撤回）          | alipay\.open\.public\.life\.msg\.recall                   |
-| Marketing（营销能力） | OpenLife（生活号）        | setIndustry（模板消息行业设置）            | alipay\.open\.public\.template\.message\.industry\.modify |
-| Marketing（营销能力） | OpenLife（生活号）        | getIndustry（生活号查询行业设置）            | alipay\.open\.public\.setting\.category\.query            |
-| Util（辅助工具）      | AES（加解密）             | decrypt（解密，常用于会员手机号解密）                | -                                                         |
-| Util（辅助工具）      | AES（加解密）             | encrypt（加密）                | -                                                         |
-| Util（辅助工具）      | Generic（通用接口）         | execute（自行拼接参数，执行OpenAPI调用）                | -                                                         |
+| Base<br/>基础能力      | OAuth<br/>用户授权           | getToken<br/>获取授权访问令牌和用户user_id               | alipay\.system\.oauth\.token                              |
+| Base<br/>基础能力     | OAuth<br/>用户授权           | refreshToken<br/>刷新授权访问令牌           | alipay\.system\.oauth\.token                              |
+| Base<br/>基础能力      | Qrcode<br/>小程序二维码          | create<br/>创建小程序二维码                 | alipay\.open\.app\.qrcode\.create                         |
+| Base<br/>基础能力      | Image<br/>图片           | upload<br/>上传门店照片                 | alipay\.offline\.material\.image\.upload                  |
+| Base<br/>基础能力      | Video<br/>视频           | upload<br/>上传门店视频                 | alipay\.offline\.material\.image\.upload                  |
+| Member<br/>会员能力    | Identification<br/>支付宝身份认证  | init<br/>身份认证初始化                   | alipay\.user\.certify\.open\.initialize                   |
+| Member<br/>会员能力    | Identification<br/>支付宝身份认证  | certify<br/>生成认证链接                | alipay\.user\.certify\.open\.certify                      |
+| Member<br/>会员能力    | Identification<br/>支付宝身份认证  | query<br/>身份认证记录查询                  | alipay\.user\.certify\.open\.query                        |
+| Payment<br/>支付能力   | Common<br/>通用          | create<br/>创建交易                 | alipay\.trade\.create                                     |
+| Payment<br/>支付能力   | Common<br/>通用          | query<br/>查询交易                  | alipay\.trade\.query                                      |
+| Payment<br/>支付能力   | Common<br/>通用          | refund<br/>交易退款                 | alipay\.trade\.refund                                     |
+| Payment<br/>支付能力   | Common<br/>通用          | close<br/>关闭交易                  | alipay\.trade\.close                                      |
+| Payment<br/>支付能力   | Common<br/>通用          | cancel<br/>撤销交易                 | alipay\.trade\.cancel                                     |
+| Payment<br/>支付能力   | Common<br/>通用          | queryRefund<br/>交易退款查询            | alipay\.trade\.fastpay\.refund\.query                     |
+| Payment<br/>支付能力   | Common<br/>通用          | downloadBill<br/>查询对账单下载地址           | alipay\.data\.dataservice\.bill\.downloadurl\.query       |
+| Payment<br/>支付能力   | Common<br/>通用          | verifyNotify<br/>异步通知验签           | -                                                         |
+| Payment<br/>支付能力   | Huabei<br/>花呗分期          | create<br/>创建花呗分期交易                 | alipay\.trade\.create                                     |
+| Payment<br/>支付能力   | FaceToFace<br/>当面付      | pay<br/>扫用户出示的付款码，完成付款                    | alipay\.trade\.pay                                        |
+| Payment<br/>支付能力   | FaceToFace<br/>当面付      | precreate<br/>生成交易付款码，待用户扫码付款              | alipay\.trade\.precreate                                  |
+| Payment<br/>支付能力   | App<br/>手机APP             | pay<br/>生成订单串，再使用客户端 SDK 凭此串唤起支付宝收银台                    | alipay\.trade\.app\.pay                                   |
+| Payment<br/>支付能力   | Page<br/>电脑网站            | pay<br/>生成交易表单，渲染后自动跳转支付宝网站引导用户完成支付                    | alipay\.trade\.page\.pay                                  |
+| Payment<br/>支付能力   | Wap<br/>手机网站             | pay<br/>生成交易表单，渲染后自动跳转支付宝网站引导用户完成支付                    | alipay\.trade\.wap\.pay                                   |
+| Security<br/>安全能力  | TextRisk<br/>文本内容安全        | detect<br/>检测内容风险                 | alipay\.security\.risk\.content\.detect                   |
+| Marketing<br/>营销能力 | Pass<br/>支付宝卡包            | createTemplate<br/>卡券模板创建         | alipay\.pass\.template\.add                               |
+| Marketing<br/>营销能力 | Pass<br/>支付宝卡包            | updateTemplate<br/>卡券模板更新         | alipay\.pass\.template\.update                            |
+| Marketing<br/>营销能力 | Pass<br/>支付宝卡包            | addInstance<br/>卡券实例发放            | alipay\.pass\.instance\.add                               |
+| Marketing<br/>营销能力 | Pass<br/>支付宝卡包            | updateInstance<br/>卡券实例更新         | alipay\.pass\.instance\.update                            |
+| Marketing<br/>营销能力 | TemplateMessage<br/>小程序模板消息 | send <br/>发送模板消息| alipay\.open\.app\.mini\.templatemessage\.send            |
+| Marketing<br/>营销能力 | OpenLife<br/>生活号        | createImageTextContent<br/>创建图文消息内容 | alipay\.open\.public\.message\.content\.create            |
+| Marketing<br/>营销能力 | OpenLife<br/>生活号        | modifyImageTextContent<br/>更新图文消息内容 | alipay\.open\.public\.message\.content\.modify            |
+| Marketing<br/>营销能力 | OpenLife<br/>生活号        | sendText<br/>群发本文消息               | alipay\.open\.public\.message\.total\.send                |
+| Marketing<br/>营销能力 | OpenLife<br/>生活号        | sendImageText<br/>群发图文消息          | alipay\.open\.public\.message\.total\.send                |
+| Marketing<br/>营销能力 | OpenLife<br/>生活号        | sendSingleMessage<br/>单发模板消息      | alipay\.open\.public\.message\.single\.send               |
+| Marketing<br/>营销能力 | OpenLife<br/>生活号        | recallMessage<br/>生活号消息撤回          | alipay\.open\.public\.life\.msg\.recall                   |
+| Marketing<br/>营销能力 | OpenLife<br/>生活号        | setIndustry<br/>模板消息行业设置            | alipay\.open\.public\.template\.message\.industry\.modify |
+| Marketing<br/>营销能力 | OpenLife<br/>生活号        | getIndustry<br/>生活号查询行业设置            | alipay\.open\.public\.setting\.category\.query            |
+| Util<br/>辅助工具      | AES<br/>加解密             | decrypt<br/>解密，常用于会员手机号解密                | -                                                         |
+| Util<br/>辅助工具      | AES<br/>加解密             | encrypt<br/>加密                | -                                                         |
+| Util<br/>辅助工具      | Generic<br/>通用接口         | execute<br/>自行拼接参数，执行OpenAPI调用                | -                                                         |
 
 > 注：更多高频场景的API持续更新中，敬请期待。
 
@@ -204,5 +202,5 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 
 您也可以使用钉钉扫描下方二维码，与更多开发者和支付宝工程师共同交流。
 
-![支付宝官方Alipay Easy SDK开源交流群](https://gw.alipayobjects.com/mdn/rms_0e15fa/afts/img/A*f4urToyhLUIAAAAAAAAAAABkARQnAQ)
+![支付宝官方Alipay Easy SDK开源交流群](https://gw.alipayobjects.com/mdn/rms_0e15fa/afts/img/A*SUaHT7fpzSwAAAAAAAAAAABkARQnAQ)
 
