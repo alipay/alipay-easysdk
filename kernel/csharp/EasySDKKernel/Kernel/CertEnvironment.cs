@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Org.BouncyCastle.X509;
 using Alipay.EasySDK.Kernel.Util;
+using System.Linq;
 
 namespace Alipay.EasySDK.Kernel
 {
@@ -62,7 +63,7 @@ namespace Alipay.EasySDK.Kernel
             //如果没有指定sn，则默认取缓存中的第一个值
             if (string.IsNullOrEmpty(sn))
             {
-                return CachedAlipayPublicKey.Values.GetEnumerator().Current;
+                return CachedAlipayPublicKey.Values.FirstOrDefault();
             }
 
             if (CachedAlipayPublicKey.ContainsKey(sn))
