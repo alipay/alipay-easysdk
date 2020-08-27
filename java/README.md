@@ -17,7 +17,7 @@ Alipay Easy SDK提供了与[能力地图](https://opendocs.alipay.com/mini/00am3
 Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开放平台开放的各类核心能力的效率。
 
 ## 环境要求
-1. Alipay Easy SDK for Java 需要配合`JDK 1.7`或其以上版本。
+1. Alipay Easy SDK for Java 需要配合`JDK 1.8`或其以上版本。
 
 2. 使用 Alipay Easy SDK for Java 之前 ，您需要先前往[支付宝开发平台-开发者中心](https://openhome.alipay.com/platform/developerIndex.htm)完成开发者接入的一些准备工作，包括创建应用、为应用添加功能包、设置应用的接口加签方式等。
 
