@@ -200,10 +200,11 @@ class Client {
     /**
      * @param string $outTradeNo
      * @param string $refundAmount
+     * @param string $outRequestNo
      * @return AlipayTradeRefundResponse
      * @throws \Exception
      */
-    public function refund($outTradeNo, $refundAmount){
+    public function refund($outTradeNo, $refundAmount, $outRequestNo = null ){
         $_runtime = [
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -239,6 +240,7 @@ class Client {
                     ];
                 $bizParams = [
                     "out_trade_no" => $outTradeNo,
+                    "out_request_no" => $outRequestNo, //标识一次退款请求，同一笔交易多次退款需要保证唯一，如需部分退款，则此参数必传。
                     "refund_amount" => $refundAmount
                     ];
                 $textParams = [];
