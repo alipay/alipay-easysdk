@@ -9,6 +9,9 @@ using Tea;
 namespace Alipay.EasySDK.Member.Identification.Models
 {
     public class AlipayUserCertifyOpenInitializeResponse : TeaModel {
+        /// <summary>
+        /// 响应原始字符串
+        /// </summary>
         [NameInMap("http_body")]
         [Validation(Required=true)]
         public string HttpBody { get; set; }

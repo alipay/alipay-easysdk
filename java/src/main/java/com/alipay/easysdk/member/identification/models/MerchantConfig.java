@@ -13,4 +13,12 @@ public class MerchantConfig extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public MerchantConfig setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl;
+        return this;
+    }
+    public String getReturnUrl() {
+        return this.returnUrl;
+    }
+
 }

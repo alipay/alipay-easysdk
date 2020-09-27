@@ -25,4 +25,36 @@ public class IdentityParam extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public IdentityParam setIdentityType(String identityType) {
+        this.identityType = identityType;
+        return this;
+    }
+    public String getIdentityType() {
+        return this.identityType;
+    }
+
+    public IdentityParam setCertType(String certType) {
+        this.certType = certType;
+        return this;
+    }
+    public String getCertType() {
+        return this.certType;
+    }
+
+    public IdentityParam setCertName(String certName) {
+        this.certName = certName;
+        return this;
+    }
+    public String getCertName() {
+        return this.certName;
+    }
+
+    public IdentityParam setCertNo(String certNo) {
+        this.certNo = certNo;
+        return this;
+    }
+    public String getCertNo() {
+        return this.certNo;
+    }
+
 }

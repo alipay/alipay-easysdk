@@ -3,14 +3,15 @@
 // This file is auto-generated, don't edit it. Thanks.
 namespace Alipay\EasySDK\Marketing\Pass;
 
-use Alipay\EasySDK\Kernel\EasySDKKernel;
+use easysdk-kernel\Client as easysdk-kernelClient;
+use AlibabaCloud\Tea\Tea;
 use AlibabaCloud\Tea\Request;
 use AlibabaCloud\Tea\Exception\TeaError;
-use AlibabaCloud\Tea\Tea;
-use AlibabaCloud\Tea\Response;
+use \Exception;
 use AlibabaCloud\Tea\Exception\TeaUnableRetryError;
 
 use Alipay\EasySDK\Marketing\Pass\Models\AlipayPassTemplateAddResponse;
+use AlibabaCloud\Tea\Response;
 use Alipay\EasySDK\Marketing\Pass\Models\AlipayPassTemplateUpdateResponse;
 use Alipay\EasySDK\Marketing\Pass\Models\AlipayPassInstanceAddResponse;
 use Alipay\EasySDK\Marketing\Pass\Models\AlipayPassInstanceUpdateResponse;
@@ -18,7 +19,7 @@ use Alipay\EasySDK\Marketing\Pass\Models\AlipayPassInstanceUpdateResponse;
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
@@ -26,7 +27,9 @@ class Client {
      * @param string $uniqueId
      * @param string $tplContent
      * @return AlipayPassTemplateAddResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
     public function createTemplate($uniqueId, $tplContent){
         $_runtime = [
@@ -34,8 +37,8 @@ class Client {
             "readTimeout" => 15000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
@@ -61,11 +64,11 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [
                     "unique_id" => $uniqueId,
                     "tpl_content" => $tplContent
-                    ];
+                ];
                 $textParams = [];
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
@@ -73,11 +76,10 @@ class Client {
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => "application/x-www-form-urlencoded;charset=utf-8"
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams,
-                    $textParams));
+                ], $systemParams, $textParams));
                 $_request->body = $this->_kernel->toUrlEncodedRequestBody($bizParams);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -94,9 +96,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;
@@ -111,7 +116,9 @@ class Client {
      * @param string $tplId
      * @param string $tplContent
      * @return AlipayPassTemplateUpdateResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
     public function updateTemplate($tplId, $tplContent){
         $_runtime = [
@@ -119,8 +126,8 @@ class Client {
             "readTimeout" => 15000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
@@ -146,11 +153,11 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [
                     "tpl_id" => $tplId,
                     "tpl_content" => $tplContent
-                    ];
+                ];
                 $textParams = [];
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
@@ -158,11 +165,10 @@ class Client {
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => "application/x-www-form-urlencoded;charset=utf-8"
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams,
-                    $textParams));
+                ], $systemParams, $textParams));
                 $_request->body = $this->_kernel->toUrlEncodedRequestBody($bizParams);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -179,9 +185,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;
@@ -198,7 +207,9 @@ class Client {
      * @param string $recognitionType
      * @param string $recognitionInfo
      * @return AlipayPassInstanceAddResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
     public function addInstance($tplId, $tplParams, $recognitionType, $recognitionInfo){
         $_runtime = [
@@ -206,8 +217,8 @@ class Client {
             "readTimeout" => 15000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
@@ -233,13 +244,13 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [
                     "tpl_id" => $tplId,
                     "tpl_params" => $tplParams,
                     "recognition_type" => $recognitionType,
                     "recognition_info" => $recognitionInfo
-                    ];
+                ];
                 $textParams = [];
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
@@ -247,11 +258,10 @@ class Client {
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => "application/x-www-form-urlencoded;charset=utf-8"
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams,
-                    $textParams));
+                ], $systemParams, $textParams));
                 $_request->body = $this->_kernel->toUrlEncodedRequestBody($bizParams);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -268,9 +278,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;
@@ -289,7 +302,9 @@ class Client {
      * @param string $verifyCode
      * @param string $verifyType
      * @return AlipayPassInstanceUpdateResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
     public function updateInstance($serialNumber, $channelId, $tplParams, $status, $verifyCode, $verifyType){
         $_runtime = [
@@ -297,8 +312,8 @@ class Client {
             "readTimeout" => 15000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
@@ -324,7 +339,7 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [
                     "serial_number" => $serialNumber,
                     "channel_id" => $channelId,
@@ -332,7 +347,7 @@ class Client {
                     "status" => $status,
                     "verify_code" => $verifyCode,
                     "verify_type" => $verifyType
-                    ];
+                ];
                 $textParams = [];
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
@@ -340,11 +355,10 @@ class Client {
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => "application/x-www-form-urlencoded;charset=utf-8"
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams,
-                    $textParams));
+                ], $systemParams, $textParams));
                 $_request->body = $this->_kernel->toUrlEncodedRequestBody($bizParams);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -361,9 +375,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;

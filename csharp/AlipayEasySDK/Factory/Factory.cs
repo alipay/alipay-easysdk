@@ -1,5 +1,6 @@
 ﻿using System;
 using Alipay.EasySDK.Kernel;
+using System.Reflection;
 
 namespace Alipay.EasySDK.Factory
 {
@@ -10,7 +11,7 @@ namespace Alipay.EasySDK.Factory
     /// </summary>
     public static class Factory
     {
-        public const string SDK_VERSION = "alipay-easysdk-net-2.0.0";
+        public const string SDK_VERSION = "alipay-easysdk-net-2.1.0";
 
         /// <summary>
         /// 将一些初始化耗时较多的信息缓存在上下文中
@@ -24,6 +25,31 @@ namespace Alipay.EasySDK.Factory
         public static void SetOptions(Config options)
         {
             context = new Context(options, SDK_VERSION);
+        }
+
+        /// <summary>
+        /// 获取调用OpenAPI所需的客户端实例
+        /// 本方法用于调用SDK扩展包中的API Client下的方法
+        /// 
+        /// 注：返回的实例不可重复使用，只可用于单次调用
+        /// </summary>
+        /// <typeparam name="T">泛型参数</typeparam>
+        /// <param name="client">API Client的类型对象</param>
+        /// <returns>client实例，用于发起单次调用</returns>
+        public static T GetClient<T>()
+        {
+            Type type = typeof(T);
+            ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(Client) });
+            context.SdkVersion = GetSdkVersion(type);
+            return (T)constructor.Invoke(new object[] { new Client(context) });
+        }
+
+        private static string GetSdkVersion(Type client)
+        {
+            return context.SdkVersion + "-" + client.FullName
+                    .Replace("EasySDK.", "")
+                    .Replace(".Client", "")
+                    .Replace(".", "-");
         }
 
         /// <summary>

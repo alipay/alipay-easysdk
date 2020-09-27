@@ -17,4 +17,20 @@ public class PresetPayToolInfo extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public PresetPayToolInfo setAmount(java.util.List<String> amount) {
+        this.amount = amount;
+        return this;
+    }
+    public java.util.List<String> getAmount() {
+        return this.amount;
+    }
+
+    public PresetPayToolInfo setAssertTypeCode(String assertTypeCode) {
+        this.assertTypeCode = assertTypeCode;
+        return this;
+    }
+    public String getAssertTypeCode() {
+        return this.assertTypeCode;
+    }
+
 }

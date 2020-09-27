@@ -5,6 +5,8 @@ namespace Alipay\EasySDK\Marketing\OpenLife\Models;
 
 use AlibabaCloud\Tea\Model;
 
+use Alipay\EasySDK\Marketing\OpenLife\Models\Context;
+
 class Template extends Model {
     protected $_name = [
         'templateId' => 'template_id',

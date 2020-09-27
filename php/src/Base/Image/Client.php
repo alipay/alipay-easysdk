@@ -3,19 +3,20 @@
 // This file is auto-generated, don't edit it. Thanks.
 namespace Alipay\EasySDK\Base\Image;
 
-use Alipay\EasySDK\Kernel\EasySDKKernel;
+use easysdk-kernel\Client as easysdk-kernelClient;
+use AlibabaCloud\Tea\Tea;
 use AlibabaCloud\Tea\Request;
 use AlibabaCloud\Tea\Exception\TeaError;
-use AlibabaCloud\Tea\Tea;
-use AlibabaCloud\Tea\Response;
+use \Exception;
 use AlibabaCloud\Tea\Exception\TeaUnableRetryError;
 
 use Alipay\EasySDK\Base\Image\Models\AlipayOfflineMaterialImageUploadResponse;
+use AlibabaCloud\Tea\Response;
 
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
@@ -23,7 +24,9 @@ class Client {
      * @param string $imageName
      * @param string $imageFilePath
      * @return AlipayOfflineMaterialImageUploadResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
     public function upload($imageName, $imageFilePath){
         $_runtime = [
@@ -31,8 +34,8 @@ class Client {
             "readTimeout" => 100000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
@@ -58,15 +61,15 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [];
                 $textParams = [
                     "image_type" => "jpg",
                     "image_name" => $imageName
-                    ];
+                ];
                 $fileParams = [
                     "image_content" => $imageFilePath
-                    ];
+                ];
                 $boundary = $this->_kernel->getRandomBoundary();
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
@@ -74,10 +77,10 @@ class Client {
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => $this->_kernel->concatStr("multipart/form-data;charset=utf-8;boundary=", $boundary)
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams));
+                ], $systemParams));
                 $_request->body = $this->_kernel->toMultipartRequestBody($textParams, $fileParams, $boundary);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -94,9 +97,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;

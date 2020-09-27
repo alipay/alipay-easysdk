@@ -20,7 +20,7 @@ namespace Alipay.EasySDK.Kernel
         /// <summary>
         /// SDK版本号
         /// </summary>
-        public string SdkVersion { get; }
+        public string SdkVersion { get; set; }
 
         public Context(Config config, string sdkVersion)
         {

@@ -26,4 +26,44 @@ public class Article extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public Article setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Article setDesc(String desc) {
+        this.desc = desc;
+        return this;
+    }
+    public String getDesc() {
+        return this.desc;
+    }
+
+    public Article setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+    public String getImageUrl() {
+        return this.imageUrl;
+    }
+
+    public Article setUrl(String url) {
+        this.url = url;
+        return this;
+    }
+    public String getUrl() {
+        return this.url;
+    }
+
+    public Article setActionName(String actionName) {
+        this.actionName = actionName;
+        return this;
+    }
+    public String getActionName() {
+        return this.actionName;
+    }
+
 }

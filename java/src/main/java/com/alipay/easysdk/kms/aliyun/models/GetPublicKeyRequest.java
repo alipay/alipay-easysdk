@@ -1,11 +1,6 @@
-/**
- * Alipay.com Inc. Copyright (c) 2004-2019 All Rights Reserved.
- */
 package com.alipay.easysdk.kms.aliyun.models;
 
-import com.aliyun.tea.NameInMap;
-import com.aliyun.tea.TeaModel;
-import com.aliyun.tea.Validation;
+import com.aliyun.tea.*;
 
 public class GetPublicKeyRequest extends TeaModel {
     @NameInMap("KeyId")

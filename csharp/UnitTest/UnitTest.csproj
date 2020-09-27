@@ -39,6 +39,7 @@
     <Folder Include="Payment\Page\" />
     <Folder Include="Payment\App\" />
     <Folder Include="Util\AES\" />
+    <Folder Include="Factory\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Payment\FaceToFace\ClientTest %28副本%29.cs" />

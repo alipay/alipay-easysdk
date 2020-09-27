@@ -271,7 +271,7 @@ class AlipayTradeRefundResponse extends Model {
     public $gmtRefundPay;
 
     /**
-     * @var array
+     * @var TradeFundBill[]
      */
     public $refundDetailItemList;
 
@@ -286,7 +286,7 @@ class AlipayTradeRefundResponse extends Model {
     public $buyerUserId;
 
     /**
-     * @var array
+     * @var PresetPayToolInfo[]
      */
     public $refundPresetPaytoolList;
 

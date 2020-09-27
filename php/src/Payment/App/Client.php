@@ -3,14 +3,14 @@
 // This file is auto-generated, don't edit it. Thanks.
 namespace Alipay\EasySDK\Payment\App;
 
-use Alipay\EasySDK\Kernel\EasySDKKernel;
+use easysdk-kernel\Client as easysdk-kernelClient;
 
 use Alipay\EasySDK\Payment\App\Models\AlipayTradeAppPayResponse;
 
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
@@ -19,7 +19,6 @@ class Client {
      * @param string $outTradeNo
      * @param string $totalAmount
      * @return AlipayTradeAppPayResponse
-     * @throws \Exception
      */
     public function pay($subject, $outTradeNo, $totalAmount){
         $systemParams = [
@@ -33,17 +32,17 @@ class Client {
             "sign_type" => $this->_kernel->getConfig("signType"),
             "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
             "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-            ];
+        ];
         $bizParams = [
             "subject" => $subject,
             "out_trade_no" => $outTradeNo,
             "total_amount" => $totalAmount
-            ];
+        ];
         $textParams = [];
         $sign = $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"));
         $response = [
             "body" => $this->_kernel->generateOrderString($systemParams, $bizParams, $textParams, $sign)
-            ];
+        ];
         return AlipayTradeAppPayResponse::fromMap($response);
     }
 

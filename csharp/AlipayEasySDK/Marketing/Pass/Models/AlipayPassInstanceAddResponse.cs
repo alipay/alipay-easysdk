@@ -9,6 +9,9 @@ using Tea;
 namespace Alipay.EasySDK.Marketing.Pass.Models
 {
     public class AlipayPassInstanceAddResponse : TeaModel {
+        /// <summary>
+        /// 响应原始字符串
+        /// </summary>
         [NameInMap("http_body")]
         [Validation(Required=true)]
         public string HttpBody { get; set; }

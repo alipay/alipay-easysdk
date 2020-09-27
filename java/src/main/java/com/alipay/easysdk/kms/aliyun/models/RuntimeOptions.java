@@ -1,28 +1,21 @@
-/**
- * Alipay.com Inc. Copyright (c) 2004-2019 All Rights Reserved.
- */
 package com.alipay.easysdk.kms.aliyun.models;
 
-import com.aliyun.tea.*;
+import com.aliyun.tea.NameInMap;
+import com.aliyun.tea.TeaModel;
 
 import java.util.Map;
 
 public class RuntimeOptions extends TeaModel {
     @NameInMap("ignoreSSL")
     public Boolean ignoreSSL;
-
     @NameInMap("maxAttempts")
     public Integer maxAttempts;
-
     @NameInMap("backoffPolicy")
     public String backoffPolicy;
-
     @NameInMap("backoffPeriod")
     public Integer backoffPeriod;
-
     @NameInMap("readTimeout")
     public Integer readTimeout;
-
     @NameInMap("connectTimeout")
     public Integer connectTimeout;
 

@@ -33,4 +33,60 @@ public class Context extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public Context setHeadColor(String headColor) {
+        this.headColor = headColor;
+        return this;
+    }
+    public String getHeadColor() {
+        return this.headColor;
+    }
+
+    public Context setUrl(String url) {
+        this.url = url;
+        return this;
+    }
+    public String getUrl() {
+        return this.url;
+    }
+
+    public Context setActionName(String actionName) {
+        this.actionName = actionName;
+        return this;
+    }
+    public String getActionName() {
+        return this.actionName;
+    }
+
+    public Context setKeyword1(Keyword keyword1) {
+        this.keyword1 = keyword1;
+        return this;
+    }
+    public Keyword getKeyword1() {
+        return this.keyword1;
+    }
+
+    public Context setKeyword2(Keyword keyword2) {
+        this.keyword2 = keyword2;
+        return this;
+    }
+    public Keyword getKeyword2() {
+        return this.keyword2;
+    }
+
+    public Context setFirst(Keyword first) {
+        this.first = first;
+        return this;
+    }
+    public Keyword getFirst() {
+        return this.first;
+    }
+
+    public Context setRemark(Keyword remark) {
+        this.remark = remark;
+        return this;
+    }
+    public Keyword getRemark() {
+        return this.remark;
+    }
+
 }

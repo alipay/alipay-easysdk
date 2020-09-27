@@ -33,4 +33,52 @@ public class TradeSettleDetail extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public TradeSettleDetail setOperationType(String operationType) {
+        this.operationType = operationType;
+        return this;
+    }
+    public String getOperationType() {
+        return this.operationType;
+    }
+
+    public TradeSettleDetail setOperationSerial_no(String operationSerial_no) {
+        this.operationSerial_no = operationSerial_no;
+        return this;
+    }
+    public String getOperationSerial_no() {
+        return this.operationSerial_no;
+    }
+
+    public TradeSettleDetail setOperationDt(String operationDt) {
+        this.operationDt = operationDt;
+        return this;
+    }
+    public String getOperationDt() {
+        return this.operationDt;
+    }
+
+    public TradeSettleDetail setTransOut(String transOut) {
+        this.transOut = transOut;
+        return this;
+    }
+    public String getTransOut() {
+        return this.transOut;
+    }
+
+    public TradeSettleDetail setTransIn(String transIn) {
+        this.transIn = transIn;
+        return this;
+    }
+    public String getTransIn() {
+        return this.transIn;
+    }
+
+    public TradeSettleDetail setAmount(String amount) {
+        this.amount = amount;
+        return this;
+    }
+    public String getAmount() {
+        return this.amount;
+    }
+
 }
