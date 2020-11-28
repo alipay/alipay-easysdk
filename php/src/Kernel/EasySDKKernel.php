@@ -400,16 +400,16 @@ class EasySDKKernel
 
     private function addOtherParams($textParams, $bizParams)
     {
-        if ($this->optionalTextParams == null) {
+        if ($this->optionalTextParams === null) {
             $this->textParams = $textParams;
         }
-        if ($textParams != null && $this->optionalTextParams != null) {
+        if ($textParams !== null && $this->optionalTextParams !== null) {
             $this->textParams = array_merge($textParams, $this->optionalTextParams);
         }
-        if ($this->optionalBizParams == null) {
+        if ($this->optionalBizParams === null) {
             $this->bizParams = $bizParams;
         }
-        if ($bizParams != null && $this->optionalBizParams != null) {
+        if ($bizParams !== null && $this->optionalBizParams !== null) {
             $this->bizParams = array_merge($bizParams, $this->optionalBizParams);
         }
     }
