@@ -23,7 +23,7 @@ import java.lang.reflect.Constructor;
  */
 public class Factory {
 
-    public static final String SDK_VERSION = "alipay-easysdk-java-2.1.0";
+    public static final String SDK_VERSION = "alipay-easysdk-java-2.1.1";
 
     /**
      * 将一些初始化耗时较多的信息缓存在上下文中

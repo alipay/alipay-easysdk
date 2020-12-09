@@ -242,6 +242,7 @@ api create(subject: string, outTradeNo: string, totalAmount: string, buyerId: st
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -304,6 +305,7 @@ api query(outTradeNo: string): AlipayTradeQueryResponse {
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -368,6 +370,7 @@ api refund(outTradeNo: string, refundAmount: string): AlipayTradeRefundResponse 
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -430,6 +433,7 @@ api close(outTradeNo: string): AlipayTradeCloseResponse {
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -493,6 +497,7 @@ api cancel(outTradeNo: string): AlipayTradeCancelResponse {
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -556,6 +561,7 @@ api queryRefund(outTradeNo: string, outRequestNo: string): AlipayTradeFastpayRef
   }
 
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -620,6 +626,7 @@ api downloadBill(billType: string, billDate: string): AlipayDataDataserviceBillD
   }
 
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {

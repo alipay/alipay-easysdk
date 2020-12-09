@@ -3,7 +3,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 namespace Alipay\EasySDK\Payment\Wap;
 
-use easysdk-kernel\Client as easysdk-kernelClient;
+use Alipay\EasySDK\Kernel\EasySDKKernel;
 
 use Alipay\EasySDK\Payment\Wap\Models\AlipayTradeWapPayResponse;
 

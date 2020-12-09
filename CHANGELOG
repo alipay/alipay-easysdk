@@ -1,9 +1,12 @@
 最新变更
-2020-0-18 Java升级Tea版本，降低对OkHttp的特性依赖，提升环境兼容性，支持对SDK扩展包的调用；C#升级Tea版本，支持对SDK扩展包的调用。
+2020-12-09 增加httpProxy功能。
 
 
 
 Java版本
+2020-12-09 Version: 2.1.1
+1. 增加httpProxy功能。
+
 2020-09-23 Version: 2.1.0
 1. 升级Tea版本，降低对OkHttp的特性依赖，提升环境兼容性。
 2. 提供Factory.getClient方法，用于调用SDK扩展包中的方法。
@@ -56,6 +59,9 @@ Factory.Util.AES().encrypt AES加密
 
 
 C#版本
+2020-12-09 Version: 2.1.1
+1. 增加httpProxy功能。
+
 2020-09-23 Version: 2.1.0
 1. 升级Tea版本。
 2. 提供Factory.getClient方法，用于调用SDK扩展包中的方法。
@@ -96,6 +102,10 @@ Factory.Util.AES().Encrypt AES加密
 
 
 PHP版本
+2020-12-09 Version: 2.0.2
+1. 增加httpProxy功能。
+2. 修复agent不生效问题。
+
 2020-07-06 Version: 2.0.0
 1. 支持可选业务参数的装配。
 2. 支持ISV代调用。

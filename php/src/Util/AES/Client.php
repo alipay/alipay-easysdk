@@ -3,7 +3,7 @@
 // This file is auto-generated, don't edit it. Thanks.
 namespace Alipay\EasySDK\Util\AES;
 
-use easysdk-kernel\Client as easysdk-kernelClient;
+use Alipay\EasySDK\Kernel\EasySDKKernel;
 
 class Client {
     protected $_kernel;

@@ -61,6 +61,7 @@ api execute(method: string, textParams: map[string]string, bizParams: map[string
   }
 
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {

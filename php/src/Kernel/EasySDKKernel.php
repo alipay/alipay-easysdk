@@ -115,7 +115,13 @@ class EasySDKKernel
      */
     public function toMultipartRequestBody($textParams, $fileParams, $boundary)
     {
-        $this->addOtherParams($textParams, null);
+        $this->textParams = $textParams;
+        if ($textParams != null && $this->optionalTextParams != null) {
+            $this->textParams = array_merge($textParams, $this->optionalTextParams);
+        } else if ($textParams == null) {
+            $this->textParams = $this->optionalTextParams;
+        }
+
         $fileField = new FileField();
         $fileField->filename = $fileParams['image_content'];
         $fileField->contentType = 'multipart/form-data;charset=utf-8;boundary=' . $boundary;
@@ -151,7 +157,6 @@ class EasySDKKernel
             return $this->getGatewayServerUrl() . '?' . $this->buildQueryString($sortedMap);
         } elseif ($method == AlipayConstants::POST) {
             //采集并排序所有参数
-            $this->addOtherParams($textParams, $bizParams);
             $sortedMap = $this->getSortedMap($systemParams, $this->bizParams, $this->textParams);
             $sortedMap[AlipayConstants::SIGN_FIELD] = $sign;
             $pageUtil = new PageUtil();
@@ -351,7 +356,18 @@ class EasySDKKernel
 
     private function getSortedMap($systemParams, $bizParams, $textParams)
     {
-        $this->addOtherParams($textParams, $bizParams);
+        $this->textParams = $textParams;
+        $this->bizParams = $bizParams;
+        if ($textParams != null && $this->optionalTextParams != null) {
+            $this->textParams = array_merge($textParams, $this->optionalTextParams);
+        } else if ($textParams == null) {
+            $this->textParams = $this->optionalTextParams;
+        }
+        if ($bizParams != null && $this->optionalBizParams != null) {
+            $this->bizParams = array_merge($bizParams, $this->optionalBizParams);
+        } else if ($bizParams == null) {
+            $this->bizParams = $this->optionalBizParams;
+        }
         $json = new JsonUtil();
         $bizParams = $json->toJsonString($this->bizParams);
         $sortedMap = $systemParams;
@@ -396,22 +412,6 @@ class EasySDKKernel
         }
         unset ($k, $v);
         return $stringToBeSigned;
-    }
-
-    private function addOtherParams($textParams, $bizParams)
-    {
-        if ($this->optionalTextParams == null) {
-            $this->textParams = $textParams;
-        }
-        if ($textParams != null && $this->optionalTextParams != null) {
-            $this->textParams = array_merge($textParams, $this->optionalTextParams);
-        }
-        if ($this->optionalBizParams == null) {
-            $this->bizParams = $bizParams;
-        }
-        if ($bizParams != null && $this->optionalBizParams != null) {
-            $this->bizParams = array_merge($bizParams, $this->optionalBizParams);
-        }
     }
 
     private function setNotifyUrl($params)
