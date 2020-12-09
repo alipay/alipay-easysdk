@@ -310,7 +310,7 @@ class AlipayTradeFastpayRefundQueryResponse extends Model {
     public $refundChargeAmount;
 
     /**
-     * @var array
+     * @var TradeFundBill[]
      */
     public $refundDetailItemList;
 
@@ -320,7 +320,7 @@ class AlipayTradeFastpayRefundQueryResponse extends Model {
     public $refundReason;
 
     /**
-     * @var array
+     * @var RefundRoyaltyResult[]
      */
     public $refundRoyaltys;
 

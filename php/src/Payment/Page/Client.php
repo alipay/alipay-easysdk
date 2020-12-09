@@ -10,7 +10,7 @@ use Alipay\EasySDK\Payment\Page\Models\AlipayTradePagePayResponse;
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
@@ -20,7 +20,6 @@ class Client {
      * @param string $totalAmount
      * @param string $returnUrl
      * @return AlipayTradePagePayResponse
-     * @throws \Exception
      */
     public function pay($subject, $outTradeNo, $totalAmount, $returnUrl){
         $systemParams = [
@@ -34,20 +33,20 @@ class Client {
             "sign_type" => $this->_kernel->getConfig("signType"),
             "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
             "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-            ];
+        ];
         $bizParams = [
             "subject" => $subject,
             "out_trade_no" => $outTradeNo,
             "total_amount" => $totalAmount,
             "product_code" => "FAST_INSTANT_TRADE_PAY"
-            ];
+        ];
         $textParams = [
             "return_url" => $returnUrl
-            ];
+        ];
         $sign = $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"));
         $response = [
             "body" => $this->_kernel->generatePage("POST", $systemParams, $bizParams, $textParams, $sign)
-            ];
+        ];
         return AlipayTradePagePayResponse::fromMap($response);
     }
 

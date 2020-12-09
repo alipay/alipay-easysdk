@@ -4,41 +4,45 @@
 namespace Alipay\EasySDK\Base\OAuth;
 
 use Alipay\EasySDK\Kernel\EasySDKKernel;
+use AlibabaCloud\Tea\Tea;
 use AlibabaCloud\Tea\Request;
 use AlibabaCloud\Tea\Exception\TeaError;
-use AlibabaCloud\Tea\Tea;
-use AlibabaCloud\Tea\Response;
+use \Exception;
 use AlibabaCloud\Tea\Exception\TeaUnableRetryError;
 
 use Alipay\EasySDK\Base\OAuth\Models\AlipaySystemOauthTokenResponse;
+use AlibabaCloud\Tea\Response;
 
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
     /**
      * @param string $code
      * @return AlipaySystemOauthTokenResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
     public function getToken($code){
         $_runtime = [
+            "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
         $_retryTimes = 0;
-        while (Tea::allowRetry($_runtime["retry"], $_retryTimes, $_now)) {
+        while (Tea::allowRetry(@$_runtime["retry"], $_retryTimes, $_now)) {
             if ($_retryTimes > 0) {
-                $_backoffTime = Tea::getBackoffTime($_runtime["backoff"], $_retryTimes);
+                $_backoffTime = Tea::getBackoffTime(@$_runtime["backoff"], $_retryTimes);
                 if ($_backoffTime > 0) {
                     Tea::sleep($_backoffTime);
                 }
@@ -57,23 +61,22 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [];
                 $textParams = [
                     "grant_type" => "authorization_code",
                     "code" => $code
-                    ];
+                ];
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
                 $_request->pathname = "/gateway.do";
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => "application/x-www-form-urlencoded;charset=utf-8"
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams,
-                    $textParams));
+                ], $systemParams, $textParams));
                 $_request->body = $this->_kernel->toUrlEncodedRequestBody($bizParams);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -90,9 +93,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;
@@ -106,23 +112,26 @@ class Client {
     /**
      * @param string $refreshToken
      * @return AlipaySystemOauthTokenResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
     public function refreshToken($refreshToken){
         $_runtime = [
+            "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
         $_retryTimes = 0;
-        while (Tea::allowRetry($_runtime["retry"], $_retryTimes, $_now)) {
+        while (Tea::allowRetry(@$_runtime["retry"], $_retryTimes, $_now)) {
             if ($_retryTimes > 0) {
-                $_backoffTime = Tea::getBackoffTime($_runtime["backoff"], $_retryTimes);
+                $_backoffTime = Tea::getBackoffTime(@$_runtime["backoff"], $_retryTimes);
                 if ($_backoffTime > 0) {
                     Tea::sleep($_backoffTime);
                 }
@@ -141,23 +150,22 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [];
                 $textParams = [
                     "grant_type" => "refresh_token",
                     "refresh_token" => $refreshToken
-                    ];
+                ];
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
                 $_request->pathname = "/gateway.do";
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => "application/x-www-form-urlencoded;charset=utf-8"
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams,
-                    $textParams));
+                ], $systemParams, $textParams));
                 $_request->body = $this->_kernel->toUrlEncodedRequestBody($bizParams);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -174,9 +182,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;

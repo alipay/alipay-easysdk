@@ -17,4 +17,20 @@ public class Template extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public Template setTemplateId(String templateId) {
+        this.templateId = templateId;
+        return this;
+    }
+    public String getTemplateId() {
+        return this.templateId;
+    }
+
+    public Template setContext(Context context) {
+        this.context = context;
+        return this;
+    }
+    public Context getContext() {
+        return this.context;
+    }
+
 }

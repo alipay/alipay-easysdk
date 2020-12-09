@@ -13,6 +13,7 @@ public class Client {
 
     public AlipayOpenApiGenericResponse execute(String method, java.util.Map<String, String> textParams, java.util.Map<String, ?> bizParams) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -83,7 +84,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 

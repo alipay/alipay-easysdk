@@ -8,14 +8,13 @@ use Alipay\EasySDK\Kernel\EasySDKKernel;
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
     /**
      * @param string $cipherText
      * @return string
-     * @throws \Exception
      */
     public function decrypt($cipherText){
         return $this->_kernel->aesDecrypt($cipherText, $this->_kernel->getConfig("encryptKey"));
@@ -24,7 +23,6 @@ class Client {
     /**
      * @param string $plainText
      * @return string
-     * @throws \Exception
      */
     public function encrypt($plainText){
         return $this->_kernel->aesEncrypt($plainText, $this->_kernel->getConfig("encryptKey"));

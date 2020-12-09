@@ -37,4 +37,60 @@ public class RefundRoyaltyResult extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public RefundRoyaltyResult setRefundAmount(String refundAmount) {
+        this.refundAmount = refundAmount;
+        return this;
+    }
+    public String getRefundAmount() {
+        return this.refundAmount;
+    }
+
+    public RefundRoyaltyResult setRoyaltyType(String royaltyType) {
+        this.royaltyType = royaltyType;
+        return this;
+    }
+    public String getRoyaltyType() {
+        return this.royaltyType;
+    }
+
+    public RefundRoyaltyResult setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+        return this;
+    }
+    public String getResultCode() {
+        return this.resultCode;
+    }
+
+    public RefundRoyaltyResult setTransOut(String transOut) {
+        this.transOut = transOut;
+        return this;
+    }
+    public String getTransOut() {
+        return this.transOut;
+    }
+
+    public RefundRoyaltyResult setTransOutEmail(String transOutEmail) {
+        this.transOutEmail = transOutEmail;
+        return this;
+    }
+    public String getTransOutEmail() {
+        return this.transOutEmail;
+    }
+
+    public RefundRoyaltyResult setTransIn(String transIn) {
+        this.transIn = transIn;
+        return this;
+    }
+    public String getTransIn() {
+        return this.transIn;
+    }
+
+    public RefundRoyaltyResult setTransInEmail(String transInEmail) {
+        this.transInEmail = transInEmail;
+        return this;
+    }
+    public String getTransInEmail() {
+        return this.transInEmail;
+    }
+
 }

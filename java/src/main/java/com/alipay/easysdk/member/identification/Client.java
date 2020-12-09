@@ -15,6 +15,7 @@ public class Client {
         TeaModel.validateParams(identityParam, "identityParam");
         TeaModel.validateParams(merchantConfig, "merchantConfig");
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -92,7 +93,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -101,6 +102,7 @@ public class Client {
 
     public AlipayUserCertifyOpenQueryResponse query(String certifyId) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -175,7 +177,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 

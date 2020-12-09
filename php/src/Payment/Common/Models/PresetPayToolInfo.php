@@ -17,10 +17,7 @@ class PresetPayToolInfo extends Model {
     public function toMap() {
         $res = [];
         if (null !== $this->amount) {
-            $res['amount'] = [];
-            if(null !== $this->amount){
-                $res['amount'] = $this->amount;
-            }
+            $res['amount'] = $this->amount;
         }
         if (null !== $this->assertTypeCode) {
             $res['assert_type_code'] = $this->assertTypeCode;
@@ -35,7 +32,6 @@ class PresetPayToolInfo extends Model {
         $model = new self();
         if(isset($map['amount'])){
             if(!empty($map['amount'])){
-                $model->amount = [];
                 $model->amount = $map['amount'];
             }
         }
@@ -45,7 +41,7 @@ class PresetPayToolInfo extends Model {
         return $model;
     }
     /**
-     * @var array
+     * @var string[]
      */
     public $amount;
 

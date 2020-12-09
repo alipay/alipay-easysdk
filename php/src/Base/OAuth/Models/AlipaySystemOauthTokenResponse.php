@@ -139,7 +139,7 @@ class AlipaySystemOauthTokenResponse extends Model {
     public $accessToken;
 
     /**
-     * @var integer
+     * @var int
      */
     public $expiresIn;
 
@@ -149,7 +149,7 @@ class AlipaySystemOauthTokenResponse extends Model {
     public $refreshToken;
 
     /**
-     * @var integer
+     * @var int
      */
     public $reExpiresIn;
 

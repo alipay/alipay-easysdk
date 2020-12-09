@@ -1,10 +1,11 @@
-/**
- * Alipay.com Inc. Copyright (c) 2004-2019 All Rights Reserved.
- */
 package com.alipay.easysdk.kms.aliyun;
 
 import com.alipay.easysdk.kernel.AlipayConstants;
-import com.alipay.easysdk.kms.aliyun.models.*;
+import com.alipay.easysdk.kms.aliyun.models.AsymmetricSignRequest;
+import com.alipay.easysdk.kms.aliyun.models.AsymmetricSignResponse;
+import com.alipay.easysdk.kms.aliyun.models.GetPublicKeyRequest;
+import com.alipay.easysdk.kms.aliyun.models.GetPublicKeyResponse;
+import com.alipay.easysdk.kms.aliyun.models.RuntimeOptions;
 import com.aliyun.tea.TeaConverter;
 import com.aliyun.tea.TeaModel;
 import com.aliyun.tea.TeaPair;
@@ -28,30 +29,40 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 实现Aliyun KMS的Client
+ * 实现KMS的Client
  *
  * @author aliyunkms
  * @version $Id: AliyunKMSClient.java, v 0.1 2020年05月08日 10:53 PM aliyunkms Exp $
  */
 public class AliyunKMSClient extends AliyunRpcClient {
-    private String keyId;
-    private String keyVersionId;
-    private String algorithm;
-    private PublicKey publicKey;
-    private String protocol;
-    private String method;
-    private String version;
-    private Integer connectTimeout;
-    private Integer readTimeout;
-    private Integer maxAttempts;
-    private boolean ignoreSSL;
-
     //支付宝signType与KMS签名算法映射表
-    private static final Map<String, String> signAlgs = new HashMap<>();
-    private static final Map<String, String> digestAlgs = new HashMap<>();
+    private static final Map<String, String> signAlgs    = new HashMap<>();
+    private static final Map<String, String> digestAlgs  = new HashMap<>();
     private static final Map<String, String> namedCurves = new HashMap<>();
 
-    public AliyunKMSClient(Map<String, Object> config) {
+    static {
+        digestAlgs.put("RSA_PKCS1_SHA_256", "SHA-256");
+        digestAlgs.put("RSA_PSS_SHA_256", "SHA-256");
+        digestAlgs.put("ECDSA_SHA_256", "SHA-256");
+
+        namedCurves.put("SM2DSA", "sm2p256v1");
+
+        signAlgs.put("RSA2", "RSA_PKCS1_SHA_256");
+    }
+
+    private String    keyId;
+    private String    keyVersionId;
+    private String    algorithm;
+    private PublicKey publicKey;
+    private String    protocol;
+    private String    method;
+    private String    version;
+    private Integer   connectTimeout;
+    private Integer   readTimeout;
+    private Integer   maxAttempts;
+    private boolean   ignoreSSL;
+
+    public AliyunKMSClient(Map<String, Object> config) throws Exception {
         super(config);
         this.keyId = (String) config.get("kmsKeyId");
         this.keyVersionId = (String) config.get("kmsKeyVersionId");
@@ -74,7 +85,9 @@ public class AliyunKMSClient extends AliyunRpcClient {
                 new TeaPair("maxAttempts", this.maxAttempts),
                 new TeaPair("ignoreSSL", this.ignoreSSL)
         ));
-        return TeaModel.toModel(this.doRequest("GetPublicKey", this.protocol, this.method, this.version, TeaModel.buildMap(request), null, runtime), new GetPublicKeyResponse());
+        return TeaModel.toModel(
+                this.doRequest("GetPublicKey", this.protocol, this.method, this.version, TeaModel.buildMap(request), null, runtime),
+                new GetPublicKeyResponse());
     }
 
     private PublicKey getPublicKey(String keyId, String keyVersionId) throws Exception {
@@ -126,7 +139,8 @@ public class AliyunKMSClient extends AliyunRpcClient {
 
     private byte[] calcSM3Digest(PublicKey pubKey, byte[] message) {
         X9ECParameters x9ECParameters = GMNamedCurves.getByName(namedCurves.get(this.algorithm));
-        ECDomainParameters ecDomainParameters = new ECDomainParameters(x9ECParameters.getCurve(), x9ECParameters.getG(), x9ECParameters.getN());
+        ECDomainParameters ecDomainParameters = new ECDomainParameters(x9ECParameters.getCurve(), x9ECParameters.getG(),
+                x9ECParameters.getN());
         BCECPublicKey localECPublicKey = (BCECPublicKey) pubKey;
         ECPublicKeyParameters ecPublicKeyParameters = new ECPublicKeyParameters(localECPublicKey.getQ(), ecDomainParameters);
         byte[] z = getZ(ecPublicKeyParameters, ecDomainParameters);
@@ -146,7 +160,9 @@ public class AliyunKMSClient extends AliyunRpcClient {
                 new TeaPair("maxAttempts", this.maxAttempts),
                 new TeaPair("ignoreSSL", this.ignoreSSL)
         ));
-        return TeaModel.toModel(this.doRequest("AsymmetricSign", this.protocol, this.method, this.version, TeaModel.buildMap(request), null, runtime), new AsymmetricSignResponse());
+        return TeaModel.toModel(
+                this.doRequest("AsymmetricSign", this.protocol, this.method, this.version, TeaModel.buildMap(request), null, runtime),
+                new AsymmetricSignResponse());
     }
 
     private String asymmetricSign(String keyId, String keyVersionId, String algorithm, byte[] message) throws Exception {
@@ -164,7 +180,7 @@ public class AliyunKMSClient extends AliyunRpcClient {
                 new TeaPair("keyId", keyId),
                 new TeaPair("keyVersionId", keyVersionId),
                 new TeaPair("algorithm", algorithm),
-                new TeaPair("digest", new String(Base64.encode(digest)))
+                new TeaPair("digest", Base64.toBase64String(digest))
         ));
         AsymmetricSignResponse response = _asymmetricSign(request);
         return response.value;
@@ -266,15 +282,5 @@ public class AliyunKMSClient extends AliyunRpcClient {
 
     public void setIgnoreSSL(boolean ignoreSSL) {
         this.ignoreSSL = ignoreSSL;
-    }
-
-    static {
-        digestAlgs.put("RSA_PKCS1_SHA_256", "SHA-256");
-        digestAlgs.put("RSA_PSS_SHA_256", "SHA-256");
-        digestAlgs.put("ECDSA_SHA_256", "SHA-256");
-
-        namedCurves.put("SM2DSA", "sm2p256v1");
-
-        signAlgs.put("RSA2", "RSA_PKCS1_SHA_256");
     }
 }

@@ -4,18 +4,19 @@
 namespace Alipay\EasySDK\Base\Video;
 
 use Alipay\EasySDK\Kernel\EasySDKKernel;
+use AlibabaCloud\Tea\Tea;
 use AlibabaCloud\Tea\Request;
 use AlibabaCloud\Tea\Exception\TeaError;
-use AlibabaCloud\Tea\Tea;
-use AlibabaCloud\Tea\Response;
+use \Exception;
 use AlibabaCloud\Tea\Exception\TeaUnableRetryError;
 
 use Alipay\EasySDK\Base\Video\Models\AlipayOfflineMaterialImageUploadResponse;
+use AlibabaCloud\Tea\Response;
 
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
@@ -23,23 +24,26 @@ class Client {
      * @param string $videoName
      * @param string $videoFilePath
      * @return AlipayOfflineMaterialImageUploadResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
     public function upload($videoName, $videoFilePath){
         $_runtime = [
+            "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 100000,
             "readTimeout" => 100000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
         $_retryTimes = 0;
-        while (Tea::allowRetry($_runtime["retry"], $_retryTimes, $_now)) {
+        while (Tea::allowRetry(@$_runtime["retry"], $_retryTimes, $_now)) {
             if ($_retryTimes > 0) {
-                $_backoffTime = Tea::getBackoffTime($_runtime["backoff"], $_retryTimes);
+                $_backoffTime = Tea::getBackoffTime(@$_runtime["backoff"], $_retryTimes);
                 if ($_backoffTime > 0) {
                     Tea::sleep($_backoffTime);
                 }
@@ -58,15 +62,15 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [];
                 $textParams = [
                     "image_type" => "mp4",
                     "image_name" => $videoName
-                    ];
+                ];
                 $fileParams = [
                     "image_content" => $videoFilePath
-                    ];
+                ];
                 $boundary = $this->_kernel->getRandomBoundary();
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
@@ -74,10 +78,10 @@ class Client {
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => $this->_kernel->concatStr("multipart/form-data;charset=utf-8;boundary=", $boundary)
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams));
+                ], $systemParams));
                 $_request->body = $this->_kernel->toMultipartRequestBody($textParams, $fileParams, $boundary);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -94,9 +98,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;

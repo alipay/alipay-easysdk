@@ -92,4 +92,12 @@ public class Config extends TeaModel {
      */
     @NameInMap("signProvider")
     public String signProvider;
+
+    /**
+     * 代理地址（可选）
+     * 例如：http://127.0.0.1:8080
+     */
+    @NameInMap("httpProxy")
+    public String httpProxy;
+
 }

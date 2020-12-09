@@ -17,4 +17,20 @@ public class Text extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public Text setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Text setContent(String content) {
+        this.content = content;
+        return this;
+    }
+    public String getContent() {
+        return this.content;
+    }
+
 }

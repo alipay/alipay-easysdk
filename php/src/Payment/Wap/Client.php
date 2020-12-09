@@ -10,7 +10,7 @@ use Alipay\EasySDK\Payment\Wap\Models\AlipayTradeWapPayResponse;
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
@@ -21,7 +21,6 @@ class Client {
      * @param string $quitUrl
      * @param string $returnUrl
      * @return AlipayTradeWapPayResponse
-     * @throws \Exception
      */
     public function pay($subject, $outTradeNo, $totalAmount, $quitUrl, $returnUrl){
         $systemParams = [
@@ -35,21 +34,21 @@ class Client {
             "sign_type" => $this->_kernel->getConfig("signType"),
             "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
             "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-            ];
+        ];
         $bizParams = [
             "subject" => $subject,
             "out_trade_no" => $outTradeNo,
             "total_amount" => $totalAmount,
             "quit_url" => $quitUrl,
             "product_code" => "QUICK_WAP_WAY"
-            ];
+        ];
         $textParams = [
             "return_url" => $returnUrl
-            ];
+        ];
         $sign = $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"));
         $response = [
             "body" => $this->_kernel->generatePage("POST", $systemParams, $bizParams, $textParams, $sign)
-            ];
+        ];
         return AlipayTradeWapPayResponse::fromMap($response);
     }
 

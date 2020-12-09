@@ -139,6 +139,7 @@ api pay(subject: string, outTradeNo: string, totalAmount: string, authCode: stri
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -203,6 +204,7 @@ api preCreate(subject: string, outTradeNo: string, totalAmount: string): AlipayT
   }
 
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {

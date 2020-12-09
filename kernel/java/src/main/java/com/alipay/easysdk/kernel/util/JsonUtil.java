@@ -37,19 +37,15 @@ public class JsonUtil {
     }
 
     private static Map<String, Object> getTeaModelMap(TeaModel teaModel) {
-        try {
-            Map<String, Object> result = new HashMap<>();
-            Map<String, Object> teaModelMap = teaModel.toMap();
-            for (Entry<String, Object> pair : teaModelMap.entrySet()) {
-                if (pair.getValue() instanceof TeaModel) {
-                    result.put(pair.getKey(), getTeaModelMap((TeaModel) pair.getValue()));
-                } else {
-                    result.put(pair.getKey(), pair.getValue());
-                }
+        Map<String, Object> result = new HashMap<>();
+        Map<String, Object> teaModelMap = teaModel.toMap();
+        for (Entry<String, Object> pair : teaModelMap.entrySet()) {
+            if (pair.getValue() instanceof TeaModel) {
+                result.put(pair.getKey(), getTeaModelMap((TeaModel) pair.getValue()));
+            } else {
+                result.put(pair.getKey(), pair.getValue());
             }
-            return result;
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e.getMessage(), e);
         }
+        return result;
     }
 }

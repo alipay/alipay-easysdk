@@ -26,6 +26,7 @@ namespace Alipay.EasySDK.Base.Image
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 100000},
                 {"readTimeout", 100000},
                 {"retry", new Dictionary<string, int?>
@@ -134,6 +135,7 @@ namespace Alipay.EasySDK.Base.Image
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 100000},
                 {"readTimeout", 100000},
                 {"retry", new Dictionary<string, int?>

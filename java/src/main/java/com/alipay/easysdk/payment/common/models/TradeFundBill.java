@@ -29,4 +29,44 @@ public class TradeFundBill extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public TradeFundBill setFundChannel(String fundChannel) {
+        this.fundChannel = fundChannel;
+        return this;
+    }
+    public String getFundChannel() {
+        return this.fundChannel;
+    }
+
+    public TradeFundBill setBankCode(String bankCode) {
+        this.bankCode = bankCode;
+        return this;
+    }
+    public String getBankCode() {
+        return this.bankCode;
+    }
+
+    public TradeFundBill setAmount(String amount) {
+        this.amount = amount;
+        return this;
+    }
+    public String getAmount() {
+        return this.amount;
+    }
+
+    public TradeFundBill setRealAmount(String realAmount) {
+        this.realAmount = realAmount;
+        return this;
+    }
+    public String getRealAmount() {
+        return this.realAmount;
+    }
+
+    public TradeFundBill setFundType(String fundType) {
+        this.fundType = fundType;
+        return this;
+    }
+    public String getFundType() {
+        return this.fundType;
+    }
+
 }

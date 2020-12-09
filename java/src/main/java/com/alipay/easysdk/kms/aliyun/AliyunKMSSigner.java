@@ -1,6 +1,3 @@
-/**
- * Alipay.com Inc. Copyright (c) 2004-2019 All Rights Reserved.
- */
 package com.alipay.easysdk.kms.aliyun;
 
 import com.alipay.easysdk.kernel.util.Signer;
@@ -8,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Aliyun KMS签名器
+ * KMS签名器
  *
  * @author aliyunkms
  * @version $Id: AliyunKMSSigner.java, v 0.1 2020年05月08日 9:10 PM aliyunkms Exp $

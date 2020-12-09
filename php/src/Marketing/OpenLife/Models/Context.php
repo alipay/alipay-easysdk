@@ -5,6 +5,8 @@ namespace Alipay\EasySDK\Marketing\OpenLife\Models;
 
 use AlibabaCloud\Tea\Model;
 
+use Alipay\EasySDK\Marketing\OpenLife\Models\Keyword;
+
 class Context extends Model {
     protected $_name = [
         'headColor' => 'head_color',

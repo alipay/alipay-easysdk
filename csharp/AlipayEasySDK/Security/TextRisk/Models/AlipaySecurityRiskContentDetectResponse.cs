@@ -9,6 +9,9 @@ using Tea;
 namespace Alipay.EasySDK.Security.TextRisk.Models
 {
     public class AlipaySecurityRiskContentDetectResponse : TeaModel {
+        /// <summary>
+        /// 响应原始字符串
+        /// </summary>
         [NameInMap("http_body")]
         [Validation(Required=true)]
         public string HttpBody { get; set; }
