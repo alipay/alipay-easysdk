@@ -106,6 +106,7 @@ api createTemplate(uniqueId: string, tplContent: string): AlipayPassTemplateAddR
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -169,6 +170,7 @@ api updateTemplate(tplId: string, tplContent: string): AlipayPassTemplateUpdateR
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -234,6 +236,7 @@ api addInstance(tplId: string, tplParams: string, recognitionType: string, recog
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -301,6 +304,7 @@ api updateInstance(serialNumber: string, channelId: string, tplParams: string, s
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {

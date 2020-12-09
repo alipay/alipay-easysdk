@@ -47,10 +47,7 @@ class AlipaySecurityRiskContentDetectResponse extends Model {
             $res['action'] = $this->action;
         }
         if (null !== $this->keywords) {
-            $res['keywords'] = [];
-            if(null !== $this->keywords){
-                $res['keywords'] = $this->keywords;
-            }
+            $res['keywords'] = $this->keywords;
         }
         if (null !== $this->uniqueId) {
             $res['unique_id'] = $this->uniqueId;
@@ -83,7 +80,6 @@ class AlipaySecurityRiskContentDetectResponse extends Model {
         }
         if(isset($map['keywords'])){
             if(!empty($map['keywords'])){
-                $model->keywords = [];
                 $model->keywords = $map['keywords'];
             }
         }
@@ -124,7 +120,7 @@ class AlipaySecurityRiskContentDetectResponse extends Model {
     public $action;
 
     /**
-     * @var array
+     * @var string[]
      */
     public $keywords;
 

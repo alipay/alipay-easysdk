@@ -17,4 +17,20 @@ public class HuabeiConfig extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public HuabeiConfig setHbFqNum(String hbFqNum) {
+        this.hbFqNum = hbFqNum;
+        return this;
+    }
+    public String getHbFqNum() {
+        return this.hbFqNum;
+    }
+
+    public HuabeiConfig setHbFqSellerPercent(String hbFqSellerPercent) {
+        this.hbFqSellerPercent = hbFqSellerPercent;
+        return this;
+    }
+    public String getHbFqSellerPercent() {
+        return this.hbFqSellerPercent;
+    }
+
 }

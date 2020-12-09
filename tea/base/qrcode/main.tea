@@ -73,6 +73,7 @@ api create(urlParam: string, queryParam: string, describe: string): AlipayOpenAp
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {

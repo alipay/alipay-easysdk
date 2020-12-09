@@ -4,6 +4,7 @@ package com.alipay.easysdk.util.generic.models;
 import com.aliyun.tea.*;
 
 public class AlipayOpenApiGenericResponse extends TeaModel {
+    // 响应原始字符串
     @NameInMap("http_body")
     @Validation(required = true)
     public String httpBody;
@@ -27,6 +28,46 @@ public class AlipayOpenApiGenericResponse extends TeaModel {
     public static AlipayOpenApiGenericResponse build(java.util.Map<String, ?> map) throws Exception {
         AlipayOpenApiGenericResponse self = new AlipayOpenApiGenericResponse();
         return TeaModel.build(map, self);
+    }
+
+    public AlipayOpenApiGenericResponse setHttpBody(String httpBody) {
+        this.httpBody = httpBody;
+        return this;
+    }
+    public String getHttpBody() {
+        return this.httpBody;
+    }
+
+    public AlipayOpenApiGenericResponse setCode(String code) {
+        this.code = code;
+        return this;
+    }
+    public String getCode() {
+        return this.code;
+    }
+
+    public AlipayOpenApiGenericResponse setMsg(String msg) {
+        this.msg = msg;
+        return this;
+    }
+    public String getMsg() {
+        return this.msg;
+    }
+
+    public AlipayOpenApiGenericResponse setSubCode(String subCode) {
+        this.subCode = subCode;
+        return this;
+    }
+    public String getSubCode() {
+        return this.subCode;
+    }
+
+    public AlipayOpenApiGenericResponse setSubMsg(String subMsg) {
+        this.subMsg = subMsg;
+        return this;
+    }
+    public String getSubMsg() {
+        return this.subMsg;
     }
 
 }

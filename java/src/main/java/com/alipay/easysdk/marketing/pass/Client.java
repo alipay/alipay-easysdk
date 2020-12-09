@@ -13,6 +13,7 @@ public class Client {
 
     public AlipayPassTemplateAddResponse createTemplate(String uniqueId, String tplContent) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -88,7 +89,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -97,6 +98,7 @@ public class Client {
 
     public AlipayPassTemplateUpdateResponse updateTemplate(String tplId, String tplContent) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -172,7 +174,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -181,6 +183,7 @@ public class Client {
 
     public AlipayPassInstanceAddResponse addInstance(String tplId, String tplParams, String recognitionType, String recognitionInfo) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -258,7 +261,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -267,6 +270,7 @@ public class Client {
 
     public AlipayPassInstanceUpdateResponse updateInstance(String serialNumber, String channelId, String tplParams, String status, String verifyCode, String verifyType) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -346,7 +350,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 

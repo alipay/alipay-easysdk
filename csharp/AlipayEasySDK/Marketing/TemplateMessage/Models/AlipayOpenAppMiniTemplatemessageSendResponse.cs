@@ -9,6 +9,9 @@ using Tea;
 namespace Alipay.EasySDK.Marketing.TemplateMessage.Models
 {
     public class AlipayOpenAppMiniTemplatemessageSendResponse : TeaModel {
+        /// <summary>
+        /// 响应原始字符串
+        /// </summary>
         [NameInMap("http_body")]
         [Validation(Required=true)]
         public string HttpBody { get; set; }

@@ -13,4 +13,12 @@ public class TradeSettleInfo extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public TradeSettleInfo setTradeSettleDetailList(java.util.List<TradeSettleDetail> tradeSettleDetailList) {
+        this.tradeSettleDetailList = tradeSettleDetailList;
+        return this;
+    }
+    public java.util.List<TradeSettleDetail> getTradeSettleDetailList() {
+        return this.tradeSettleDetailList;
+    }
+
 }

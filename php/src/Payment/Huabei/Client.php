@@ -4,19 +4,20 @@
 namespace Alipay\EasySDK\Payment\Huabei;
 
 use Alipay\EasySDK\Kernel\EasySDKKernel;
+use AlibabaCloud\Tea\Tea;
 use AlibabaCloud\Tea\Request;
 use AlibabaCloud\Tea\Exception\TeaError;
-use AlibabaCloud\Tea\Tea;
-use AlibabaCloud\Tea\Response;
+use \Exception;
 use AlibabaCloud\Tea\Exception\TeaUnableRetryError;
 
 use Alipay\EasySDK\Payment\Huabei\Models\HuabeiConfig;
 use Alipay\EasySDK\Payment\Huabei\Models\AlipayTradeCreateResponse;
+use AlibabaCloud\Tea\Response;
 
 class Client {
     protected $_kernel;
 
-    public function __construct(EasySDKKernel $kernel){
+    public function __construct($kernel){
         $this->_kernel = $kernel;
     }
 
@@ -27,24 +28,27 @@ class Client {
      * @param string $buyerId
      * @param HuabeiConfig $extendParams
      * @return AlipayTradeCreateResponse
-     * @throws \Exception
+     * @throws TeaError
+     * @throws Exception
+     * @throws TeaUnableRetryError
      */
-    public function create($subject, $outTradeNo, $totalAmount, $buyerId, HuabeiConfig $extendParams){
+    public function create($subject, $outTradeNo, $totalAmount, $buyerId, $extendParams){
         $extendParams->validate();
         $_runtime = [
+            "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
             "retry" => [
                 "maxAttempts" => 0
-                ]
-            ];
+            ]
+        ];
         $_lastRequest = null;
         $_lastException = null;
         $_now = time();
         $_retryTimes = 0;
-        while (Tea::allowRetry($_runtime["retry"], $_retryTimes, $_now)) {
+        while (Tea::allowRetry(@$_runtime["retry"], $_retryTimes, $_now)) {
             if ($_retryTimes > 0) {
-                $_backoffTime = Tea::getBackoffTime($_runtime["backoff"], $_retryTimes);
+                $_backoffTime = Tea::getBackoffTime(@$_runtime["backoff"], $_retryTimes);
                 if ($_backoffTime > 0) {
                     Tea::sleep($_backoffTime);
                 }
@@ -63,14 +67,14 @@ class Client {
                     "sign_type" => $this->_kernel->getConfig("signType"),
                     "app_cert_sn" => $this->_kernel->getMerchantCertSN(),
                     "alipay_root_cert_sn" => $this->_kernel->getAlipayRootCertSN()
-                    ];
+                ];
                 $bizParams = [
                     "subject" => $subject,
                     "out_trade_no" => $outTradeNo,
                     "total_amount" => $totalAmount,
                     "buyer_id" => $buyerId,
                     "extend_params" => $extendParams
-                    ];
+                ];
                 $textParams = [];
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
@@ -78,11 +82,10 @@ class Client {
                 $_request->headers = [
                     "host" => $this->_kernel->getConfig("gatewayHost"),
                     "content-type" => "application/x-www-form-urlencoded;charset=utf-8"
-                    ];
+                ];
                 $_request->query = $this->_kernel->sortMap(Tea::merge([
                     "sign" => $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"))
-                    ], $systemParams,
-                    $textParams));
+                ], $systemParams, $textParams));
                 $_request->body = $this->_kernel->toUrlEncodedRequestBody($bizParams);
                 $_lastRequest = $_request;
                 $_response= Tea::send($_request, $_runtime);
@@ -99,9 +102,12 @@ class Client {
                 }
                 throw new TeaError([
                     "message" => "验签失败，请检查支付宝公钥设置是否正确。"
-                    ]);
+                ]);
             }
-            catch (\Exception $e) {
+            catch (Exception $e) {
+                if (!($e instanceof TeaError)) {
+                    $e = new TeaError([], $e->getMessage(), $e->getCode(), $e);
+                }
                 if (Tea::isRetryable($e)) {
                     $_lastException = $e;
                     continue;

@@ -4,8 +4,8 @@
 	"version": "0.0.1",
 	"main": "./main.tea",
 	"releases": {
-		"java": "com.alipay.sdk:easysdk-kernel:1.0.0",
-		"csharp": "AlipayEasySDK.Kernel:1.0.0"
+		"java": "com.alipay.sdk:easysdk-kernel:1.0.3",
+		"csharp": "AlipayEasySDK.Kernel:1.0.1"
 	},
 	"java": {
 		"package": "com.alipay.easysdk.kernel"
@@ -14,7 +14,7 @@
 		"namespace": "Alipay.EasySDK.Kernel"
 	},
 	"php": {
-		"namespace": "Alipay.EasySDK.Kernel",
+		"namespace": "Alipay.EasySDK.Kernel"
 	},
 	"go": {
 		"namespace": "alipay/easysdk/kernel"

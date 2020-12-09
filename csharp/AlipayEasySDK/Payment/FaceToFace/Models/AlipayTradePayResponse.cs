@@ -9,6 +9,9 @@ using Tea;
 namespace Alipay.EasySDK.Payment.FaceToFace.Models
 {
     public class AlipayTradePayResponse : TeaModel {
+        /// <summary>
+        /// 响应原始字符串
+        /// </summary>
         [NameInMap("http_body")]
         [Validation(Required=true)]
         public string HttpBody { get; set; }

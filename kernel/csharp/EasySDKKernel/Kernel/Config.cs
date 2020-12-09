@@ -85,5 +85,15 @@ namespace Alipay.EasySDK.Kernel
         [NameInMap("encryptKey")]
         [Validation(Required = true)]
         public string EncryptKey { get; set; }
-    }
+
+
+        /// <summary>
+        /// 代理地址（可选）例如：http://127.0.0.1:8080
+        /// </summary>
+        [NameInMap("httpProxy")]
+        [Validation(Required = true)]
+        public string HttpProxy { get; set; }
+
+        }
+
 }

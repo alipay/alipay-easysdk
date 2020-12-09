@@ -14,6 +14,7 @@ public class Client {
     public AlipayTradeCreateResponse create(String subject, String outTradeNo, String totalAmount, String buyerId, HuabeiConfig extendParams) throws Exception {
         TeaModel.validateParams(extendParams, "extendParams");
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -92,7 +93,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 

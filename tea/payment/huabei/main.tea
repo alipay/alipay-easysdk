@@ -81,6 +81,7 @@ api create(subject: string, outTradeNo: string, totalAmount: string, buyerId: st
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {

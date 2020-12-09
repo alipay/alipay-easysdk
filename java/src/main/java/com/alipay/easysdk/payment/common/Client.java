@@ -13,6 +13,7 @@ public class Client {
 
     public AlipayTradeCreateResponse create(String subject, String outTradeNo, String totalAmount, String buyerId) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -90,7 +91,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -99,6 +100,7 @@ public class Client {
 
     public AlipayTradeQueryResponse query(String outTradeNo) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -173,7 +175,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -182,6 +184,7 @@ public class Client {
 
     public AlipayTradeRefundResponse refund(String outTradeNo, String refundAmount) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -257,7 +260,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -266,6 +269,7 @@ public class Client {
 
     public AlipayTradeCloseResponse close(String outTradeNo) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -340,7 +344,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -349,6 +353,7 @@ public class Client {
 
     public AlipayTradeCancelResponse cancel(String outTradeNo) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -423,7 +428,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -432,6 +437,7 @@ public class Client {
 
     public AlipayTradeFastpayRefundQueryResponse queryRefund(String outTradeNo, String outRequestNo) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -507,7 +513,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 
@@ -516,6 +522,7 @@ public class Client {
 
     public AlipayDataDataserviceBillDownloadurlQueryResponse downloadBill(String billType, String billDate) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
             new TeaPair("retry", TeaConverter.buildMap(
@@ -591,7 +598,7 @@ public class Client {
                 if (Tea.isRetryable(e)) {
                     continue;
                 }
-                throw e;
+                throw new RuntimeException(e);
             }
         }
 

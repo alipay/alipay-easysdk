@@ -75,6 +75,7 @@ api getToken(code: string): AlipaySystemOauthTokenResponse {
     message = '验签失败，请检查支付宝公钥设置是否正确。'
   }
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {
@@ -138,6 +139,7 @@ api refreshToken(refreshToken: string): AlipaySystemOauthTokenResponse {
   }
   
 } runtime {
+  httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
   retry = {

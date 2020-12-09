@@ -45,7 +45,7 @@ class TradeSettleInfo extends Model {
         return $model;
     }
     /**
-     * @var array
+     * @var TradeSettleDetail[]
      */
     public $tradeSettleDetailList;
 

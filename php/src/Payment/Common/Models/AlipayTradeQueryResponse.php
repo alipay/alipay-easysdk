@@ -491,7 +491,7 @@ class AlipayTradeQueryResponse extends Model {
     public $terminalId;
 
     /**
-     * @var array
+     * @var TradeFundBill[]
      */
     public $fundBillList;
 
@@ -521,7 +521,7 @@ class AlipayTradeQueryResponse extends Model {
     public $settlementId;
 
     /**
-     * @var array
+     * @var TradeSettleInfo[]
      */
     public $tradeSettleInfo;
 

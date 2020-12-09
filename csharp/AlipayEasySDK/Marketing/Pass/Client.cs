@@ -26,6 +26,7 @@ namespace Alipay.EasySDK.Marketing.Pass
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
                 {"retry", new Dictionary<string, int?>
@@ -130,6 +131,7 @@ namespace Alipay.EasySDK.Marketing.Pass
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
                 {"retry", new Dictionary<string, int?>
@@ -234,6 +236,7 @@ namespace Alipay.EasySDK.Marketing.Pass
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
                 {"retry", new Dictionary<string, int?>
@@ -338,6 +341,7 @@ namespace Alipay.EasySDK.Marketing.Pass
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
                 {"retry", new Dictionary<string, int?>
@@ -442,6 +446,7 @@ namespace Alipay.EasySDK.Marketing.Pass
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
                 {"retry", new Dictionary<string, int?>
@@ -548,6 +553,7 @@ namespace Alipay.EasySDK.Marketing.Pass
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
                 {"retry", new Dictionary<string, int?>
@@ -654,6 +660,7 @@ namespace Alipay.EasySDK.Marketing.Pass
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
                 {"retry", new Dictionary<string, int?>
@@ -762,6 +769,7 @@ namespace Alipay.EasySDK.Marketing.Pass
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
                 {"retry", new Dictionary<string, int?>

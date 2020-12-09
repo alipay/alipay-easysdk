@@ -452,7 +452,7 @@ class AlipayTradePayResponse extends Model {
     public $gmtPayment;
 
     /**
-     * @var array
+     * @var TradeFundBill[]
      */
     public $fundBillList;
 
@@ -477,7 +477,7 @@ class AlipayTradePayResponse extends Model {
     public $discountGoodsDetail;
 
     /**
-     * @var array
+     * @var VoucherDetail[]
      */
     public $voucherDetailList;
 

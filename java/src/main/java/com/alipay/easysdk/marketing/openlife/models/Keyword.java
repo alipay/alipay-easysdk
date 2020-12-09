@@ -17,4 +17,20 @@ public class Keyword extends TeaModel {
         return TeaModel.build(map, self);
     }
 
+    public Keyword setColor(String color) {
+        this.color = color;
+        return this;
+    }
+    public String getColor() {
+        return this.color;
+    }
+
+    public Keyword setValue(String value) {
+        this.value = value;
+        return this;
+    }
+    public String getValue() {
+        return this.value;
+    }
+
 }
