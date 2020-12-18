@@ -365,7 +365,7 @@ class EasySDKKernel
         }
         if ($bizParams != null && $this->optionalBizParams != null) {
             $this->bizParams = array_merge($bizParams, $this->optionalBizParams);
-        } else if ($bizParams == null) {
+        } else if ($bizParams == null && $this->optionalBizParams != null) {
             $this->bizParams = $this->optionalBizParams;
         }
         $json = new JsonUtil();
