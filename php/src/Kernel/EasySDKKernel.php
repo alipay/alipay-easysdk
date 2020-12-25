@@ -369,7 +369,9 @@ class EasySDKKernel
             $this->bizParams = $this->optionalBizParams;
         }
         $json = new JsonUtil();
-        $bizParams = $json->toJsonString($this->bizParams);
+        if($this->bizParams != null){
+            $bizParams = $json->toJsonString($this->bizParams);
+        }
         $sortedMap = $systemParams;
         if (!empty($bizParams)) {
             $sortedMap[AlipayConstants::BIZ_CONTENT_FIELD] = json_encode($bizParams, JSON_UNESCAPED_UNICODE);
