@@ -6,6 +6,7 @@ namespace Alipay\EasySDK\Test\util\generic;
 
 use Alipay\EasySDK\Kernel\Factory;
 use Alipay\EasySDK\Test\TestAccount;
+use Alipay\EasySDK\Kernel\Util\ResponseChecker;
 use PHPUnit\Framework\TestCase;
 
 class ClientTest extends TestCase
@@ -15,6 +16,41 @@ class ClientTest extends TestCase
         parent::__construct($name, $data, $dataName);
         $account = new TestAccount();
         Factory::setOptions($account->getTestAccount());
+    }
+
+    public function testSDKExecute()
+    {
+        $bizParams = array(
+            "subject" => "Iphone6 16G",
+            "out_trade_no" => "f4833085-0c46-4bb0-8e5f-622a02a4cffc",
+            "total_amount" => "0.10"
+        );
+
+        $textParams = array();
+
+        $result = Factory::util()->generic()->sdkExecute("alipay.trade.app.pay", $textParams, $bizParams);
+        $this->assertEquals(true, strpos($result->body, 'alipay_sdk=alipay-easysdk-php') > 0);
+        $this->assertEquals(true, strpos($result->body, 'sign') > 0);
+    }
+
+    public function testFileExecute()
+    {
+        $textParams = array(
+            "image_type" => "png",
+            "image_name" => "海底捞",
+            "image_pids" => "22088021822217233"
+        );
+        $account = new TestAccount();
+        $filePath = $account->getResourcesPath(). '/resources/fixture/sample.png';
+
+        $fileParams = array(
+            "image_content" => $filePath
+        );
+
+        $result = Factory::util()->generic()->fileExecute("alipay.offline.material.image.upload", $textParams, null, $fileParams);
+        $responseChecker = new ResponseChecker();
+        $this->assertEquals(true, $responseChecker->success($result));
+        $this->assertEquals('Success', $result->msg);
     }
 
     public function testExecuteWithoutAppAuthToken()

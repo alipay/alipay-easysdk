@@ -52,7 +52,11 @@ public class Context {
     }
 
     public String getConfig(String key) {
-        return (String) config.get(key);
+        if (String.valueOf(config.get(key)) == "null") {
+            return null;
+        } else {
+            return String.valueOf(config.get(key));
+        }
     }
 
     public String getSdkVersion() {

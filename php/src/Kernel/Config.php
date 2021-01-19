@@ -21,5 +21,6 @@ class Config extends Model
     public $notifyUrl;
     public $encryptKey;
     public $httpProxy;
+    public $ignoreSSL;
 
 }

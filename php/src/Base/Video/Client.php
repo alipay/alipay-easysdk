@@ -30,6 +30,7 @@ class Client {
      */
     public function upload($videoName, $videoFilePath){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 100000,
             "readTimeout" => 100000,

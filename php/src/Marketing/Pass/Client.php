@@ -33,6 +33,7 @@ class Client {
      */
     public function createTemplate($uniqueId, $tplContent){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -123,6 +124,7 @@ class Client {
      */
     public function updateTemplate($tplId, $tplContent){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -215,6 +217,7 @@ class Client {
      */
     public function addInstance($tplId, $tplParams, $recognitionType, $recognitionInfo){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -311,6 +314,7 @@ class Client {
      */
     public function updateInstance($serialNumber, $channelId, $tplParams, $status, $verifyCode, $verifyType){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,

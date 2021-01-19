@@ -38,6 +38,7 @@ class Client {
         $identityParam->validate();
         $merchantConfig->validate();
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -129,6 +130,7 @@ class Client {
      */
     public function query($certifyId){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,

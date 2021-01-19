@@ -72,6 +72,7 @@ api detect(content: string): AlipaySecurityRiskContentDetectResponse {
   }
 
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,

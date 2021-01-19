@@ -139,6 +139,7 @@ api pay(subject: string, outTradeNo: string, totalAmount: string, authCode: stri
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -204,6 +205,7 @@ api preCreate(subject: string, outTradeNo: string, totalAmount: string): AlipayT
   }
 
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,

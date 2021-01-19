@@ -13,6 +13,7 @@ public class Client {
 
     public AlipaySystemOauthTokenResponse getToken(String code) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("ignoreSSL", _kernel.getConfig("ignoreSSL")),
             new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
@@ -98,6 +99,7 @@ public class Client {
 
     public AlipaySystemOauthTokenResponse refreshToken(String refreshToken) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("ignoreSSL", _kernel.getConfig("ignoreSSL")),
             new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),

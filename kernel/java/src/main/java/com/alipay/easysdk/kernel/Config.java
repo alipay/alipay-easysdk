@@ -100,4 +100,11 @@ public class Config extends TeaModel {
     @NameInMap("httpProxy")
     public String httpProxy;
 
+
+    /**
+     * 忽略证书校验（可选）
+     */
+    @NameInMap("ignoreSSL")
+    public boolean ignoreSSL;
+
 }

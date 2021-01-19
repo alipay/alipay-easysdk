@@ -13,6 +13,7 @@ public class Client {
 
     public AlipaySecurityRiskContentDetectResponse detect(String content) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("ignoreSSL", _kernel.getConfig("ignoreSSL")),
             new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),

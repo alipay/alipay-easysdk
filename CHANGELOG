@@ -1,11 +1,17 @@
 最新变更
-2020-12-09 增加httpProxy功能。
+增加通用方法中sdkExecute与fileExecute功能。增加java与php的MultipleFactory多实例调用。
+go版本sdk首次发布
 
 
 
 Java版本
-2020-12-09 Version: 2.1.1
-1. 增加httpProxy功能。
+2021-01-18 Version: 2.2.0
+1. 增加sdkExecute功能。
+2. 增加fileExecute功能。
+3. 增加MultipleFactory多实例调用。
+
+2020-12-11 Version: 2.1.2
+1. 增加可设置ignoreSSL忽略SSL校验功能。
 
 2020-09-23 Version: 2.1.0
 1. 升级Tea版本，降低对OkHttp的特性依赖，提升环境兼容性。
@@ -59,6 +65,9 @@ Factory.Util.AES().encrypt AES加密
 
 
 C#版本
+2020-12-11 Version: 2.1.2
+1. 增加可设置ignoreSSL忽略SSL校验功能。
+
 2020-12-09 Version: 2.1.1
 1. 增加httpProxy功能。
 
@@ -102,6 +111,15 @@ Factory.Util.AES().Encrypt AES加密
 
 
 PHP版本
+2021-01-18 Version: 2.2.0
+1. 增加sdkExecute功能。
+2. 增加fileExecute功能。
+3. 增加MultipleFactory多实例调用。
+
+
+2020-12-11 Version: 2.0.3
+1. 增加可设置ignoreSSL忽略SSL校验功能。
+
 2020-12-09 Version: 2.0.2
 1. 增加httpProxy功能。
 2. 修复agent不生效问题。
@@ -135,4 +153,9 @@ Factory::util()->aes()->encrypt AES加密
 1. 修复大小写路径敏感问题。
 
 2020-03-20 Version: 1.0.0
+1. 首次发布。
+
+
+PHP版本
+2021-01-18 Version: 1.0.0
 1. 首次发布。

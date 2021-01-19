@@ -45,6 +45,7 @@ class Client {
      */
     public function createImageTextContent($title, $cover, $content, $contentComment, $ctype, $benefit, $extTags, $loginIds){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -148,6 +149,7 @@ class Client {
      */
     public function modifyImageTextContent($contentId, $title, $cover, $content, $couldComment, $ctype, $benefit, $extTags, $loginIds){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -244,6 +246,7 @@ class Client {
      */
     public function sendText($text){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -337,6 +340,7 @@ class Client {
      */
     public function sendImageText($articles){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -428,6 +432,7 @@ class Client {
     public function sendSingleMessage($toUserId, $template){
         $template->validate();
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -517,6 +522,7 @@ class Client {
      */
     public function recallMessage($messageId){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -608,6 +614,7 @@ class Client {
      */
     public function setIndustry($primaryIndustryCode, $primaryIndustryName, $secondaryIndustryCode, $secondaryIndustryName){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -698,6 +705,7 @@ class Client {
      */
     public function getIndustry(){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,

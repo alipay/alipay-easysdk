@@ -26,6 +26,7 @@ namespace Alipay.EasySDK.Base.Video
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"ignoreSSL", this._kernel.GetConfig("ignoreSSL")},
                 {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 100000},
                 {"readTimeout", 100000},
@@ -135,6 +136,7 @@ namespace Alipay.EasySDK.Base.Video
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"ignoreSSL", this._kernel.GetConfig("ignoreSSL")},
                 {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 100000},
                 {"readTimeout", 100000},
