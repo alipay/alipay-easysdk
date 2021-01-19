@@ -29,6 +29,7 @@ class Client {
      */
     public function detect($content){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,

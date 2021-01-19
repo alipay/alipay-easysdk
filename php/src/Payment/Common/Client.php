@@ -38,6 +38,7 @@ class Client {
      */
     public function create($subject, $outTradeNo, $totalAmount, $buyerId){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -129,6 +130,7 @@ class Client {
      */
     public function query($outTradeNo){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -218,6 +220,7 @@ class Client {
      */
     public function refund($outTradeNo, $refundAmount){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -307,6 +310,7 @@ class Client {
      */
     public function close($outTradeNo){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -395,6 +399,7 @@ class Client {
      */
     public function cancel($outTradeNo){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -484,6 +489,7 @@ class Client {
      */
     public function queryRefund($outTradeNo, $outRequestNo){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
@@ -574,6 +580,7 @@ class Client {
      */
     public function downloadBill($billType, $billDate){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,

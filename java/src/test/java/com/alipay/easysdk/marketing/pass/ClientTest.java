@@ -58,11 +58,8 @@ public class ClientTest {
         assertThat(ResponseChecker.success(response), is(false));
         assertThat(response.code, is("40004"));
         assertThat(response.msg, is("Business Failed"));
-        assertThat(response.subCode, is("KP.AE_ALIPASS_APPID_NOSUPPORT"));
-        assertThat(response.subMsg, is("该AppId不支持"));
         assertThat(response.httpBody, not(nullValue()));
         assertThat(response.success, is(false));
-        assertThat(response.result, containsString("该AppId不支持"));
     }
 
     @Test

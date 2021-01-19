@@ -121,17 +121,18 @@ class EasySDKKernel
         } else if ($textParams == null) {
             $this->textParams = $this->optionalTextParams;
         }
+        if (count($fileParams) > 0) {
 
-        $fileField = new FileField();
-        $fileField->filename = $fileParams['image_content'];
-        $fileField->contentType = 'multipart/form-data;charset=utf-8;boundary=' . $boundary;
-        $fileField->content = new Stream(fopen($fileParams['image_content'], 'r'));
-        $map = [
-            'image_type' => $this->textParams['image_type'],
-            'image_name' => $this->textParams['image_name'],
-            'image_content' => $fileField
-        ];
-        $stream = FileForm::toFileForm($map, $boundary);
+            foreach ($fileParams as $key => $value) {
+                $fileField = new FileField();
+                $fileField->filename = $value;
+                $fileField->contentType = 'multipart/form-data;charset=utf-8;boundary=' . $boundary;
+                $fileField->content = new Stream(fopen($value, 'r'));
+                $this->textParams[$key] = $fileField;
+            }
+        }
+        $stream = FileForm::toFileForm($this->textParams, $boundary);
+
         do {
             $readLength = $stream->read(1024);
         } while (0 != $readLength);
@@ -369,7 +370,9 @@ class EasySDKKernel
             $this->bizParams = $this->optionalBizParams;
         }
         $json = new JsonUtil();
-        $bizParams = $json->toJsonString($this->bizParams);
+        if ($this->bizParams != null) {
+            $bizParams = $json->toJsonString($this->bizParams);
+        }
         $sortedMap = $systemParams;
         if (!empty($bizParams)) {
             $sortedMap[AlipayConstants::BIZ_CONTENT_FIELD] = json_encode($bizParams, JSON_UNESCAPED_UNICODE);

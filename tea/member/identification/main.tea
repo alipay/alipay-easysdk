@@ -101,6 +101,7 @@ api init(outerOrderNo: string, bizCode: string, identityParam: IdentityParam, me
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -193,6 +194,7 @@ api query(certifyId: string): AlipayUserCertifyOpenQueryResponse {
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,

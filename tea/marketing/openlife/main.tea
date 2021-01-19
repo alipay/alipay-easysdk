@@ -168,6 +168,7 @@ api createImageTextContent(title: string, cover: string, content: string, conten
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -239,6 +240,7 @@ api modifyImageTextContent(contentId: string, title: string, cover: string, cont
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -308,6 +310,7 @@ api sendText(text: string): AlipayOpenPublicMessageTotalSendResponse {
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -372,6 +375,7 @@ api sendImageText(articles: [ Article ]): AlipayOpenPublicMessageTotalSendRespon
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -436,6 +440,7 @@ api sendSingleMessage(toUserId: string, template: Template): AlipayOpenPublicMes
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -499,6 +504,7 @@ api recallMessage(messageId: string): AlipayOpenPublicLifeMsgRecallResponse {
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -565,6 +571,7 @@ api setIndustry(primaryIndustryCode: string, primaryIndustryName: string, second
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -627,6 +634,7 @@ api getIndustry(): AlipayOpenPublicSettingCategoryQueryResponse {
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,

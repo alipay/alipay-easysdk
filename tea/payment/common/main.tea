@@ -242,6 +242,7 @@ api create(subject: string, outTradeNo: string, totalAmount: string, buyerId: st
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -305,6 +306,7 @@ api query(outTradeNo: string): AlipayTradeQueryResponse {
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -370,6 +372,7 @@ api refund(outTradeNo: string, refundAmount: string): AlipayTradeRefundResponse 
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -433,6 +436,7 @@ api close(outTradeNo: string): AlipayTradeCloseResponse {
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -497,6 +501,7 @@ api cancel(outTradeNo: string): AlipayTradeCancelResponse {
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -561,6 +566,7 @@ api queryRefund(outTradeNo: string, outRequestNo: string): AlipayTradeFastpayRef
   }
 
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,
@@ -626,6 +632,7 @@ api downloadBill(billType: string, billDate: string): AlipayDataDataserviceBillD
   }
 
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,

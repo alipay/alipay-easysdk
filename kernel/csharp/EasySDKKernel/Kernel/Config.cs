@@ -94,6 +94,13 @@ namespace Alipay.EasySDK.Kernel
         [Validation(Required = true)]
         public string HttpProxy { get; set; }
 
+        /// <summary>
+        /// 忽略证书校验（可选）
+        /// </summary>
+        [NameInMap("ignoreSSL")]
+        [Validation(Required = true)]
+        public string IgnoreSSL { get; set; }
+
         }
 
 }

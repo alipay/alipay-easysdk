@@ -13,6 +13,7 @@ public class Client {
 
     public AlipayOfflineMaterialImageUploadResponse upload(String videoName, String videoFilePath) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("ignoreSSL", _kernel.getConfig("ignoreSSL")),
             new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 100000),
             new TeaPair("readTimeout", 100000),

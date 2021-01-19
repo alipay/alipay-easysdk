@@ -13,6 +13,7 @@ public class Client {
 
     public AlipayOpenApiGenericResponse execute(String method, java.util.Map<String, String> textParams, java.util.Map<String, ?> bizParams) throws Exception {
         java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("ignoreSSL", _kernel.getConfig("ignoreSSL")),
             new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
             new TeaPair("connectTimeout", 15000),
             new TeaPair("readTimeout", 15000),
@@ -89,6 +90,109 @@ public class Client {
         }
 
         throw new TeaUnretryableException(_lastRequest);
+    }
+
+    public AlipayOpenApiGenericResponse fileExecute(String method, java.util.Map<String, String> textParams, java.util.Map<String, ?> bizParams, java.util.Map<String, String> fileParams) throws Exception {
+        java.util.Map<String, Object> runtime_ = TeaConverter.buildMap(
+            new TeaPair("ignoreSSL", _kernel.getConfig("ignoreSSL")),
+            new TeaPair("httpProxy", _kernel.getConfig("httpProxy")),
+            new TeaPair("connectTimeout", 100000),
+            new TeaPair("readTimeout", 100000),
+            new TeaPair("retry", TeaConverter.buildMap(
+                new TeaPair("maxAttempts", 0)
+            ))
+        );
+
+        TeaRequest _lastRequest = null;
+        long _now = System.currentTimeMillis();
+        int _retryTimes = 0;
+        while (Tea.allowRetry((java.util.Map<String, Object>) runtime_.get("retry"), _retryTimes, _now)) {
+            if (_retryTimes > 0) {
+                int backoffTime = Tea.getBackoffTime(runtime_.get("backoff"), _retryTimes);
+                if (backoffTime > 0) {
+                    Tea.sleep(backoffTime);
+                }
+            }
+            _retryTimes = _retryTimes + 1;
+            try {
+                TeaRequest request_ = new TeaRequest();
+                java.util.Map<String, String> systemParams = TeaConverter.buildMap(
+                    new TeaPair("method", method),
+                    new TeaPair("app_id", _kernel.getConfig("appId")),
+                    new TeaPair("timestamp", _kernel.getTimestamp()),
+                    new TeaPair("format", "json"),
+                    new TeaPair("version", "1.0"),
+                    new TeaPair("alipay_sdk", _kernel.getSdkVersion()),
+                    new TeaPair("charset", "UTF-8"),
+                    new TeaPair("sign_type", _kernel.getConfig("signType")),
+                    new TeaPair("app_cert_sn", _kernel.getMerchantCertSN()),
+                    new TeaPair("alipay_root_cert_sn", _kernel.getAlipayRootCertSN())
+                );
+                String boundary = _kernel.getRandomBoundary();
+                request_.protocol = _kernel.getConfig("protocol");
+                request_.method = "POST";
+                request_.pathname = "/gateway.do";
+                request_.headers = TeaConverter.buildMap(
+                    new TeaPair("host", _kernel.getConfig("gatewayHost")),
+                    new TeaPair("content-type", _kernel.concatStr("multipart/form-data;charset=utf-8;boundary=", boundary))
+                );
+                request_.query = _kernel.sortMap(TeaConverter.merge(String.class,
+                    TeaConverter.buildMap(
+                        new TeaPair("sign", _kernel.sign(systemParams, bizParams, textParams, _kernel.getConfig("merchantPrivateKey")))
+                    ),
+                    systemParams,
+                    textParams
+                ));
+                request_.body = _kernel.toMultipartRequestBody(textParams, fileParams, boundary);
+                _lastRequest = request_;
+                TeaResponse response_ = Tea.doAction(request_, runtime_);
+
+                java.util.Map<String, Object> respMap = _kernel.readAsJson(response_, method);
+                if (_kernel.isCertMode()) {
+                    if (_kernel.verify(respMap, _kernel.extractAlipayPublicKey(_kernel.getAlipayCertSN(respMap)))) {
+                        return TeaModel.toModel(_kernel.toRespModel(respMap), new AlipayOpenApiGenericResponse());
+                    }
+
+                } else {
+                    if (_kernel.verify(respMap, _kernel.getConfig("alipayPublicKey"))) {
+                        return TeaModel.toModel(_kernel.toRespModel(respMap), new AlipayOpenApiGenericResponse());
+                    }
+
+                }
+
+                throw new TeaException(TeaConverter.buildMap(
+                    new TeaPair("message", "验签失败，请检查支付宝公钥设置是否正确。")
+                ));
+            } catch (Exception e) {
+                if (Tea.isRetryable(e)) {
+                    continue;
+                }
+                throw new RuntimeException(e);
+            }
+        }
+
+        throw new TeaUnretryableException(_lastRequest);
+    }
+
+    public AlipayOpenApiGenericSDKResponse sdkExecute(String method, java.util.Map<String, String> textParams, java.util.Map<String, Object> bizParams) throws Exception {
+        TeaRequest request_ = new TeaRequest();
+        java.util.Map<String, String> systemParams = TeaConverter.buildMap(
+            new TeaPair("method", method),
+            new TeaPair("app_id", _kernel.getConfig("appId")),
+            new TeaPair("timestamp", _kernel.getTimestamp()),
+            new TeaPair("format", "json"),
+            new TeaPair("version", "1.0"),
+            new TeaPair("alipay_sdk", _kernel.getSdkVersion()),
+            new TeaPair("charset", "UTF-8"),
+            new TeaPair("sign_type", _kernel.getConfig("signType")),
+            new TeaPair("app_cert_sn", _kernel.getMerchantCertSN()),
+            new TeaPair("alipay_root_cert_sn", _kernel.getAlipayRootCertSN())
+        );
+        String sign = _kernel.sign(systemParams, bizParams, textParams, _kernel.getConfig("merchantPrivateKey"));
+        java.util.Map<String, String> response = TeaConverter.buildMap(
+            new TeaPair("body", _kernel.generateOrderString(systemParams, bizParams, textParams, sign))
+        );
+        return TeaModel.toModel(response    , new AlipayOpenApiGenericSDKResponse());
     }
 
     

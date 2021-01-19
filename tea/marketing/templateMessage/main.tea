@@ -73,6 +73,7 @@ api send(toUserId: string, formId: string, userTemplateId: string, page: string,
   }
   
 } runtime {
+  ignoreSSL = @kernel.getConfig("ignoreSSL"),
   httpProxy = @kernel.getConfig("httpProxy"),
   connectTimeout = 15000,
   readTimeout = 15000,

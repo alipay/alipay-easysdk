@@ -26,6 +26,7 @@ namespace Alipay.EasySDK.Marketing.TemplateMessage
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"ignoreSSL", this._kernel.GetConfig("ignoreSSL")},
                 {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},
@@ -134,6 +135,7 @@ namespace Alipay.EasySDK.Marketing.TemplateMessage
         {
             Dictionary<string, object> runtime_ = new Dictionary<string, object>
             {
+                {"ignoreSSL", this._kernel.GetConfig("ignoreSSL")},
                 {"httpProxy", this._kernel.GetConfig("httpProxy")},
                 {"connectTimeout", 15000},
                 {"readTimeout", 15000},

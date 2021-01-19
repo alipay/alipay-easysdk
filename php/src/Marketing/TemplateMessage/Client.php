@@ -33,6 +33,7 @@ class Client {
      */
     public function send($toUserId, $formId, $userTemplateId, $page, $data){
         $_runtime = [
+            "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
             "connectTimeout" => 15000,
             "readTimeout" => 15000,
