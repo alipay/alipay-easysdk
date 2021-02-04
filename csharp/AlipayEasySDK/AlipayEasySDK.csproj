@@ -24,9 +24,6 @@
     <Compile Remove="Class1.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Factory\" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="AlipayEasySDK.Kernel" Version="1.0.5" />
   </ItemGroup>
 </Project>
