@@ -19,9 +19,10 @@ class Client {
      * @param string $outTradeNo
      * @param string $totalAmount
      * @param string $returnUrl
+     * @param string $method
      * @return AlipayTradePagePayResponse
      */
-    public function pay($subject, $outTradeNo, $totalAmount, $returnUrl){
+    public function pay($subject, $outTradeNo, $totalAmount, $returnUrl, $method = 'POST'){
         $systemParams = [
             "method" => "alipay.trade.page.pay",
             "app_id" => $this->_kernel->getConfig("appId"),
@@ -45,7 +46,7 @@ class Client {
         ];
         $sign = $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig("merchantPrivateKey"));
         $response = [
-            "body" => $this->_kernel->generatePage("POST", $systemParams, $bizParams, $textParams, $sign)
+            "body" => $this->_kernel->generatePage($method, $systemParams, $bizParams, $textParams, $sign)
         ];
         return AlipayTradePagePayResponse::fromMap($response);
     }
