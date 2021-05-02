@@ -11,34 +11,53 @@ namespace Alipay.EasySDK.Kernel.Util
         /// <summary>
         /// 将字典各层次Value中的JObject和JArray转换成C#标准库中的Dictionary和List
         /// </summary>
-        /// <param name="dicObj">输入字典</param>
+        /// <param name="iputObj">输入字典</param>
         /// <returns>转换后的输出字典</returns>
-        public static Dictionary<string, object> ObjToDictionary(Dictionary<string, object> dicObj)
+        public static Dictionary<string, object> ObjToDictionary(Dictionary<string, object> iputObj)
         {
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-            foreach (string key in dicObj.Keys)
+            Dictionary<string, object> result = new Dictionary<string, object>();
+            foreach (string key in iputObj.Keys)
             {
-                if (dicObj[key] is JArray)
+                if (iputObj[key] is JArray)
                 {
-                    List<Dictionary<string, object>> dicObjList = ((JArray)dicObj[key]).ToObject<List<Dictionary<string, object>>>();
-                    List<Dictionary<string, object>> dicList = new List<Dictionary<string, object>>();
-                    foreach (Dictionary<string, object> objItem in dicObjList)
-                    {
-                        dicList.Add(ObjToDictionary(objItem));
-                    }
-                    dic.Add(key, dicList);
+                    List<object> objList = ((JArray)iputObj[key]).ToObject<List<object>>();
+                    result.Add(key, ConvertList(objList));
                 }
-                else if (dicObj[key] is JObject)
+                else if (iputObj[key] is JObject)
                 {
-                    Dictionary<string, object> dicJObj = ((JObject)dicObj[key]).ToObject<Dictionary<string, object>>();
-                    dic.Add(key, ObjToDictionary(dicJObj));
+                    Dictionary<string, object> dicObj = ((JObject)iputObj[key]).ToObject<Dictionary<string, object>>();
+                    result.Add(key, ObjToDictionary(dicObj));
                 }
                 else
                 {
-                    dic.Add(key, dicObj[key]);
+                    result.Add(key, iputObj[key]);
                 }
             }
-            return dic;
+            return result;
+        }
+
+
+        private static List<object> ConvertList(List<object> inputList)
+        {
+            List<object> result = new List<object>();
+            foreach (var obj in inputList)
+            {
+                if (obj is JArray)
+                {
+                    List<object> listObj = ((JArray)obj).ToObject<List<object>>();
+                    result.Add(ConvertList(listObj));
+                }
+                else if (obj is JObject)
+                {
+                    Dictionary<string, object> dicObj = ((JObject)obj).ToObject<Dictionary<string, object>>();
+                    result.Add(ObjToDictionary(dicObj));
+                }
+                else
+                {
+                    result.Add(obj);
+                }
+            }
+            return result;
         }
     }
 }
