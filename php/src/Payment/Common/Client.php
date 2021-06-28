@@ -213,12 +213,13 @@ class Client {
     /**
      * @param string $outTradeNo
      * @param string $refundAmount
+     * @param string $outRequestNo
      * @return AlipayTradeRefundResponse
      * @throws TeaError
      * @throws Exception
      * @throws TeaUnableRetryError
      */
-    public function refund($outTradeNo, $refundAmount){
+    public function refund($outTradeNo, $refundAmount,$outRequestNo = null){
         $_runtime = [
             "ignoreSSL" => $this->_kernel->getConfig("ignoreSSL"),
             "httpProxy" => $this->_kernel->getConfig("httpProxy"),
@@ -258,6 +259,9 @@ class Client {
                     "out_trade_no" => $outTradeNo,
                     "refund_amount" => $refundAmount
                 ];
+                if ($outRequestNo!==null){
+                    $bizParams["out_request_no"] = $outRequestNo;
+                }
                 $textParams = [];
                 $_request->protocol = $this->_kernel->getConfig("protocol");
                 $_request->method = "POST";
