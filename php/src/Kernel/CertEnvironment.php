@@ -5,7 +5,7 @@ namespace Alipay\EasySDK\Kernel;
 
 
 use Alipay\EasySDK\Kernel\Util\AntCertificationUtil;
-use http\Exception\RuntimeException;
+use Alipay\EasySDK\Kernel\Exceptions\RuntimeException;
 
 class CertEnvironment
 {
