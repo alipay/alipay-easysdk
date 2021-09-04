@@ -224,8 +224,6 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 | Util      | AES             | decrypt                | -                                                         |
 | Util      | AES             | encrypt                | -                                                         |
 | Util      | Generic         | execute                | -                                                         |
-| Util      | Generic         | sdkExecute             | -                                                         |
-| Util      | Generic         | fileExecute            | -                                                         |
 
 > 注：更多高频场景的API持续更新中，敬请期待。
 

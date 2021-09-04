@@ -80,12 +80,12 @@ public class TestAccount {
             Config config = new Config();
             config.protocol = "https";
             config.gatewayHost = "openapi.alipay.com";
-            config.appId = "2019051064521003";
+            config.appId = "2021002177673029";
             config.signType = "RSA2";
 
             config.alipayCertPath = "src/test/resources/fixture/alipayCertPublicKey_RSA2.crt";
             config.alipayRootCertPath = "src/test/resources/fixture/alipayRootCert.crt";
-            config.merchantCertPath = "src/test/resources/fixture/appCertPublicKey_2019051064521003.crt";
+            config.merchantCertPath = "src/test/resources/fixture/appCertPublicKey_2021002177673029.crt";
             config.merchantPrivateKey = getPrivateKey(config.appId);
             return config;
         }

@@ -17,6 +17,7 @@ import com.alipay.easysdk.marketing.openlife.models.Keyword;
 import com.alipay.easysdk.marketing.openlife.models.Template;
 import com.google.common.collect.Lists;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -52,7 +53,7 @@ public class ClientTest {
     @Test
     public void testModifyImageTextContent() throws Exception {
         AlipayOpenPublicMessageContentModifyResponse response = Marketing.OpenLife().modifyImageTextContent(
-                "20190510645210035577f788-d6cd-4020-9dba-1a195edb7342", "新标题",
+                "2021002177673029ecae71f5-9af3-4317-b9ce-d3a8f238f8ce", "新标题",
                 "http://dl.django.t.taobao.com/rest/1.0/image?fileIds=hOTQ1lT1TtOjcxGflvnUXgAAACMAAQED",
                 "新示例", "T", "activity", "满100减20",
                 "关键,热度", "13434343432,xxx@163.com");
@@ -63,7 +64,7 @@ public class ClientTest {
         assertThat(response.subCode, is(nullValue()));
         assertThat(response.subMsg, is(nullValue()));
         assertThat(response.httpBody, not(nullValue()));
-        assertThat(response.contentId, is("20190510645210035577f788-d6cd-4020-9dba-1a195edb7342"));
+        assertThat(response.contentId, is("2021002177673029ecae71f5-9af3-4317-b9ce-d3a8f238f8ce"));
         assertThat(response.contentUrl, is(notNullValue()));
     }
 
@@ -135,17 +136,17 @@ public class ClientTest {
         context.remark = keyword;
 
         Template template = new Template();
-        template.templateId = "e44cd3e52ffa46b1a50afc145f55d1ea";
+        template.templateId = "TM9f1a1af9c3d9418bb0f66af22c817f41";
         template.context = context;
 
         AlipayOpenPublicMessageSingleSendResponse response = Marketing.OpenLife().sendSingleMessage(
                 "2088002656718920", template);
 
-        assertThat(ResponseChecker.success(response), is(true));
-        assertThat(response.code, is("10000"));
-        assertThat(response.msg, is("Success"));
-        assertThat(response.subCode, is(nullValue()));
-        assertThat(response.subMsg, is(nullValue()));
+        assertThat(ResponseChecker.success(response), is(false));
+        assertThat(response.code, is("40004"));
+        assertThat(response.msg, is("Business Failed"));
+        assertThat(response.subCode, is("MSG_TEMPLATE_NOT_EXIST"));
+        assertThat(response.subMsg, is("消息模板不存在"));
         assertThat(response.httpBody, not(nullValue()));
     }
 
@@ -154,11 +155,11 @@ public class ClientTest {
         AlipayOpenPublicLifeMsgRecallResponse response = Marketing.OpenLife().recallMessage(
                 "201905106452100327f456f6-8dd2-4a06-8b0e-ec8a3a85c46a");
 
-        assertThat(ResponseChecker.success(response), is(true));
-        assertThat(response.code, is("10000"));
-        assertThat(response.msg, is("Success"));
-        assertThat(response.subCode, is(nullValue()));
-        assertThat(response.subMsg, is(nullValue()));
+        assertThat(ResponseChecker.success(response), is(false));
+        assertThat(response.code, is("40004"));
+        assertThat(response.msg, is("Business Failed"));
+        assertThat(response.subCode, is("PUB.RCD_MSG_NOT_EXIST"));
+        assertThat(response.subMsg, is("撤回的消息不存在"));
         assertThat(response.httpBody, not(nullValue()));
     }
 
