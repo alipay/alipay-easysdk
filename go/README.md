@@ -1,7 +1,4 @@
-[![Latest Stable Version](https://poser.pugx.org/alipaysdk/easysdk/v/stable)](https://packagist.org/packages/alipaysdk/easysdk)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk?ref=badge_shield)
-
-欢迎使用 Alipay **Easy** SDK for Go 。
+欢迎使用 Alipay **Easy** SDK for Go（Beta）。
 
 Alipay Esay SDK for Go让您不用复杂编程即可访支付宝开放平台开放的各项常用能力，SDK可以自动帮您满足能力调用过程中所需的证书校验、加签、验签、发送HTTP请求等非功能性要求。
 

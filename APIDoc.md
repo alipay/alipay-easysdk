@@ -794,7 +794,8 @@ execute(method: string, textParams: map[string]string, bizParams: map[string]any
 
 * 接口说明
 
-对于Alipay Easy SDK尚未支持的Open API，开发者可以通过调用此方法，通过自行拼装请求参数，完成几乎所有OpenAPI的调用，且调用时可按需设置所有可选参数。本接口同样会自动为您完成请求的加签和响应的验签工作。
+对于Alipay Easy SDK尚未支持的Open API，开发者可以通过调用此方法，通过自行拼装请求参数，完成大部分OpenAPI的调用，且调用时可按需设置所有可选参数。本接口同样会自动为您完成请求的加签和响应的验签工作。
+注：本接口不支持文件型字段的上传。
 
 * 入参说明
 

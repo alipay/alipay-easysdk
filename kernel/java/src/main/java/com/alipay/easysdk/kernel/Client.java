@@ -11,10 +11,13 @@ import com.aliyun.tea.TeaResponse;
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DateFormat;
@@ -28,6 +31,8 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 
 public class Client {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Client.class);
+
     /**
      * 构造成本较高的一些参数缓存在上下文中
      */
@@ -124,12 +129,24 @@ public class Client {
      * @param method   调用的OpenAPI的接口名称
      * @return 响应反序列化的Map
      */
+    @SuppressWarnings("unchecked")
     public java.util.Map<String, Object> readAsJson(TeaResponse response, String method) throws Exception {
         String responseBody = response.getResponseBody();
         Map map = new Gson().fromJson(responseBody, Map.class);
         map.put(AlipayConstants.BODY_FIELD, responseBody);
         map.put(AlipayConstants.METHOD_FIELD, method);
+        closeConnection(response);
         return map;
+    }
+
+    private void closeConnection(TeaResponse response) {
+        if (response.getResponse() != null) {
+            try {
+                response.getResponse().close();
+            } catch (IOException e) {
+                LOGGER.warn("关闭链接遭遇异常：" + e.getMessage(), e);
+            }
+        }
     }
 
     /**

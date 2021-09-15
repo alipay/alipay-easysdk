@@ -32,7 +32,7 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 ## 安装依赖
 ### 通过[Composer](https://packagist.org/packages/alipaysdk/easysdk/)在线安装依赖（推荐）
 
-`composer require alipaysdk/easysdk:^2.2`
+`composer require alipaysdk/easysdk:^2.0`
 
 ### 本地手动集成依赖（适用于自己修改源码后的本地重新打包安装）
 1. 本机安装配置[Composer](https://getcomposer.org/)工具。
@@ -218,8 +218,6 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 | Util      | AES             | decrypt                | -                                                         |
 | Util      | AES             | encrypt                | -                                                         |
 | Util      | Generic         | execute                | -                                                         |
-| Util      | Generic         | sdkExecute             | -                                                         |
-| Util      | Generic         | fileExecute            | -                                                         |
 
 > 注：更多高频场景的API持续更新中，敬请期待。
 

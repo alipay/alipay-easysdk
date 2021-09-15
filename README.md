@@ -198,9 +198,6 @@ Alipay Easy SDK将致力于保持良好的API命名，以符合开发者的编�
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Falipay%2Falipay-easysdk?ref=badge_large)
 
 # 交流与技术支持
-不管您在使用Alipay Easy SDK的过程中遇到任何问题，欢迎在当前 GitHub [提交 Issues](https://github.com/alipay/alipay-easysdk/issues/new)。
+不管您在使用Alipay Easy SDK的过程中遇到任何问题，欢迎前往 [支付宝开放社区](https://forum.alipay.com/mini-app/channel/1100001)  发帖与支付宝工作人员和其他开发者一起交流。
 
-您也可以使用钉钉扫描下方二维码，与更多开发者和支付宝工程师共同交流。
-
-![支付宝官方Alipay Easy SDK开源交流群](https://gw.alipayobjects.com/mdn/rms_0e15fa/afts/img/A*SUaHT7fpzSwAAAAAAAAAAABkARQnAQ)
-
+注：为了提高开发者问题的响应时效，github本身的issue功能已关闭，支付宝开放社区中发帖的问题，通常会在2小时内响应。
