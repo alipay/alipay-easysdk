@@ -1,6 +1,5 @@
 最新变更
-修复Java版本中Okhttp Response没有主动关闭的问题。
-
+修复PHP7.4及其以上环境下，根证书解析报错的问题。
 
 Java版本
 2021-09-04 Version: 2.2.1
@@ -161,5 +160,9 @@ Factory::util()->aes()->encrypt AES加密
 
 
 PHP版本
+2021-09-24 Version: 2.0.1
+1.修复PHP7.4及其以上环境下，根证书解析报错的问题。
+
 2021-01-18 Version: 1.0.0
 1. 首次发布。
+
