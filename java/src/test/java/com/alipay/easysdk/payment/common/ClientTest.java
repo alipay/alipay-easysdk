@@ -50,7 +50,7 @@ public class ClientTest {
     @Test
     public void testCreateWithOptional() throws Exception {
         String outTradeNo = UUID.randomUUID().toString();
-        AlipayTradeCreateResponse response = Factory.Payment.Common().agent("e34").optional("goods_detail", getGoodsDetail())
+        AlipayTradeCreateResponse response = Factory.Payment.Common().optional("goods_detail", getGoodsDetail())
                 .create("iPhone6 16G", outTradeNo, "0.01", "2088002656718920");
 
         assertThat(response.code, is("10000"));
