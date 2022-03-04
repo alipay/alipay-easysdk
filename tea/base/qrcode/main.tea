@@ -13,7 +13,9 @@ model AlipayOpenAppQrcodeCreateResponse {
   subCode: string(name='sub_code'),
   subMsg: string(name='sub_msg'),
 
-  qrCodeUrl: string(name='qr_code_url')
+  qrCodeUrl: string(name='qr_code_url', description='方形二维码图片链接地址'),
+  qrCodeUrlCircleWhite?: string(name='qr_code_url_circle_white', description='圆形二维码地址，白色slogan'),
+  qrCodeUrlCircleBlue?: string(name='qr_code_url_circle_blue', description='圆形二维码地址，蓝色slogan')
 }
 
 api create(urlParam: string, queryParam: string, describe: string): AlipayOpenAppQrcodeCreateResponse {
