@@ -135,7 +135,11 @@ class EasySDKKernel
 
         do {
             $readLength = $stream->read(1024);
-        } while (0 != $readLength);
+        } while (!$readLength);
+        /**
+         * in PHP 8.0 or above: 0 != '' always true, this is an endless loop
+         */
+        // } while (0 != $readLength);
         return $stream;
     }
 
@@ -228,6 +232,7 @@ class EasySDKKernel
     public function verify($respMap, $alipayPublicKey)
     {
         $resp = json_decode($respMap[AlipayConstants::BODY_FIELD], true);
+        // var_dump($resp);
         $sign = $resp[AlipayConstants::SIGN_FIELD];
         $signContentExtractor = new SignContentExtractor();
         $content = $signContentExtractor->getSignSourceData($respMap[AlipayConstants::BODY_FIELD],
@@ -355,7 +360,16 @@ class EasySDKKernel
 
     }
 
-    private function getSortedMap($systemParams, $bizParams, $textParams)
+    private function getExcludeMethods()
+    {
+        return [
+            // 占位用，兼容不传递接口名称的情况
+            'placeholder',
+            'alipay.merchant.item.file.upload',
+        ];
+    }
+
+    private function getSortedMap($systemParams, $bizParams, $textParams, $method = 'placeholder')
     {
         $this->textParams = $textParams;
         $this->bizParams = $bizParams;
@@ -384,7 +398,7 @@ class EasySDKKernel
                 $sortedMap = $this->textParams;
             }
         }
-        if ($this->getConfig(AlipayConstants::NOTIFY_URL_CONFIG_KEY) != null) {
+        if (!in_array($method, $this->getExcludeMethods()) && $this->getConfig(AlipayConstants::NOTIFY_URL_CONFIG_KEY) != null) {
             $sortedMap[AlipayConstants::NOTIFY_URL_FIELD] = $this->getConfig(AlipayConstants::NOTIFY_URL_CONFIG_KEY);
         }
         return $sortedMap;
