@@ -118,6 +118,10 @@ Factory.Util.AES().Encrypt AES加密
 
 
 PHP版本
+2022-11-28 Version: 2.2.3
+1、去掉多余引号
+2、toMultipartRequestBody方法中，PHP8时 0 != $readLength 永远为true导致while产生死循环
+
 2022-05-06 Version: 2.2.2
 1. php删除php中多余的composer包
 

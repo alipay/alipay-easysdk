@@ -2,7 +2,7 @@
 	"name":"alipaysdk/easysdk",
 	"description":"支付宝官方 Alipay Easy SDK",
 	"type":"library",
-	"version":"2.2.2",
+	"version":"2.2.3",
 	"authors":[
 		{
 			"name":"junying.wjy",
