@@ -31,6 +31,8 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 
 `AppId`、`应用的私钥`、`支付宝公钥`
 
+4. 接口加解密暂不支持。
+
 ## 安装依赖
 ### 通过[NuGet](https://www.nuget.org/packages/AlipayEasySDK/)程序包管理器在线安装依赖（推荐）
 * 在 `解决方案资源管理器面板` 中右击您的项目选择 `管理 NuGet 程序包` 菜单，在打开的 `NuGet 管理面板` 中点击 `浏览` 选项卡输入 `AlipayEasySDK`，在下方列表中选择 `Authors` 为 `antopen` 由官方发布的**最新稳定版**NuGet包，点击 **安装** 即可。
@@ -110,9 +112,6 @@ namespace SDKDemo
 
                 //可设置异步通知接收服务地址（可选）
                 NotifyUrl = "<-- 请填写您的支付类接口异步通知接收服务地址，例如：https://www.test.com/callback -->",
-
-                //可设置AES密钥，调用AES加解密相关接口时需要（可选）
-                EncryptKey = "<-- 请填写您的AES密钥，例如：aa4BtZ4tspm2wnXLb1ThQA== -->"
             };
         }
     }
@@ -134,7 +133,7 @@ Factory.Payment.FaceToFace()
 ```csharp
 Factory.Payment.FaceToFace()
     // 调用AsyncNotify扩展方法，可以为每此API调用，设置独立的异步通知地址
-    // 此处设置的异步通知地址的优先级高于全局Config中配置的异步通知地址
+    // 此处设置的异步通知地址的优先级低于全局Config中配置的异步通知地址
     .AsyncNotify("https://www.test.com/callback")
     .PreCreate("Apple iPhone11 128G", "2234567890", "5799.00");
 ```

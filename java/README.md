@@ -31,6 +31,8 @@ Alipay Easy SDK主要目标是提升开发者在**服务端**集成支付宝开�
 
 `AppId`、`应用的私钥`、`支付宝公钥`
 
+4. 接口加解密暂不支持。
+
 ## 安装依赖
 ### 通过[Maven](https://mvnrepository.com/artifact/com.alipay.sdk/alipay-easysdk)来管理项目依赖
 推荐通过Maven来管理项目依赖，您只需在项目的`pom.xml`文件中声明如下依赖
@@ -100,9 +102,6 @@ public class Main {
         //可设置异步通知接收服务地址（可选）
         config.notifyUrl = "<-- 请填写您的支付类接口异步通知接收服务地址，例如：https://www.test.com/callback -->";
 
-        //可设置AES密钥，调用AES加解密相关接口时需要（可选）
-        config.encryptKey = "<-- 请填写您的AES密钥，例如：aa4BtZ4tspm2wnXLb1ThQA== -->";
-
         return config;
     }
 }
@@ -123,7 +122,7 @@ Factory.Payment.FaceToFace()
 ```java
 Factory.Payment.FaceToFace()
     // 调用asyncNotify扩展方法，可以为每此API调用，设置独立的异步通知地址
-    // 此处设置的异步通知地址的优先级高于全局Config中配置的异步通知地址
+    // 此处设置的异步通知地址的优先级低于全局Config中配置的异步通知地址
     .asyncNotify("https://www.test.com/callback")
     .preCreate("Apple iPhone11 128G", "2234567890", "5799.00");
 ```
