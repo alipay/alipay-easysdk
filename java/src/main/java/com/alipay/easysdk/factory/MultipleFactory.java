@@ -12,15 +12,13 @@ import com.alipay.easysdk.kms.aliyun.AliyunKMSClient;
 import com.alipay.easysdk.kms.aliyun.AliyunKMSSigner;
 import com.aliyun.tea.TeaModel;
 
-import java.lang.reflect.Constructor;
-
 /**
  * @author junying
  * @version : MultipleFactory.java, v 0.1 2020年12月23日 2:14 下午 junying Exp $
  */
 public class MultipleFactory {
 
-    public final String SDK_VERSION = "alipay-easysdk-java-2.1.2";
+    public final String SDK_VERSION = "alipay-easysdk-java-2.2.2";
 
     /**
      * 将一些初始化耗时较多的信息缓存在上下文中
@@ -43,32 +41,6 @@ public class MultipleFactory {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-    }
-
-    /**
-     * 获取调用OpenAPI所需的客户端实例
-     * 本方法用于调用SDK扩展包中的API Client下的方法
-     * <p>
-     * 注：返回的实例不可重复使用，只可用于单次调用
-     *
-     * @param client API Client的类型对象
-     * @return client实例，用于发起单次调用
-     */
-    public <T> T getClient(Class<T> client) {
-        try {
-            Constructor<T> constructor = client.getConstructor(Client.class);
-            context.setSdkVersion(getSdkVersion(client));
-            return constructor.newInstance(new Client(context));
-        } catch (Exception e) {
-            throw new RuntimeException("" + e.getMessage(), e);
-        }
-    }
-
-    private <T> String getSdkVersion(Class<T> client) {
-        return context.getSdkVersion() + "-" + client.getCanonicalName()
-                .replace("com.alipay.easysdk.", "")
-                .replace(".Client", "")
-                .replace(".", "-");
     }
 
     /**

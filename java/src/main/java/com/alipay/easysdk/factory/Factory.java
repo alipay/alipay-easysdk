@@ -11,8 +11,6 @@ import com.alipay.easysdk.kms.aliyun.AliyunKMSClient;
 import com.alipay.easysdk.kms.aliyun.AliyunKMSSigner;
 import com.aliyun.tea.TeaModel;
 
-import java.lang.reflect.Constructor;
-
 /**
  * 客户端工厂，用于快速配置和访问各种场景下的API Client
  *
@@ -23,7 +21,7 @@ import java.lang.reflect.Constructor;
  */
 public class Factory {
 
-    public static final String SDK_VERSION = "alipay-easysdk-java-2.1.2";
+    public static final String SDK_VERSION = "alipay-easysdk-java-2.2.2";
 
     /**
      * 将一些初始化耗时较多的信息缓存在上下文中
@@ -46,32 +44,6 @@ public class Factory {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-    }
-
-    /**
-     * 获取调用OpenAPI所需的客户端实例
-     * 本方法用于调用SDK扩展包中的API Client下的方法
-     *
-     * 注：返回的实例不可重复使用，只可用于单次调用
-     *
-     * @param client API Client的类型对象
-     * @return client实例，用于发起单次调用
-     */
-    public static <T> T getClient(Class<T> client) {
-        try {
-            Constructor<T> constructor = client.getConstructor(Client.class);
-            context.setSdkVersion(getSdkVersion(client));
-            return constructor.newInstance(new Client(context));
-        } catch (Exception e) {
-            throw new RuntimeException("" + e.getMessage(), e);
-        }
-    }
-
-    private static <T> String getSdkVersion(Class<T> client) {
-        return context.getSdkVersion() + "-" + client.getCanonicalName()
-                .replace("com.alipay.easysdk.", "")
-                .replace(".Client", "")
-                .replace(".", "-");
     }
 
     /**

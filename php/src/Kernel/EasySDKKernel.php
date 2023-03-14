@@ -133,9 +133,9 @@ class EasySDKKernel
         }
         $stream = FileForm::toFileForm($this->textParams, $boundary);
 
-        do {
-            $readLength = $stream->read(1024);
-        } while (0 != $readLength);
+//        do {
+//            $readLength = $stream->read(1024);
+//        } while (0 != $readLength);
         return $stream;
     }
 

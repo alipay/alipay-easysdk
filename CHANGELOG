@@ -1,7 +1,11 @@
 最新变更
-修复PHP7.4及其以上环境下，根证书解析报错的问题。
+java删除Factory.getClient方法
+php删除php中多余的composer包
 
 Java版本
+2022-05-06 Version: 2.2.2
+1. 删除Factory.getClient方法
+
 2021-09-04 Version: 2.2.1
 1. 修复Okhttp Response没有主动关闭的问题。
 
@@ -114,6 +118,16 @@ Factory.Util.AES().Encrypt AES加密
 
 
 PHP版本
+2022-11-28 Version: 2.2.3
+1、去掉多余引号
+2、toMultipartRequestBody方法中，PHP8时 0 != $readLength 永远为true导致while产生死循环
+
+2022-05-06 Version: 2.2.2
+1. php删除php中多余的composer包
+
+2021-09-24 Version: 2.2.1
+1. 修复PHP7.4及其以上环境下，根证书解析报错的问题。
+
 2021-01-18 Version: 2.2.0
 1. 增加sdkExecute功能。
 2. 增加fileExecute功能。
