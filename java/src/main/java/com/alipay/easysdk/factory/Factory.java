@@ -21,7 +21,7 @@ import com.aliyun.tea.TeaModel;
  */
 public class Factory {
 
-    public static final String SDK_VERSION = "alipay-easysdk-java-2.2.2";
+    public static final String SDK_VERSION = "alipay-easysdk-java-2.2.3";
 
     /**
      * 将一些初始化耗时较多的信息缓存在上下文中

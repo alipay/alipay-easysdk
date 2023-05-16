@@ -1,6 +1,9 @@
 最新变更
-java删除Factory.getClient方法
-php删除php中多余的composer包
+java兼容新老证书切换
+
+Java版本
+2023-05-16 Version: 2.2.3
+1. 兼容新老证书切换
 
 Java版本
 2022-05-06 Version: 2.2.2
