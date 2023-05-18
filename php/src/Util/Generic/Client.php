@@ -306,4 +306,31 @@ class Client {
         return $this;
     }
 
+    /**
+     * 生成页面类请求所需URL或Form表单
+     * @param string $method 接口名称，如：ant.merchant.expand.indirect.zft.consult
+     * @param array $bizParams 业务参数（OpenAPI中biz_content里的参数）
+     * @param array $textParams 公共请求参数（OpenAPI中非biz_content里的参数）
+     * @param string $httpMethod 生成的请求类型，GET生成URL, POST生成HTML表单（自动执行表单POST请求）
+     * @return object AlipayOpenApiGenericSDKResponse
+     */
+    public function generatePage($method, $bizParams = [], $textParams = [], $httpMethod = 'POST')
+    {
+        $systemParams = [
+            'method' => $method,
+            'app_id' => $this->_kernel->getConfig('appId'),
+            'timestamp' => $this->_kernel->getTimestamp(),
+            'format' => 'json',
+            'version' => '1.0',
+            'alipay_sdk' => $this->_kernel->getSdkVersion(),
+            'charset' => 'UTF-8',
+            'sign_type' => $this->_kernel->getConfig('signType'),
+            'app_cert_sn' => $this->_kernel->getMerchantCertSN(),
+            'alipay_root_cert_sn' => $this->_kernel->getAlipayRootCertSN()
+        ];
+        $sign = $this->_kernel->sign($systemParams, $bizParams, $textParams, $this->_kernel->getConfig('merchantPrivateKey'));
+        $response = ['body' => $this->_kernel->generatePage($httpMethod, $systemParams, $bizParams, $textParams, $sign)];
+        return AlipayOpenApiGenericSDKResponse::fromMap($response);
+    }
+
 }
