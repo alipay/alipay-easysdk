@@ -13,7 +13,7 @@ using Alipay.EasySDK.Util.Generic.Models;
 
 namespace Alipay.EasySDK.Util.Generic
 {
-    public class Client 
+    public class Client
     {
         protected Alipay.EasySDK.Kernel.Client _kernel;
 
@@ -40,7 +40,7 @@ namespace Alipay.EasySDK.Util.Generic
             Exception _lastException = null;
             long _now = System.DateTime.Now.Millisecond;
             int _retryTimes = 0;
-            while (TeaCore.AllowRetry((IDictionary) runtime_["retry"], _retryTimes, _now))
+            while (TeaCore.AllowRetry((IDictionary)runtime_["retry"], _retryTimes, _now))
             {
                 if (_retryTimes > 0)
                 {
@@ -67,6 +67,10 @@ namespace Alipay.EasySDK.Util.Generic
                         {"app_cert_sn", this._kernel.GetMerchantCertSN()},
                         {"alipay_root_cert_sn", this._kernel.GetAlipayRootCertSN()},
                     };
+                    if (textParams == null)
+                    {
+                        textParams = new Dictionary<string, string>();
+                    }
                     request_.Protocol = this._kernel.GetConfig("protocol");
                     request_.Method = "POST";
                     request_.Pathname = "/gateway.do";
@@ -140,7 +144,7 @@ namespace Alipay.EasySDK.Util.Generic
             Exception _lastException = null;
             long _now = System.DateTime.Now.Millisecond;
             int _retryTimes = 0;
-            while (TeaCore.AllowRetry((IDictionary) runtime_["retry"], _retryTimes, _now))
+            while (TeaCore.AllowRetry((IDictionary)runtime_["retry"], _retryTimes, _now))
             {
                 if (_retryTimes > 0)
                 {
@@ -167,6 +171,10 @@ namespace Alipay.EasySDK.Util.Generic
                         {"app_cert_sn", this._kernel.GetMerchantCertSN()},
                         {"alipay_root_cert_sn", this._kernel.GetAlipayRootCertSN()},
                     };
+                    if (textParams == null)
+                    {
+                        textParams = new Dictionary<string, string>();
+                    }
                     request_.Protocol = this._kernel.GetConfig("protocol");
                     request_.Method = "POST";
                     request_.Pathname = "/gateway.do";
@@ -222,7 +230,7 @@ namespace Alipay.EasySDK.Util.Generic
             throw new TeaUnretryableException(_lastRequest, _lastException);
         }
 
-        
+
         /// <summary>
         /// ISV代商户代用，指定appAuthToken
         /// </summary>

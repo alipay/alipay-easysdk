@@ -34,8 +34,8 @@ namespace UnitTest.Util.Generic
         public void TestExecuteWithAppAuthToken()
         {
             string outTradeNo = Guid.NewGuid().ToString();
-            AlipayOpenApiGenericResponse response = Factory.Util.Generic().Execute(
-                    "alipay.trade.create", GetTextParams(), GetBizParams(outTradeNo));
+            AlipayOpenApiGenericResponse response = Factory.Util.Generic().Agent(GetAppAuthToken()).Execute(
+                    "alipay.trade.create", null, GetBizParams(outTradeNo));
 
             Assert.IsFalse(ResponseChecker.Success(response));
             Assert.AreEqual(response.Code, "20001");
@@ -43,6 +43,11 @@ namespace UnitTest.Util.Generic
             Assert.AreEqual(response.SubCode, "aop.invalid-app-auth-token");
             Assert.AreEqual(response.SubMsg, "无效的应用授权令牌");
             Assert.NotNull(response.HttpBody);
+        }
+
+        private string GetAppAuthToken()
+        {
+            return "201712BB_D0804adb2e743078d1822d536956X34";
         }
 
         private Dictionary<string, string> GetTextParams()
