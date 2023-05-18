@@ -375,7 +375,7 @@ class EasySDKKernel
         }
         $sortedMap = $systemParams;
         if (!empty($bizParams)) {
-            $sortedMap[AlipayConstants::BIZ_CONTENT_FIELD] = json_encode($bizParams, JSON_UNESCAPED_UNICODE);
+            $sortedMap[AlipayConstants::BIZ_CONTENT_FIELD] = json_encode($bizParams, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
         }
         if (!empty($this->textParams)) {
             if (!empty($sortedMap)) {
