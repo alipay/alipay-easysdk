@@ -14,6 +14,10 @@ class AntCertificationUtil
     public function getCertSN($certPath)
     {
         $cert = file_get_contents($certPath);
+
+        // 清除证书文件中多余的换行
+        $cert = $this->clearNeedlessLine($cert);
+
         $ssl = openssl_x509_parse($cert);
         $SN = md5($this->array2string(array_reverse($ssl['issuer'])) . $ssl['serialNumber']);
         return $SN;
@@ -72,9 +76,18 @@ class AntCertificationUtil
     {
         $dec = 0;
         $len = strlen($hex);
+
+        // 当前应用的 scale 设置可能不是0，会使bc系列函数执行后多出小数位的0
+        $currentScale = bcscale();
+        bcscale(0);
+
         for ($i = 1; $i <= $len; $i++) {
             $dec = bcadd($dec, bcmul(strval(hexdec($hex[$i - 1])), bcpow('16', strval($len - $i))));
         }
+
+        // 恢复应用默认的 scale
+        bcscale($currentScale);
+
         return $dec;
     }
 
@@ -608,5 +621,19 @@ class AntCertificationUtil
             }
         }
         return substr($der, 4, $len + 4);
+    }
+
+
+    /**
+     * 清除内容中的多余空行
+     * @param string $certData 证书内容
+     * @return string $certData 清理后的证书内容
+     */
+    public function clearNeedlessLine($certData) {
+        while (strpos($certData, "\n\n") !== false) {
+            $certData = str_replace("\n\n", "\n", $certData);
+        }
+
+        return $certData;
     }
 }
