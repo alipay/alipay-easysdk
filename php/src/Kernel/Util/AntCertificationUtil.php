@@ -76,9 +76,18 @@ class AntCertificationUtil
     {
         $dec = 0;
         $len = strlen($hex);
+
+        // 当前应用的 scale 设置可能不是0，会使bc系列函数执行后多出小数位的0
+        $currentScale = bcscale();
+        bcscale(0);
+
         for ($i = 1; $i <= $len; $i++) {
             $dec = bcadd($dec, bcmul(strval(hexdec($hex[$i - 1])), bcpow('16', strval($len - $i))));
         }
+
+        // 恢复应用默认的 scale
+        bcscale($currentScale);
+
         return $dec;
     }
 
