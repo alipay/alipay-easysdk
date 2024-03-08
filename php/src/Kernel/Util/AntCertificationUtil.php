@@ -14,6 +14,10 @@ class AntCertificationUtil
     public function getCertSN($certPath)
     {
         $cert = file_get_contents($certPath);
+
+        // 清除证书文件中多余的换行
+        $cert = $this->clearNeedlessLine($cert);
+
         $ssl = openssl_x509_parse($cert);
         $SN = md5($this->array2string(array_reverse($ssl['issuer'])) . $ssl['serialNumber']);
         return $SN;
@@ -608,5 +612,19 @@ class AntCertificationUtil
             }
         }
         return substr($der, 4, $len + 4);
+    }
+
+
+    /**
+     * 清除内容中的多余空行
+     * @param string $certData 证书内容
+     * @return string $certData 清理后的证书内容
+     */
+    public function clearNeedlessLine($certData) {
+        while (strpos($certData, "\n\n") !== false) {
+            $certData = str_replace("\n\n", "\n", $certData);
+        }
+
+        return $certData;
     }
 }
